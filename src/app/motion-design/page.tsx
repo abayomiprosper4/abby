@@ -3,20 +3,32 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Introduction from "@/components/Introduction";
 import Socials from "@/components/Socials";
-
+import { useState, useEffect } from "react";
 import flyingPlaneImg from "../../../public/assets/images/flying-plane.png";
 import countdownTimerImg from "../../../public/assets/images/countdown-timer.png";
 import textAnimationImg from "../../../public/assets/images/text-animation.png";
 
 import driveIcon from "../../../public/assets/icons/drive.svg";
-
+type Theme = "dark" | "light";
 const MotionDesignPage = () => {
+          const [theme, setTheme] = useState<Theme>("dark");
+        
+          // 1. Theme Persistence Logic
+          useEffect(() => {
+            const savedTheme =
+              (localStorage.getItem("theme") as Theme | null) || "dark";
+            setTheme(savedTheme);
+          }, []);
+        
+          useEffect(() => {
+            localStorage.setItem("theme", theme);
+          }, [theme]);
   return (
     <div className="pt-8 mx-[5%]">
-      <Header />
+      <Header theme={theme} setTheme={setTheme} />
 
       <div className="mt-8 mb-24">
-        <Introduction />
+        <Introduction theme={theme} />
 
         <p className="text-xl leading-8 text-gray-700 max-w-[957px]">
           I will call myself a beginner motion designer with over a year of

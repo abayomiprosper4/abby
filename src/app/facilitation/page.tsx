@@ -1,19 +1,31 @@
 import Image from "next/image";
-
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Introduction from "@/components/Introduction";
 import Socials from "@/components/Socials";
 
 import driveIcon from "../../../public/assets/icons/drive.svg";
-
+type Theme = "dark" | "light";
 const Facilitation = () => {
+            const [theme, setTheme] = useState<Theme>("dark");
+          
+            // 1. Theme Persistence Logic
+            useEffect(() => {
+              const savedTheme =
+                (localStorage.getItem("theme") as Theme | null) || "dark";
+              setTheme(savedTheme);
+            }, []);
+          
+            useEffect(() => {
+              localStorage.setItem("theme", theme);
+            }, [theme]);
     return (
         <div className="pt-8">
             <div className="w-full mx-auto">
-                <Header />
+                <Header theme={theme} setTheme={setTheme} />
                 <main>
                     <div>
-                        <Introduction />
+                        <Introduction theme={theme} />
                         <p className="w-[90%] mx-auto text-lg leading-8 text-gray-700 mb-16">I am a self taught design thinking facilitator with over a year of professional experience.</p>
                     </div>
                     <section className="mx-auto w-[90%] grid gap-y-20 gap-x-40 md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">

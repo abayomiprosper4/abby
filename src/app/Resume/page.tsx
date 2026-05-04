@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 type Theme = "dark" | "light";
 export default function ManagementPage() {
     const [theme, setTheme] = useState<Theme>("dark");
-    const [mobileOpen, setMobileOpen] = useState(false);
   
     // 1. Theme Persistence Logic
     useEffect(() => {

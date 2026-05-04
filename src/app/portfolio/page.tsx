@@ -1,9 +1,9 @@
 "use client";
 
 import Header from "@/components/Header";
+import { useEffect, useState } from "react";
 import Socials from "@/components/Socials";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -89,12 +89,25 @@ const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => vo
     </div>
   );
 };
-
+type Theme = "dark" | "light";
 export default function PortfolioPage() {
   const router = useRouter();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+
+      const [theme, setTheme] = useState<Theme>("dark");
+    
+      // 1. Theme Persistence Logic
+      useEffect(() => {
+        const savedTheme =
+          (localStorage.getItem("theme") as Theme | null) || "dark";
+        setTheme(savedTheme);
+      }, []);
+    
+      useEffect(() => {
+        localStorage.setItem("theme", theme);
+      }, [theme]);
 
   const handleProjectClick = (project: Project) => {
     if (project.title === "Gleephoria" || project.title === "GigSecure") {
@@ -124,7 +137,7 @@ export default function PortfolioPage() {
 
   return (
     <main className="mx-auto py-8 mt-10 font-space min-h-screen relative">
-      <Header />
+    <Header theme={theme} setTheme={setTheme} />
 
       <section className="flex flex-col lg:flex-row justify-between items-start gap-12 mx-24 mb-24 mt-16">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white/80 leading-[1.1] max-w-4xl tracking-tight">

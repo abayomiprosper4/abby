@@ -2,23 +2,35 @@ import Image from "next/image";
 
 import Header from "@/components/Header";
 import Introduction from "@/components/Introduction";
-
+import { useState, useEffect } from "react";
 import wireframingImg from "../../../public/assets/images/blog-wireframing.png";
 import boxShadowImg from "../../../public/assets/images/blog-box-shadow.png";
 import uiuxReplicationImg from "../../../public/assets/images/blog-ui-ux-replication.png";
 import blogIcon from "../../../public/assets/icons/blog.svg";
 import Socials from "@/components/Socials";
-
+type Theme = "dark" | "light";
 const BlogPage = () => {
+    const [theme, setTheme] = useState<Theme>("dark");
+              
+    // 1. Theme Persistence Logic
+     useEffect(() => {
+      const savedTheme =
+      (localStorage.getItem("theme") as Theme | null) || "dark";
+        setTheme(savedTheme);
+    }, []);
+              
+    useEffect(() => {
+         localStorage.setItem("theme", theme);
+    }, [theme]);
     return (
         <>
             <div className="pt-8">
                 <div className="w-[90%] mx-auto">
-                    <Header />
+                    <Header theme={theme} setTheme={setTheme} />
                 </div>
                 <main>
                     <div className="w-[90%] mx-auto mt-8 mb-24">
-                        <Introduction />
+                        <Introduction theme={theme} />
                         <p className="text-lg md:text-2xl text-white/[0.69]">
                             I am a freelance writer dedicated to writing blogs and articles on UI/UX and any other thing I find interesting
                             things. I see writing as a way of giving back to the community. I constantly blog on Hashnode.

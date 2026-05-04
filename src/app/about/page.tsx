@@ -2,19 +2,30 @@ import Image from "next/image";
 
 import Header from "@/components/Header";
 import Socials from "@/components/Socials";
-
+import { useState, useEffect } from "react";
 import arbyImage from "../../../public/assets/images/arby.png";
 import img1 from "../../../public/assets/images/Rectangle 1533.png";
 import img2 from "../../../public/assets/images/Rectangle 1534.png";
 import img3 from "../../../public/assets/images/Group 119109.png";
 import img4 from "../../../public/assets/images/Group 119108.png";
-
+type Theme = "dark" | "light";
 const About = () => {
-
+            const [theme, setTheme] = useState<Theme>("dark");
+          
+            // 1. Theme Persistence Logic
+            useEffect(() => {
+              const savedTheme =
+                (localStorage.getItem("theme") as Theme | null) || "dark";
+              setTheme(savedTheme);
+            }, []);
+          
+            useEffect(() => {
+              localStorage.setItem("theme", theme);
+            }, [theme]);
     return (
         <div className="pt-8 ">
             <div className="w-[90%] mx-auto">
-                <Header />
+                <Header theme={theme} setTheme={setTheme} />
             </div>
             <main>
                 <section className="text-white/60 md:mb-20">

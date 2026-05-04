@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Introduction from "@/components/Introduction";
 import Socials from "@/components/Socials";
@@ -10,13 +10,26 @@ import transturaImg from "../../../public/assets/images/transtura.png";
 import orvalonDigitalImg from "../../../public/assets/images/orvalon-digital.png";
 import uxResearchPaperImg from "../../../public/assets/images/ux-research-paper.png";
 
+type Theme = "dark" | "light";
 const ProductDesignPage = () => {
+      const [theme, setTheme] = useState<Theme>("dark");
+    
+      // 1. Theme Persistence Logic
+      useEffect(() => {
+        const savedTheme =
+          (localStorage.getItem("theme") as Theme | null) || "dark";
+        setTheme(savedTheme);
+      }, []);
+    
+      useEffect(() => {
+        localStorage.setItem("theme", theme);
+      }, [theme]);
   return (
     <div className="pt-8 mx-[5%]">
-      <Header />
+          <Header theme={theme} setTheme={setTheme} />
 
       <div className="mt-8 mb-24">
-        <Introduction />
+        <Introduction theme={theme} />
 
         <p className="text-xl leading-8">
           I am a <span className="font-extrabold">Product designer</span> with 3
