@@ -5,7 +5,7 @@ import Introduction from "@/components/Introduction";
 import Socials from "@/components/Socials";
 import BackToTopBtn from "./components/BacktoTopBtn";
 import motion from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import {
   CalendarDays,
   ChartNoAxesCombined,
@@ -15,15 +15,11 @@ import {
   Play,
   Sparkles,
 } from "lucide-react";
+import MotionCraft from "./components/MotionCraft";
+import Works from "./components/Works";
 
 type Theme = "dark" | "light";
 
-type WorkItem = {
-  tags: string[];
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-};
 
 type ServiceItem = {
   title: string;
@@ -31,14 +27,10 @@ type ServiceItem = {
   icon: React.ReactNode;
 };
 
-type MotionItem = {
-  title: string;
-  description: string;
-};
-
 export default function Page() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const revealedElements = useRef(new Set<HTMLElement>());
 
   // 1. Theme Persistence Logic
   useEffect(() => {
@@ -61,6 +53,7 @@ export default function Page() {
           if (entry.isIntersecting) {
             entry.target.classList.add("opacity-100", "translate-y-0");
             entry.target.classList.remove("opacity-0", "translate-y-8");
+            revealedElements.current.add(entry.target as HTMLElement);
             observer.unobserve(entry.target);
           }
         });
@@ -68,9 +61,30 @@ export default function Page() {
       { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
 
-    revealEls.forEach((el) => observer.observe(el));
+    revealEls.forEach((el) => {
+      // If already revealed, restore state
+      if (revealedElements.current.has(el)) {
+        el.classList.add("opacity-100", "translate-y-0");
+        el.classList.remove("opacity-0", "translate-y-8");
+      } else {
+        // Manually check if element is already in viewport
+        const rect = el.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isInViewport) {
+          // Element is already visible, reveal it immediately
+          el.classList.add("opacity-100", "translate-y-0");
+          el.classList.remove("opacity-0", "translate-y-8");
+          revealedElements.current.add(el);
+        } else {
+          // Element is not visible, observe it
+          observer.observe(el);
+        }
+      }
+    });
+
     return () => observer.disconnect();
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -98,40 +112,6 @@ export default function Page() {
     tertiaryBg: isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]",
   };
 
-  // 4. Data Objects
-  const workItems: WorkItem[] = useMemo(
-    () => [
-      {
-        tags: ["Product Design", "Strategy"],
-        title: "Enterprise Dashboard Platform",
-        description:
-          "Redesigned a complex analytics dashboard used by 50K+ users, improving task completion rates by over 40% through strategic UX restructuring.",
-        icon: <ChartNoAxesCombined className="h-7 w-7" />,
-      },
-      {
-        tags: ["Mobile", "UX Research"],
-        title: "Fintech Mobile Experience",
-        description:
-          "Led end-to-end design for a fintech app serving emerging markets, focusing on accessibility and trust-building patterns.",
-        icon: <Sparkles className="h-7 w-7" />,
-      },
-      {
-        tags: ["Design System", "Systems"],
-        title: "Component Library & Tokens",
-        description:
-          "Built a scalable design system with 200+ components and token architecture, reducing design-to-dev handoff time by 60%.",
-        icon: <CircleDot className="h-7 w-7" />,
-      },
-      {
-        tags: ["Facilitation", "Workshop"],
-        title: "Cross-Functional Alignment",
-        description:
-          "Designed and facilitated a 3-day product strategy workshop aligning 5 teams on roadmap priorities for a B2B SaaS platform.",
-        icon: <ChevronRight className="h-7 w-7 rotate-90" />,
-      },
-    ],
-    [],
-  );
 
   const services: ServiceItem[] = useMemo(
     () => [
@@ -163,30 +143,6 @@ export default function Page() {
     [],
   );
 
-  const motionItems: MotionItem[] = useMemo(
-    () => [
-      {
-        title: "Onboarding Flow Animation",
-        description:
-          "Micro-interactions guiding users through a fintech onboarding experience",
-      },
-      {
-        title: "Dashboard State Transitions",
-        description:
-          "Seamless transitions between data views in an analytics platform",
-      },
-      {
-        title: "Component Motion System",
-        description: "A systematic approach to motion within a design system",
-      },
-      {
-        title: "Workshop Facilitation Reel",
-        description:
-          "Behind the scenes of design sprint facilitation and team alignment",
-      },
-    ],
-    [],
-  );
 
   return (
     <div
@@ -223,137 +179,15 @@ export default function Page() {
 
       <main id="top">
         <Introduction theme={theme} />
-
-        {/* Motion & Craft Section */}
-        <section
-          id="facilitation"
-          className={`px-6 py-24 ${themeStyles.secondaryBg}`}
-        >
-          <div className="mx-auto max-w-[1200px]">
-            <div className="mb-14">
-              <span
-                className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
-                style={{ color: accent }}
-              >
-                Motion & Craft
-              </span>
-              <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
-                Bringing interfaces to life
-              </h2>
-              <p
-                className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}
-              >
-                Motion is not decoration — it&apos;s communication. Here are
-                some explorations in product animation and interaction design.
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {motionItems.map((item) => (
-                <div
-                  key={item.title}
-                  className={`reveal group overflow-hidden rounded-[20px] border transition-all duration-300 hover:-translate-y-1.5 opacity-0 translate-y-8 ${themeStyles.card} ${themeStyles.border} hover:border-[#FF6A2A]/30 ${isDark ? "hover:shadow-[0_20px_50px_rgba(255,106,42,0.1)]" : "hover:shadow-2xl"}`}
-                >
-                  <div
-                    className={`relative aspect-video flex items-center justify-center overflow-hidden ${themeStyles.tertiaryBg}`}
-                  >
-                    {/* Video Overlay Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,106,42,0.08)] to-transparent pointer-events-none" />
-
-                    {/* Play Button */}
-                    <div
-                      className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full text-white transition-transform duration-300 group-hover:scale-110"
-                      style={{
-                        backgroundColor: accent,
-                        boxShadow: `0 4px 24px rgba(255, 106, 42, 0.4)`,
-                      }}
-                    >
-                      <Play className="ml-1 h-6 w-6 fill-current" />
-                    </div>
-                  </div>
-                  <div className="p-7">
-                    <h3 className="mb-2 text-lg font-semibold tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`text-sm leading-relaxed ${themeStyles.muted}`}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Selected Work */}
-        <section id="work" className="px-6 py-24">
-          <div className="mx-auto max-w-[1200px]">
-            <div className="reveal mb-14 opacity-0 translate-y-8">
-              <span
-                className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
-                style={{ color: accent }}
-              >
-                Selected Work
-              </span>
-              <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
-                Projects that define craft and impact
-              </h2>
-              <p
-                className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}
-              >
-                A curated selection of product design work spanning enterprise
-                platforms, consumer apps, and design systems.
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {workItems.map((item) => (
-                <article
-                  key={item.title}
-                  className={`reveal group overflow-hidden rounded-[20px] border transition-all duration-300 hover:-translate-y-2 ${themeStyles.card} ${themeStyles.borderHover} opacity-0 translate-y-8`}
-                >
-                  <div className="relative flex h-[240px] items-center justify-center overflow-hidden bg-gradient-to-br from-transparent to-black/5">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,106,42,0.1)] to-transparent" />
-                    <div
-                      className={`relative flex h-16 w-16 items-center justify-center rounded-2xl border ${themeStyles.border} ${themeStyles.secondaryBg}`}
-                      style={{ color: accent }}
-                    >
-                      {item.icon}
-                    </div>
-                  </div>
-                  <div className="p-7">
-                    <div className="mb-4 flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className={`rounded-md px-3 py-1 text-[0.75rem] font-semibold ${themeStyles.tertiaryBg} ${themeStyles.subtle}`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <h3 className="mb-2 text-xl font-semibold tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className={`text-sm leading-7 ${themeStyles.subtle}`}>
-                      {item.description}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
+        <MotionCraft theme={theme} />
+        <Works theme={theme} />
         {/* Strategy / Services */}
         <section
           id="strategy"
           className={`px-6 py-24 ${themeStyles.secondaryBg}`}
         >
           <div className="mx-auto max-w-[1200px]">
-            <div className="reveal mb-14 opacity-0 translate-y-8">
+            <div className="reveal mb-14">
               <span
                 className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
                 style={{ color: accent }}
@@ -397,7 +231,7 @@ export default function Page() {
         {/* About */}
         <section id="about" className="px-6 py-24">
           <div className="mx-auto grid max-w-[1200px] gap-20 lg:grid-cols-2 lg:items-center">
-            <div className="reveal opacity-0 translate-y-8">
+            <div className="reveal">
               <div
                 className={`relative overflow-hidden rounded-[24px] border p-8 ${themeStyles.card} ${themeStyles.border}`}
               >
@@ -550,7 +384,7 @@ function ServiceCard({
 }) {
   return (
     <article
-      className={`reveal relative overflow-hidden rounded-[20px] border p-10 transition-all duration-300 hover:-translate-y-1 ${themeStyles.card} ${themeStyles.borderHover} opacity-0 translate-y-8`}
+      className={`reveal relative overflow-hidden rounded-[20px] border p-10 transition-all duration-300 hover:-translate-y-1 ${themeStyles.card} ${themeStyles.borderHover}`}
     >
       <div
         className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border ${

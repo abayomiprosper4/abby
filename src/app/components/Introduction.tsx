@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 const fadeInUp: Variants = {
