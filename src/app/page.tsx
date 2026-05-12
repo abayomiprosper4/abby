@@ -4,7 +4,6 @@ import Header from "@/components/Header";
 import Introduction from "@/components/Introduction";
 import Socials from "@/components/Socials";
 import BackToTopBtn from "./components/BacktoTopBtn";
-import motion from "framer-motion";
 import { useEffect, useMemo, useState, useRef } from "react";
 import {
   CalendarDays,
@@ -32,7 +31,7 @@ export default function Page() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const revealedElements = useRef(new Set<HTMLElement>());
 
-  // 1. Theme Persistence Logic
+
   useEffect(() => {
     const savedTheme =
       (localStorage.getItem("theme") as Theme | null) || "dark";
@@ -43,7 +42,6 @@ export default function Page() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // 2. Reveal Animations & Scroll Logic
   useEffect(() => {
     const revealEls = document.querySelectorAll<HTMLElement>(".reveal");
 
@@ -62,22 +60,22 @@ export default function Page() {
     );
 
     revealEls.forEach((el) => {
-      // If already revealed, restore state
+
       if (revealedElements.current.has(el)) {
         el.classList.add("opacity-100", "translate-y-0");
         el.classList.remove("opacity-0", "translate-y-8");
       } else {
-        // Manually check if element is already in viewport
+
         const rect = el.getBoundingClientRect();
         const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
         
         if (isInViewport) {
-          // Element is already visible, reveal it immediately
+
           el.classList.add("opacity-100", "translate-y-0");
           el.classList.remove("opacity-0", "translate-y-8");
           revealedElements.current.add(el);
         } else {
-          // Element is not visible, observe it
+
           observer.observe(el);
         }
       }
@@ -93,7 +91,6 @@ export default function Page() {
     };
   }, [mobileOpen]);
 
-  // 3. Derived Styles (Defined before use)
   const isDark = theme === "dark";
   const accent = "#FF6A2A";
 
@@ -128,13 +125,13 @@ export default function Page() {
         icon: <ChartNoAxesCombined className="h-6 w-6" />,
       },
       {
-        title: "Design Facilitation",
+        title: "Design thinking Facilitation",
         description:
-          "I lead workshops that align stakeholders, surface insights, and accelerate decision-making from design sprints to discovery sessions.",
+          "I lead workshops that align stakeholders, and accelerate decision-making from design sprints to discovery sessions.",
         icon: <UsersIcon />,
       },
       {
-        title: "Motion for Product",
+        title: "Motion Design",
         description:
           "Thoughtful motion design that guides users and provides feedback. Micro-interactions, transitions, and prototype animations.",
         icon: <Play className="h-6 w-6" />,
@@ -179,56 +176,44 @@ export default function Page() {
 
       <main id="top">
         <Introduction theme={theme} />
-        <MotionCraft theme={theme} />
         <Works theme={theme} />
+        <MotionCraft theme={theme} />
         {/* Strategy / Services */}
-        <section
-          id="strategy"
-          className={`px-6 py-24 ${themeStyles.secondaryBg}`}
-        >
-          <div className="mx-auto max-w-[1200px]">
-            <div className="reveal mb-14">
-              <span
-                className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
-                style={{ color: accent }}
-              >
-                What I Do
-              </span>
-              <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
-                End-to-end product leadership
-              </h2>
-              <p
-                className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}
-              >
-                I bring a unique blend of design craft, strategic thinking, and
-                team enablement to every engagement.
-              </p>
-            </div>
+       <section
+  id="strategy"
+  className={`px-6 py-24 ${themeStyles.secondaryBg}`}
+>
+  <div className="mx-auto max-w-[1200px]">
+    <div className="reveal mb-14">
+      <span
+        className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
+        style={{ color: accent }}
+      >
+        What I Do
+      </span>
+      <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
+        Designing products and helping teams move ideas forward.
+      </h2>
+      <p className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}>
+        I bring a unique blend of design craft, strategic thinking, and
+        team enablement to every engagement.
+      </p>
+    </div>
 
-            <div className="grid gap-6 lg:grid-cols-3">
-              {services.slice(0, 3).map((service) => (
-                <ServiceCard
-                  key={service.title}
-                  service={service}
-                  isDark={isDark}
-                  accent={accent}
-                  themeStyles={themeStyles}
-                />
-              ))}
-            </div>
-
-            <div className="mx-auto mt-6 max-w-[400px]">
-              <ServiceCard
-                service={services[3]}
-                isDark={isDark}
-                accent={accent}
-                themeStyles={themeStyles}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* About */}
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => (
+        <div key={service.title} className="reveal">
+          <ServiceCard
+            service={service}
+            isDark={isDark}
+            accent={accent}
+            themeStyles={themeStyles}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
         <section id="about" className="px-6 py-24">
           <div className="mx-auto grid max-w-[1200px] gap-20 lg:grid-cols-2 lg:items-center">
             <div className="reveal">

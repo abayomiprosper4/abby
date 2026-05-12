@@ -118,7 +118,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
           </a>
 
           <ul className="hidden items-center gap-8 md:flex">
-            {["work", "strategy", "facilitation", "about"].map((item) => (
+            {["work", "about", "Blog", "Facilitation", "Playground"].map((item) => (
               <li key={item}>
                 <a
                   href={`#${item}`}
