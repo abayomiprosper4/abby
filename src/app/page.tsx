@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import MotionCraft from "./components/MotionCraft";
 import Works from "./components/Works";
+import CTA from "./components/CTA";
 
 type Theme = "dark" | "light";
 
@@ -294,7 +295,7 @@ export default function Page() {
                     className="font-semibold"
                     style={{ color: isDark ? "#EAEAEA" : "#1A1A1A" }}
                   >
-                    Creating solutions that are useful, thoughtful, and built with intention.
+                    Creating solutions that are useful, thoughtful, and built with intention
                   </span>
                   .
                 </p>
@@ -314,38 +315,7 @@ export default function Page() {
         </section>
  <MotionCraft theme={theme} />
         {/* Contact CTA */}
-        <section id="contact" className="px-6 py-28 text-center">
-          <div className="mx-auto max-w-[700px]">
-            <div className="reveal opacity-0 translate-y-8">
-              <h2 className="mb-6 text-3xl font-bold tracking-[-0.03em] sm:text-5xl">
-                Let&apos;s build meaningful products together.
-              </h2>
-              <p className={`mb-10 text-lg leading-8 ${themeStyles.subtle}`}>
-                I&apos;m currently open to new opportunities and strategic
-                design challenges.
-              </p>
-
-              <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <a
-                  href="mailto:hello@abisolajegede.com"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#E55A1F]"
-                  style={{ backgroundColor: accent }}
-                >
-                  <Mail className="h-4 w-4" />
-                  Get In Touch
-                </a>
-                <a
-                  href="#"
-                  className={`inline-flex items-center justify-center gap-2 rounded-lg border px-7 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:text-[#FF6A2A] ${themeStyles.border} ${isDark ? "text-[#EAEAEA] hover:border-[#FF6A2A]" : "text-[#1A1A1A] hover:border-[#FF6A2A]"}`}
-                >
-                  <CalendarDays className="h-4 w-4" />
-                  Schedule a Call
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        <CTA theme={theme} />
         <Socials />
         <BackToTopBtn />
       </main>

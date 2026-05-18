@@ -82,18 +82,9 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
           "Designed and animated motion visuals for an AI focused digital campaign experience",
       },
       {
-        title: "Dashboard State Transitions",
+        title: "Morphing UI Animation",
         description:
-          "Seamless transitions between data views in an analytics platform",
-      },
-      {
-        title: "Component Motion System",
-        description: "A systematic approach to motion within a design system",
-      },
-      {
-        title: "Workshop Facilitation Reel",
-        description:
-          "Behind the scenes of design sprint facilitation and team alignment",
+          "Animated interface concept exploring seamless transitions and visual flow",
       },
     ],
     [],
