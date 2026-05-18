@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { Play } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 
 
 type Theme = "dark" | "light";
@@ -152,6 +152,15 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="mt-8">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#E55A1F]"
+              style={{ backgroundColor: accent }}
+              >
+              View more works <ArrowRight className="ml-2"/>
+            </a>
           </div>
         </section>
   )

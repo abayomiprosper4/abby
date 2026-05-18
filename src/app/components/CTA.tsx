@@ -50,7 +50,8 @@ const CTA = ({ theme }: CTAProps) => {
             </a>
             <a
               href="#"
-              className={`inline-flex items-center justify-center gap-2 rounded-lg border px-7 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:text-[#FF6A2A] ${themeStyles.border} ${isDark ? "text-[#EAEAEA] hover:border-[#FF6A2A]" : "text-[#1A1A1A] hover:border-[#FF6A2A]"}`}
+              className={`inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#FF6A2A]`}
+              style={{ backgroundColor: accent }}
             >
               <CalendarDays className="h-4 w-4" />
               Schedule a Call
