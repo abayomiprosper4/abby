@@ -213,7 +213,6 @@ export default function Page() {
     </div>
   </div>
 </section>
- <MotionCraft theme={theme} />
         <section id="about" className="px-6 py-24">
           <div className="mx-auto grid max-w-[1200px] gap-20 lg:grid-cols-2 lg:items-center">
             <div className="reveal">
@@ -314,7 +313,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-
+ <MotionCraft theme={theme} />
         {/* Contact CTA */}
         <section id="contact" className="px-6 py-28 text-center">
           <div className="mx-auto max-w-[700px]">
