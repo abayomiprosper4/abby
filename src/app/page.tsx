@@ -6,6 +6,7 @@ import Socials from "@/components/Socials";
 import BackToTopBtn from "./components/BacktoTopBtn";
 import { useEffect, useMemo, useState, useRef } from "react";
 import {
+  ArrowRight,
   CalendarDays,
   ChartNoAxesCombined,
   ChevronRight,
@@ -281,21 +282,19 @@ export default function Page() {
                     Abisola Jegede
                   </span>{" "}
                   — a product designer and innovation lead with a background in
-                  design thinking, facilitation, and digital. I architect experiences that solve real
-                  problems.
+                  design thinking, facilitation, and digital product design. I enjoy helping teams turn complex ideas into prctical, human-centered experiences.
                 </p>
                 <p>
-                  My approach combines rigorous research with bold creative
-                  vision. I&apos;ve led design for products used by millions and
-                  built design systems from scratch.
+                  Over the years, I&apos;ve worked across startup ecosystems, innovation programs, and digital products, designing interfaces,
+                  facilitating workshops, and supporting teams through Ive Product developmetn and strategic thinking.
                 </p>
                 <p>
-                  My goal remains the same:{" "}
+                  Whether I&apos;m designing flows in Figma, or leading collaborative sessions, my focus remains the same:{" "}
                   <span
                     className="font-semibold"
                     style={{ color: isDark ? "#EAEAEA" : "#1A1A1A" }}
                   >
-                    build products that matter
+                    Creating solutions that are useful, thoughtful, and built with intention.
                   </span>
                   .
                 </p>
@@ -307,7 +306,7 @@ export default function Page() {
                   className="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#E55A1F]"
                   style={{ backgroundColor: accent }}
                 >
-                  Let&apos;s Work Together
+                  View more about me <ArrowRight className="ml-2"/>
                 </a>
               </div>
             </div>

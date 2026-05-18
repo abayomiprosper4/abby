@@ -77,9 +77,9 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
     const motionItems: MotionItem[] = useMemo(
     () => [
       {
-        title: "Onboarding Flow Animation",
+        title: "Flailabls AI Campaign",
         description:
-          "Micro-interactions guiding users through a fintech onboarding experience",
+          "Designed and animated motion visuals for an AI focused digital campaign experience",
       },
       {
         title: "Dashboard State Transitions",
