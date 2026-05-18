@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { ArrowRight, Play } from "lucide-react";
-
+import SlidingBtn from "@/components/SlidingBtn";
 
 type Theme = "dark" | "light";
 type MotionItem = {
@@ -16,13 +16,15 @@ interface MotionCraftProps {
 
 const MotionCraft = ({ theme }: MotionCraftProps) => {
   const revealedElements = useRef(new Set<HTMLElement>());
-  
+
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   useEffect(() => {
-    const revealEls = document.querySelectorAll<HTMLElement>("#facilitation .reveal");
+    const revealEls = document.querySelectorAll<HTMLElement>(
+      "#facilitation .reveal",
+    );
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -45,7 +47,7 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
       } else {
         const rect = el.getBoundingClientRect();
         const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-        
+
         if (isInViewport) {
           el.classList.add("opacity-100", "translate-y-0");
           el.classList.remove("opacity-0", "translate-y-8");
@@ -74,10 +76,10 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
     secondaryBg: isDark ? "bg-[#111111]" : "bg-[#FFFFFF]",
     tertiaryBg: isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]",
   };
-    const motionItems: MotionItem[] = useMemo(
+  const motionItems: MotionItem[] = useMemo(
     () => [
       {
-        title: "Flailabls AI Campaign",
+        title: "Flailabs AI Campaign",
         description:
           "Designed and animated motion visuals for an AI focused digital campaign experience",
       },
@@ -94,76 +96,64 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
   const accent = "#FF6A2A";
   const subtle = isDark ? "text-[#A0A0A0]" : "text-[#555555]";
 
-  return (      
-      <section
-          id="facilitation"
-          className={`px-6 py-24 ${themeStyles.secondaryBg}`}
-        >
-          <div className="mx-auto max-w-[1200px]">
-            <div className="mb-14">
-              <span
-                className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
-                style={{ color: accent }}
-              >
-                Motion & Craft
-              </span>
-              <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
-                Bringing interfaces to life
-              </h2>
-              <p
-                className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}
-              >
-                Motion is not decoration — it&apos;s communication. Here are
-                some explorations in product animation and interaction design.
-              </p>
-            </div>
+  return (
+    <section
+      id="facilitation"
+      className={`px-6 py-24 ${themeStyles.secondaryBg}`}
+    >
+      <div className="mx-auto max-w-[1200px]">
+        <div className="mb-14">
+          <span
+            className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
+            style={{ color: accent }}
+          >
+            Motion & Craft
+          </span>
+          <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
+            Bringing interfaces to life
+          </h2>
+          <p className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}>
+            Motion is not decoration — it&apos;s communication. Here are some
+            explorations in product animation and interaction design.
+          </p>
+        </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              {motionItems.map((item) => (
-                <div
-                  key={item.title}
-                  className={`reveal group overflow-hidden rounded-[20px] border transition-all duration-300 hover:-translate-y-1.5 opacity-0 translate-y-8 ${themeStyles.card} ${themeStyles.border} hover:border-[#FF6A2A]/30 ${isDark ? "hover:shadow-[0_20px_50px_rgba(255,106,42,0.1)]" : "hover:shadow-2xl"}`}
-                >
-                  <div
-                    className={`relative aspect-video flex items-center justify-center overflow-hidden ${themeStyles.tertiaryBg}`}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,106,42,0.08)] to-transparent pointer-events-none" />
-
-                    <div
-                      className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full text-white transition-transform duration-300 group-hover:scale-110"
-                      style={{
-                        backgroundColor: accent,
-                        boxShadow: `0 4px 24px rgba(255, 106, 42, 0.4)`,
-                      }}
-                    >
-                      <Play className="ml-1 h-6 w-6 fill-current" />
-                    </div>
-                  </div>
-                  <div className="p-7">
-                    <h3 className="mb-2 text-lg font-semibold tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`text-sm leading-relaxed ${themeStyles.muted}`}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-8">
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#E55A1F]"
-              style={{ backgroundColor: accent }}
+        <div className="grid gap-6 md:grid-cols-2">
+          {motionItems.map((item) => (
+            <div
+              key={item.title}
+              className={`reveal group overflow-hidden rounded-[20px] border transition-all duration-300 hover:-translate-y-1.5 opacity-0 translate-y-8 ${themeStyles.card} ${themeStyles.border} hover:border-[#FF6A2A]/30 ${isDark ? "hover:shadow-[0_20px_50px_rgba(255,106,42,0.1)]" : "hover:shadow-2xl"}`}
+            >
+              <div
+                className={`relative aspect-video flex items-center justify-center overflow-hidden ${themeStyles.tertiaryBg}`}
               >
-              View more works <ArrowRight className="ml-2"/>
-            </a>
-          </div>
-        </section>
-  )
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,106,42,0.08)] to-transparent pointer-events-none" />
+              </div>
+              <div className="p-7">
+                <h3 className="mb-2 text-lg font-semibold tracking-tight">
+                  {item.title}
+                </h3>
+                <p className={`text-sm leading-relaxed ${themeStyles.muted}`}>
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mt-8 text-center">
+        <SlidingBtn
+          href="#work"
+          variant="solid"
+          accent={accent}
+          isDark={isDark}
+          text="View more works"
+          icon={<ArrowRight className="h-4 w-4" />}
+          iconPosition="right"
+        />
+      </div>
+    </section>
+  );
 };
 
 export default MotionCraft;

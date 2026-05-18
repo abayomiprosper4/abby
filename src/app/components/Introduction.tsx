@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ArrowRight, Volume2Icon, ExternalLink } from "lucide-react";
+import SlidingBtn from "./SlidingBtn";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -33,7 +34,9 @@ const Introduction = ({ theme }: IntroductionProps) => {
 
   const handlePlayAudio = () => {
     if (!audioRef.current) return;
-    audioRef.current.paused ? audioRef.current.play() : audioRef.current.pause();
+    audioRef.current.paused
+      ? audioRef.current.play()
+      : audioRef.current.pause();
   };
 
   return (
@@ -44,12 +47,15 @@ const Introduction = ({ theme }: IntroductionProps) => {
         animate="show"
         className="flex items-center max-w-[93%] mx-auto"
       >
-        <section className="relative min-h-screen flex flex-col justify-center 
-                          overflow-hidden text-left px-6 py-20 w-full">
+        <section
+          className="relative min-h-screen flex flex-col justify-center 
+                          overflow-hidden text-left px-6 py-20 w-full"
+        >
           <div className="mx-auto w-full">
-            <div className="relative z-10 flex flex-col md:flex-row 
-                          justify-between items-start gap-8">
-
+            <div
+              className="relative z-10 flex flex-col md:flex-row 
+                          justify-between items-start gap-8"
+            >
               <div className="flex-1">
                 <motion.div className="mb-2 text-lg font-medium opacity-80">
                   I am Abisola Jegede
@@ -83,8 +89,8 @@ const Introduction = ({ theme }: IntroductionProps) => {
                   transition={{ duration: 0.7, delay: 0.2 }}
                   className={`reveal mb-10 max-w-4xl md:text-xl text-md leading-8 ${subtle}`}
                 >
-                  I use product design, design thinking, and facilitation to 
-                  help organizations build solutions that are practical, 
+                  I use product design, design thinking, and facilitation to
+                  help organizations build solutions that are practical,
                   human-centered, and aligned with strategic goals.
                 </motion.p>
 
@@ -95,39 +101,36 @@ const Introduction = ({ theme }: IntroductionProps) => {
                   transition={{ duration: 0.7, delay: 0.3 }}
                   className="flex flex-col gap-4 sm:flex-row"
                 >
-                  <a
+                  <SlidingBtn
                     href="#work"
-                    className="inline-flex items-center justify-center gap-2 
-                             rounded-lg px-7 py-3.5 text-sm font-semibold 
-                             text-white shadow-[0_4px_16px_rgba(255,106,42,0.3)] 
-                             transition hover:-translate-y-0.5 
-                             hover:bg-[#E55A1F]"
-                    style={{ backgroundColor: accent }}
-                  >
-                    View Portfolio <ArrowRight className="h-4 w-4" />
-                  </a>
-                  <a
-                    href="#"
-                    className={`inline-flex items-center justify-center gap-2 
-                               rounded-lg border px-7 py-3.5 text-sm 
-                               font-semibold transition hover:-translate-y-0.5 
-                               hover:text-[#FF6A2A] ${border} ${
-                                 isDark 
-                                   ? "text-[#EAEAEA] hover:border-[#FF6A2A]" 
-                                   : "text-[#1A1A1A] hover:border-[#FF6A2A]"
-                               }`}
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Download Resume
-                  </a>
+                    variant="solid"
+                    accent={accent}
+                    isDark={isDark}
+                    text="View Portfolio"
+                    icon={<ArrowRight className="h-4 w-4" />}
+                    iconPosition="right"
+                  />
+                  <SlidingBtn
+                    href="/assets/resume.pdf"
+                    variant="outline"
+                    isDark={isDark}
+                    borderClass={isDark ? "border-zinc-800" : "border-zinc-300"}
+                    text="Download Resume"
+                    icon={<ExternalLink className="h-4 w-4" />}
+                    iconPosition="left"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
                 </motion.div>
               </div>
 
               <div className="flex flex-col md:text-center items-start md:items-start gap-1 pt-1">
                 <div className="flex items-center gap-2">
-                  <label className={`text-lg font-medium tracking-tight ${
-                    isDark ? 'text-neutral-100' : 'text-neutral-900'
-                  }`}>
+                  <label
+                    className={`text-lg font-medium tracking-tight ${
+                      isDark ? "text-neutral-100" : "text-neutral-900"
+                    }`}
+                  >
                     Pronunciation
                   </label>
                   <button
@@ -144,12 +147,13 @@ const Introduction = ({ theme }: IntroductionProps) => {
                   src="/assets/audio/Pronunciation.mp3"
                   className="hidden"
                 />
-                <p className="text-lg text-neutral-500 font-mono 
-                           tracking-widest uppercase">
+                <p
+                  className="text-lg text-neutral-500 font-mono 
+                           tracking-widest uppercase"
+                >
                   /Ah: bi: soh: la/
                 </p>
               </div>
-
             </div>
           </div>
         </section>

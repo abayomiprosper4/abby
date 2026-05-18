@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Introduction from "@/components/Introduction";
+import Image from "next/image";
 import Socials from "@/components/Socials";
 import BackToTopBtn from "./components/BacktoTopBtn";
 import { useEffect, useMemo, useState, useRef } from "react";
@@ -18,9 +19,9 @@ import {
 import MotionCraft from "./components/MotionCraft";
 import Works from "./components/Works";
 import CTA from "./components/CTA";
+import SlidingBtn from "./components/SlidingBtn";
 
 type Theme = "dark" | "light";
-
 
 type ServiceItem = {
   title: string;
@@ -32,7 +33,6 @@ export default function Page() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [mobileOpen, setMobileOpen] = useState(false);
   const revealedElements = useRef(new Set<HTMLElement>());
-
 
   useEffect(() => {
     const savedTheme =
@@ -62,22 +62,18 @@ export default function Page() {
     );
 
     revealEls.forEach((el) => {
-
       if (revealedElements.current.has(el)) {
         el.classList.add("opacity-100", "translate-y-0");
         el.classList.remove("opacity-0", "translate-y-8");
       } else {
-
         const rect = el.getBoundingClientRect();
         const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-        
-        if (isInViewport) {
 
+        if (isInViewport) {
           el.classList.add("opacity-100", "translate-y-0");
           el.classList.remove("opacity-0", "translate-y-8");
           revealedElements.current.add(el);
         } else {
-
           observer.observe(el);
         }
       }
@@ -111,7 +107,6 @@ export default function Page() {
     tertiaryBg: isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]",
   };
 
-
   const services: ServiceItem[] = useMemo(
     () => [
       {
@@ -141,7 +136,6 @@ export default function Page() {
     ],
     [],
   );
-
 
   return (
     <div
@@ -180,75 +174,79 @@ export default function Page() {
         <Introduction theme={theme} />
         <Works theme={theme} />
         {/* Strategy / Services */}
-       <section
-  id="strategy"
-  className={`px-6 py-24 ${themeStyles.secondaryBg}`}
->
-  <div className="mx-auto max-w-[1200px]">
-    <div className="reveal mb-14">
-      <span
-        className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
-        style={{ color: accent }}
-      >
-        What I Do
-      </span>
-      <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
-        Designing products and helping teams move ideas forward.
-      </h2>
-      <p className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}>
-        I bring a unique blend of design craft, strategic thinking, and
-        team enablement to every engagement.
-      </p>
-    </div>
+        <section
+          id="strategy"
+          className={`px-6 py-24 ${themeStyles.secondaryBg}`}
+        >
+          <div className="mx-auto max-w-[1200px]">
+            <div className="reveal mb-14">
+              <span
+                className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
+                style={{ color: accent }}
+              >
+                What I Do
+              </span>
+              <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
+                Designing products and helping teams move ideas forward.
+              </h2>
+              <p
+                className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}
+              >
+                I bring a unique blend of design craft, strategic thinking, and
+                team enablement to every engagement.
+              </p>
+            </div>
 
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {services.map((service) => (
-        <div key={service.title} className="reveal">
-          <ServiceCard
-            service={service}
-            isDark={isDark}
-            accent={accent}
-            themeStyles={themeStyles}
-          />
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {services.map((service) => (
+                <div key={service.title} className="reveal">
+                  <ServiceCard
+                    service={service}
+                    isDark={isDark}
+                    accent={accent}
+                    themeStyles={themeStyles}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         <section id="about" className="px-6 py-24">
           <div className="mx-auto grid max-w-[1200px] gap-20 lg:grid-cols-2 lg:items-center">
-            <div className="reveal">
+            <div className="reveal m-8">
               <div
-                className={`relative overflow-hidden rounded-[24px] border p-8 ${themeStyles.card} ${themeStyles.border}`}
+                className={`relative overflow-hidden rounded-[24px] ${themeStyles.card} ${themeStyles.border}`}
               >
                 <div
-                  className="absolute inset-[-50%] opacity-50"
+                  className="absolute inset-[-50%] opacity-50 z-0" // Added z-0 to keep gradient behind image
                   style={{
                     background: isDark
                       ? "radial-gradient(circle, rgba(255,106,42,0.18) 0%, transparent 70%)"
                       : "radial-gradient(circle, rgba(255,106,42,0.14) 0%, transparent 70%)",
                   }}
                 />
-                <div className="relative aspect-[4/5] rounded-2xl bg-gradient-to-br from-black/5 to-black/10 flex items-center justify-center">
-                  <span
-                    className="text-7xl font-bold tracking-[-0.04em] opacity-15 sm:text-8xl"
-                    style={{ color: accent }}
-                  >
-                    AJ
-                  </span>
+                <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-black/5 to-black/10 z-10">
+                  <Image
+                    src="/assets/images/abby-profile.png"
+                    alt="Abisola Jegede Profile"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 500px"
+                    priority
+                    className="object-cover object-center"
+                  />
                 </div>
               </div>
 
               <div className="mt-8 grid grid-cols-2 gap-4">
                 {[
-                  ["8+", "Years Experience"],
-                  ["40+", "Products Shipped"],
-                  ["15+", "Design Systems"],
-                  ["100+", "Workshops Led"],
+                  ["4+", "Years Experience"],
+                  ["50+", "Sessions Facilitated"],
+                  ["15+", "Products Designed"],
+                  ["100+", "People Mentored"],
                 ].map(([num, label]) => (
                   <div
                     key={label}
-                    className={`rounded-xl border p-5 text-center transition hover:-translate-y-1 ${themeStyles.card} ${themeStyles.borderHover}`}
+                    className={`rounded-xl p-6 text-center transition hover:scale-105 ${themeStyles.card} ${themeStyles.borderHover}`}
                   >
                     <div
                       className="mb-1 text-3xl font-bold tracking-tight"
@@ -256,7 +254,7 @@ export default function Page() {
                     >
                       {num}
                     </div>
-                    <div className={`text-xs font-medium ${themeStyles.muted}`}>
+                    <div className={`text-sm font-medium ${themeStyles.muted}`}>
                       {label}
                     </div>
                   </div>
@@ -283,37 +281,45 @@ export default function Page() {
                     Abisola Jegede
                   </span>{" "}
                   — a product designer and innovation lead with a background in
-                  design thinking, facilitation, and digital product design. I enjoy helping teams turn complex ideas into prctical, human-centered experiences.
+                  design thinking, facilitation, and digital product design. I
+                  enjoy helping teams turn complex ideas into prctical,
+                  human-centered experiences.
                 </p>
                 <p>
-                  Over the years, I&apos;ve worked across startup ecosystems, innovation programs, and digital products, designing interfaces,
-                  facilitating workshops, and supporting teams through Ive Product developmetn and strategic thinking.
+                  Over the years, I&apos;ve worked across startup ecosystems,
+                  innovation programs, and digital products, designing
+                  interfaces, facilitating workshops, and supporting teams
+                  through Ive Product developmetn and strategic thinking.
                 </p>
                 <p>
-                  Whether I&apos;m designing flows in Figma, or leading collaborative sessions, my focus remains the same:{" "}
+                  Whether I&apos;m designing flows in Figma, or leading
+                  collaborative sessions, my focus remains the same:{" "}
                   <span
                     className="font-semibold"
                     style={{ color: isDark ? "#EAEAEA" : "#1A1A1A" }}
                   >
-                    Creating solutions that are useful, thoughtful, and built with intention
+                    Creating solutions that are useful, thoughtful, and built
+                    with intention
                   </span>
                   .
                 </p>
               </div>
 
               <div className="mt-8">
-                <a
-                  href="#contact"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#E55A1F]"
-                  style={{ backgroundColor: accent }}
-                >
-                  View more about me <ArrowRight className="ml-2"/>
-                </a>
+                  <SlidingBtn
+                    href="#work"
+                    variant="solid"
+                    accent={accent}
+                    isDark={isDark}
+                    text="View Portfolio"
+                    icon={<ArrowRight className="h-4 w-4" />}
+                    iconPosition="right"
+                  />
               </div>
             </div>
           </div>
         </section>
- <MotionCraft theme={theme} />
+        <MotionCraft theme={theme} />
         {/* Contact CTA */}
         <CTA theme={theme} />
         <Socials />

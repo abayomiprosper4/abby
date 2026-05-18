@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 import { Moon, SunMedium, X } from "lucide-react";
+import SlidingBtn from "./SlidingBtn";
 
 type Theme = "dark" | "light";
 
@@ -159,13 +160,13 @@ export default function Header({ theme, setTheme }: HeaderProps) {
               </span>
             </button>
 
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_16px_rgba(255,106,42,0.3)] transition hover:-translate-y-0.5 hover:bg-[#E55A1F]"
-              style={{ backgroundColor: accent }}
-            >
-              Contact Me
-            </a>
+                  <SlidingBtn
+                    href="#contact"
+                    variant="solid"
+                    accent={accent}
+                    isDark={isDark}
+                    text="Contact me"
+                  />
 
             <button
               type="button"
