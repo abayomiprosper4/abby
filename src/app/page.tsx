@@ -177,7 +177,6 @@ export default function Page() {
       <main id="top">
         <Introduction theme={theme} />
         <Works theme={theme} />
-        <MotionCraft theme={theme} />
         {/* Strategy / Services */}
        <section
   id="strategy"
@@ -214,6 +213,7 @@ export default function Page() {
     </div>
   </div>
 </section>
+ <MotionCraft theme={theme} />
         <section id="about" className="px-6 py-24">
           <div className="mx-auto grid max-w-[1200px] gap-20 lg:grid-cols-2 lg:items-center">
             <div className="reveal">
@@ -282,7 +282,7 @@ export default function Page() {
                     Abisola Jegede
                   </span>{" "}
                   — a product designer and innovation lead with a background in
-                  systems thinking. I architect experiences that solve real
+                  design thinking, facilitation, and digital. I architect experiences that solve real
                   problems.
                 </p>
                 <p>

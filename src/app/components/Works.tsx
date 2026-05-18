@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import { useRouter } from "next/navigation";;
 
 type Theme = "dark" | "light";
 
@@ -19,7 +19,6 @@ interface WorksProps {
 
 const Works = ({ theme }: WorksProps) => {
   const router = useRouter();
-  const revealedElements = useRef(new Set<HTMLElement>());
   
   const isDark = theme === "dark";
   const accent = "#FF6A2A";
@@ -61,7 +60,7 @@ const Works = ({ theme }: WorksProps) => {
       types: ["Web App", "System Design"],
       description: "Built a centralized applicatinon system that reduced submission dropoff rates by 50% and improved application management across teams.",
       image: "/assets/images/forms.png",
-      href: "/portfolio/nithub-forms",
+      href: "/",
     },
     {
       title: "Transtura",
@@ -72,7 +71,6 @@ const Works = ({ theme }: WorksProps) => {
     },
   ];
 
-  // ... (Keep your existing useEffects for the IntersectionObserver)
 
   return (
     <section id="work" className="px-6 py-24">
