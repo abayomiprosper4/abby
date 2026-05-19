@@ -60,7 +60,7 @@ const Works = ({ theme }: WorksProps) => {
       types: ["Web App", "System Design"],
       description: "Built a centralized applicatinon system that reduced submission dropoff rates by 50% and improved application management across teams.",
       image: "/assets/images/forms.png",
-      href: "/",
+      href: "/portfolio/nithubform",
     },
     {
       title: "Transtura",

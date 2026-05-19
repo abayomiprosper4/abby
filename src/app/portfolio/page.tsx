@@ -54,7 +54,7 @@ const projects: Project[] = [
     description:
       "Designing a centralized forms system to unify fragmented applications.",
     image: "/assets/images/forms.png",
-    href: "/portfolio/nithub-forms",
+    href: "/portfolio/nithubforms",
   },
   {
     title: "Transtura",
@@ -73,9 +73,6 @@ const ProjectCard = ({
   project: Project;
   onClick: () => void;
 }) => {
-  const isClipped =
-    project.title === "Spenditure" || project.title === "Gleephoria";
-
   return (
     <div
       onClick={onClick}
@@ -90,8 +87,7 @@ const ProjectCard = ({
       </p>
 
       <div
-        className={`mt-auto w-full relative h-48 sm:h-64 transition-all duration-500 
-        ${isClipped ? "translate-y-14 scale-110" : "group-hover:scale-105"}`}
+        className={`mt-auto w-full relative h-48 sm:h-64 transition-all duration-500`}
       >
         <img
           src={project.image}
@@ -156,10 +152,9 @@ export default function PortfolioPage() {
           Product designer with <span>5+ years</span> of experience crafting
           experiences, guiding teams, and building systems that work.
         </h1>
-
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-16 gap-8 mb-32">
+      <section className="grid z-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-16 gap-8 mb-32">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}
