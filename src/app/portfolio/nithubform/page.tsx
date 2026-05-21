@@ -16,28 +16,52 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(TextPlugin, ScrollTrigger);
 }
 type Theme = "dark" | "light";
+interface NithubFormProps {
+  theme: Theme;
+}
 const NithubFormsPage = () => {
   const titlePart1Ref = useRef<HTMLSpanElement>(null);
   const titlePart2Ref = useRef<HTMLSpanElement>(null);
   const challengeRef = useRef<HTMLHeadingElement>(null);
   const approachRef = useRef<HTMLParagraphElement>(null);
   const quoteRef = useRef<HTMLHeadingElement>(null);
+  const [theme, setTheme] = useState<Theme>("dark");
 
-        const [theme, setTheme] = useState<Theme>("dark");
-      
-        // 1. Theme Persistence Logic
-        useEffect(() => {
-          const savedTheme =
-            (localStorage.getItem("theme") as Theme | null) || "dark";
-          setTheme(savedTheme);
-        }, []);
-      
-        useEffect(() => {
-          localStorage.setItem("theme", theme);
-        }, [theme]);
+  // 1. Theme Persistence Logic
+  useEffect(() => {
+    const savedTheme =
+      (localStorage.getItem("theme") as Theme | null) || "dark";
+    setTheme(savedTheme);
+  }, []);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 3.8 });
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+  // --- Dynamic Theme Variables ---
+  const isDark = theme === "dark";
+  const accent = "#FF6A2A";
+  const themeStyles = {
+    surface: isDark
+      ? "bg-[#0B0B0B] text-[#EAEAEA]"
+      : "bg-[#F8F9FB] text-[#1A1A1A]",
+    card: isDark
+      ? "bg-[#111111] border-[rgba(255,255,255,0.08)] shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+      : "bg-[#FFFFFF] border-[rgba(0,0,0,0.06)] shadow-[0_8px_32px_rgba(0,0,0,0.08)]",
+    heading: isDark ? "text-white" : "text-[#1A1A1A]",
+    subtle: isDark ? "text-[#A0A0A0]" : "text-[#555555]",
+    muted: isDark ? "text-[#666666]" : "text-[#888888]",
+    border: isDark
+      ? "border-[rgba(255,255,255,0.08)]"
+      : "border-[rgba(0,0,0,0.06)]",
+    borderHover: isDark
+      ? "hover:border-[rgba(255,255,255,0.15)]"
+      : "hover:border-[rgba(0,0,0,0.12)]",
+    secondaryBg: isDark ? "bg-[#111111]" : "bg-[#FFFFFF]",
+    tertiaryBg: isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]",
+  };
+  // -------------------------------
+  useEffect(() => {
+    const tl = gsap.timeline({ delay: 2.8 });
     tl.to(titlePart1Ref.current, {
       text: "Designing a centralized forms system to unify fragmented applications and ",
       duration: 1.5,
@@ -90,7 +114,7 @@ const NithubFormsPage = () => {
   } as const;
 
   return (
-    <div className="bg-white pt-24 text-[#1a1a1a] min-h-screen">
+    <div className={`${themeStyles.surface} pt-24 text-[#1a1a1a] min-h-screen`}>
       <Header theme={theme} setTheme={setTheme} />
       <motion.section
         initial={{ backgroundColor: "#ffffff" }}
@@ -111,14 +135,22 @@ const NithubFormsPage = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...bounceTransition, delay: 2.5 }}
-          className="flex justify-between text-center items-baseline mx-auto max-w-6xl mb-12 border-b border-gray-100 pb-6 px-4 xl:px-0"
+          className={`flex justify-between text-center items-baseline mx-auto max-w-6xl mb-12 border-b ${themeStyles.border} pb-6 px-4 xl:px-0`}
         >
-          <h2 className="text-xl font-bold tracking-tight">Nithub Form</h2>
-          <span className="text-gray-400 font-medium">August 2025</span>
+          <h2
+            className={`text-xl font-bold tracking-tight ${themeStyles.heading}`}
+          >
+            Nithub Form
+          </h2>
+          <span className={`font-medium ${themeStyles.subtle}`}>
+            August 2025
+          </span>
         </motion.div>
 
         {/* Main Title (Typewriter) */}
-        <h1 className="text-3xl md:text-5xl mx-auto max-w-6xl font-extrabold mb-20 tracking-tighter leading-[1.2] text-gray-900 px-4 xl:px-0 min-h-[3em]">
+        <h1
+          className={`text-3xl md:text-5xl mx-auto max-w-6xl font-extrabold mb-20 tracking-tighter leading-[1.2] ${themeStyles.heading} px-4 xl:px-0 min-h-[3em]`}
+        >
           <span ref={titlePart1Ref}></span>
           <span ref={titlePart2Ref} className="text-[#03947B]"></span>
         </h1>
@@ -132,7 +164,7 @@ const NithubFormsPage = () => {
               transition: { staggerChildren: 0.8, delayChildren: 3.8 },
             },
           }}
-          className="space-y-12 mx-auto max-w-6xl mb-32 min-w-2xl px-4 xl:px-0"
+          className={`space-y-12 mx-auto max-w-6xl mb-32 min-w-2xl px-4 xl:px-0`}
         >
           {[
             {
@@ -156,10 +188,14 @@ const NithubFormsPage = () => {
                 visible: { opacity: 1, x: 0, transition: bounceTransition },
               }}
             >
-              <h3 className="text-[13px] uppercase tracking-[0.2em] font-black text-gray-900 mb-3">
+              <h3
+                className={`text-[13px] uppercase tracking-[0.2em] font-black ${themeStyles.subtle} mb-3`}
+              >
                 {item.title}
               </h3>
-              <p className="text-gray-500 text-lg leading-relaxed max-w-4xl">
+              <p
+                className={`text-gray-500 text-lg leading-relaxed max-w-4xl ${themeStyles.subtle}`}
+              >
                 {item.desc}
               </p>
             </motion.section>
@@ -175,22 +211,26 @@ const NithubFormsPage = () => {
             transition={bounceTransition}
             className="max-w-6xl mx-auto px-4 xl:px-0"
           >
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2
+              className={`text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}`}
+            >
               Context
             </h2>
             <div className="space-y-8 max-w-6xl">
-              <p className="text-2xl md:text-3xl font-medium text-gray-800 leading-snug">
+              <p
+                className={`text-2xl md:text-3xl font-medium ${themeStyles.subtle} leading-snug`}
+              >
                 At Nithub, forms are a core part of how programs, applications,
                 and requests are managed. Different teams created and maintained
                 their own Google Forms independently.
               </p>
-              <p className="text-gray-600 text-xl leading-relaxed">
+              <p className={`text-xl leading-relaxed ${themeStyles.subtle}`}>
                 This worked initially, but as activities and programs grew,
                 forms became scattered across teams and storage locations. The
                 website became the primary entry point for people engaging with
                 Nithub, but most applications were completed elsewhere.
               </p>
-              <p className="text-gray-600 text-xl leading-relaxed">
+              <p className={`text-xl leading-relaxed ${themeStyles.subtle}`}>
                 Forms were no longer just tools for collecting information; they
                 had become a key part of how people entered and interacted with
                 the hub.
@@ -201,7 +241,7 @@ const NithubFormsPage = () => {
 
           <section className="max-w-6xl mx-auto px-4 xl:px-0">
             <h2
-              className="text-2xl md:text-4xl font-bold mb-6 text-gray-900 min-h-[1.5em]"
+              className={`text-2xl md:text-4xl font-bold mb-6 ${themeStyles.heading} min-h-[1.5em]`}
               ref={challengeRef}
             ></h2>
             <motion.div
@@ -209,7 +249,7 @@ const NithubFormsPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={bounceTransition}
-              className="max-w-6xl mx-auto px-4 xl:px-0 text-gray-600 text-xl leading-relaxed mb-7"
+              className={`max-w-6xl ${themeStyles.subtle} mx-auto px-4 xl:px-0 text-xl leading-relaxed mb-7`}
             >
               At Nithub, forms were a core part of how programs, applications,
               and requests were managed. Different teams such as Programs,
@@ -230,7 +270,7 @@ const NithubFormsPage = () => {
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ ...bounceTransition, delay: 1 }}
-                className="text-lg md:text-2xl font-bold text-gray-800 leading-tight"
+                className={`text-lg md:text-2xl font-bold ${themeStyles.subtle} leading-tight`}
               >
                 "How might we bring forms into the Nithub experience while
                 creating a shared structure for teams to manage them?"
@@ -241,34 +281,38 @@ const NithubFormsPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={bounceTransition}
-              className="max-w-6xl mx-auto px-4 xl:px-0 mt-16"
+              className="max-w-6xl bg-[#f7f3f3] px-6 rounded-xl shadow-md shadow-gray-200 mx-auto py-4 xl:px-0 mt-16"
             >
               <img src="/assets/images/design-challenge.png" alt="" />
             </motion.div>
           </section>
           <section className="py-20 px-4 xl:px-0">
-            <h2 className="max-w-6xl mx-auto text-2xl md:text-3xl font-bold mb-12 text-gray-900">
+            <h2
+              className={`max-w-6xl mx-auto text-2xl md:text-3xl font-bold mb-12 ${themeStyles.heading}`}
+            >
               Why This Mattered
             </h2>
 
             <div className="max-w-6xl mx-auto grid gap-6 items-start mb-16">
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">
+                <h3 className={`text-xl font-bold ${themeStyles.heading} mb-4`}>
                   External Impact
                 </h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className={`text-lg leading-relaxed ${themeStyles.heading}`}>
                   Redirecting people away from the website at the moment of
                   conversion broke continuity and created uncertainty about
                   whether they were still within Nithub.
                 </p>
               </div>
-              <h3 className="text-xl font-bold text-gray-800">
+              <h3 className={`text-xl font-bold ${themeStyles.heading}`}>
                 Internal Struggle
               </h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <p
+                className={`text-gray-600 text-lg leading-relaxed ${themeStyles.subtle}`}
+              >
                 The lack of a central location meant:
               </p>
-              <ul className="space-y-3 text-lg text-gray-600 pl-2">
+              <ul className={`space-y-3 text-lg pl-2 ${themeStyles.subtle}`}>
                 <li className="flex items-center gap-3">
                   <DotIcon className="text-rose-500 shrink-0" /> Forms were hard
                   to find or track
@@ -290,88 +334,97 @@ const NithubFormsPage = () => {
 
             <div className="max-w-4xl mx-auto text-center mt-12">
               <h1
-                className="font-bold text-3xl md:text-4xl text-gray-900 min-h-[3em] italic"
+                className={`font-bold text-3xl md:text-4xl ${themeStyles.heading} min-h-[3em] italic`}
                 ref={quoteRef}
               ></h1>
             </div>
             <ProbStatement />
           </section>
 
-          <section className="mx-auto max-w-6xl pb-12 px-4 xl:px-0">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
-              Approach
-            </h2>
-            <p
-              className="text-2xl md:text-3xl font-medium text-gray-800 leading-[1.4] min-h-[3em] mb-10"
-              ref={approachRef}
-            ></p>
-
-            <div>
-              <p className="text-gray-600 text-xl leading-relaxed mb-8">
-                Key questions guiding the work:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                {[
-                  "Where should forms live in the Nithub environment?",
-                  "How should teams create and track them over time?",
-                  "How does the application journey remain continuous?",
-                  "What structure supports this as programs scale?",
-                ].map((question, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
-                  >
-                    <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
-                      {question}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                className="text-gray-900 text-xl md:text-2xl font-semibold leading-relaxed max-w-3xl"
+          <section className="mx-auto pb-12 px-4 xl:px-0">
+            <div className="max-w-6xl mx-auto">
+              <h2
+                className={`text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}`}
               >
-                This shifted the direction from improving individual screens to
-                designing a{" "}
-                <span className="text-blue-600">holistic forms system.</span>
-              </motion.p>
-            </div>
+                Approach
+              </h2>
+              <p
+                className="text-2xl md:text-3xl font-medium text-teal-600 leading-[1.4] min-h-[3em] mb-10"
+                ref={approachRef}
+              ></p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={bounceTransition}
-              className="mt-40"
-            >
-              <p className="text-2xl font-bold mb-4">Old User Flow</p>
-              <img
-                src="/assets/images/old-flow.png"
-                alt="Workflow Mapping and Lifecycle"
-                className="w-full rounded-3xl"
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={bounceTransition}
-              className="mt-20"
-            >
-              <p className="text-2xl font-bold mb-4">New User Flow</p>
-              <img
-                src="/assets/images/new-flow.png"
-                alt="Workflow Mapping and Lifecycle"
-                className="w-full rounded-3xl"
-              />
-            </motion.div>
+              <div>
+                <p className="text-gray-600 text-xl leading-relaxed mb-8">
+                  Key questions guiding the work:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                  {[
+                    "Where should forms live in the Nithub environment?",
+                    "How should teams create and track them over time?",
+                    "How does the application journey remain continuous?",
+                    "What structure supports this as programs scale?",
+                  ].map((question, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
+                    >
+                      <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
+                        {question}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  className={`text-xl ${accent} md:text-2xl font-semibold leading-relaxed max-w-3xl`}
+                >
+                  This shifted the direction from improving individual screens
+                  to designing a{" "}
+                  <span className="text-blue-600">holistic forms system.</span>
+                </motion.p>
+              </div>
+            </div>
+            <div className="bg-[#f7f3f3] p-7 pb-20 mt-10">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={bounceTransition}
+                className="mt-40"
+              >
+                <p className="text-2xl text-black font-bold mb-4">
+                  Old User Flow
+                </p>
+                <img
+                  src="/assets/images/old-flow.png"
+                  alt="Workflow Mapping and Lifecycle"
+                  className={"w-full rounded-xl p-4"}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={bounceTransition}
+                className="mt-20"
+              >
+                <p className="text-2xl text-black font-bold mb-4">
+                  New User Flow
+                </p>
+                <img
+                  src="/assets/images/new-flow.png"
+                  alt="Workflow Mapping and Lifecycle"
+                  className="w-full rounded-3xl"
+                />
+              </motion.div>
+            </div>
           </section>
           <motion.section
             initial={{ opacity: 0, x: -50 }}
@@ -380,15 +433,19 @@ const NithubFormsPage = () => {
             transition={bounceTransition}
             className="max-w-6xl mx-auto px-4 xl:px-0"
           >
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2
+              className={
+                'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'
+              }
+            >
               Process
             </h2>
 
             <div className="space-y-6 max-w-5xl">
-              <h3 className="text-gray-800 text-lg leading-relaxed font-semibold tracking-wider">
+              <h3 className={'${themeStyles.muted} text-lg leading-relaxed font-semibold tracking-wider'}>
                 Experience Mapping
               </h3>
-              <p className="text-gray-600 text-xl leading-relaxed">
+              <p className="text-xl leading-relaxed">
                 I mapped the application journey from website entry to
                 submission. The map showed a consistent break: users left the
                 Nithub site to complete forms and had no guided return.
@@ -428,13 +485,13 @@ const NithubFormsPage = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={bounceTransition}
-            className="max-w-6xl mx-auto px-4 xl:px-0 py-16"
+            className="bg-[#f7f3f3] mx-auto px-24 xl:px-26 py-16"
           >
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2 className={'text-2xl md:text-3xl font-bold mb-8 text-black'}>
               Internal Workflow Mapping
             </h2>
 
-            <p className="text-gray-600 text-xl leading-relaxed mb-12 max-w-4xl">
+            <p className={'text-black text-xl leading-relaxed mb-12 max-w-4xl'}>
               I traced how forms were created, stored, and handed over across
               teams. The patterns were consistent:
             </p>
@@ -475,10 +532,10 @@ const NithubFormsPage = () => {
             </motion.div>
           </motion.section>
           <section className="max-w-6xl mx-auto px-4 xl:px-0 py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2 className={'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'}>
               Observed Behaviour & Recurring Feedback
             </h2>
-            <p className="text-gray-600 text-xl leading-relaxed">
+            <p className={'text-gray-600 text-xl leading-relaxed ${accent}'}>
               Across teams, people described difficulty locating or taking over
               existing forms. Users were also known to drop off after leaving
               the website to complete applications.
@@ -509,11 +566,12 @@ const NithubFormsPage = () => {
               ))}
             </div>
           </section>
-          <section className="max-w-6xl mx-auto px-4 xl:px-0 py-16">
-            <h1 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+          <section className="px-4 xl:px-0 py-16">
+            <div className="max-w-6xl mx-auto">
+            <h1 className={'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'}>
               From Lifecycle Diagram
             </h1>
-            <h2 className="text-xl md:text-2xl font-bold mb-8 text-gray-600">
+            <h2 className={'text-xl md:text-2xl font-bold mb-8 ${themeStyles.heading}'}>
               Key Insights
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-16">
@@ -539,21 +597,22 @@ const NithubFormsPage = () => {
                 </motion.div>
               ))}
             </div>
-            <div className="items-center text-center">
+            </div>
+            <div className="items-center bg-[#f7f3f3] py-16 text-center">
               <img
                 src="/assets/images/form-lifecycle.png"
                 alt="Form Lifecycle Diagram"
                 className="mx-auto"
               />
-              <p className="my-10">Missing shared Repository</p>
+              <p className="text-black my-10">Missing shared Repository</p>
               <div>
-                <div className="border border-[#27A810] w-9/12 rounded-xl py-8 mb-12 mx-auto">
+                <div className="text-black border border-[#27A810] w-9/12 rounded-xl py-8 mb-12 mx-auto">
                   <p className="font-semibold text-md mb-2">
                     User Application Journey
                   </p>
                   <p>Inconsistent experience across programs</p>
                 </div>
-                <div className="flex items-center text-center justify-center gap-20 mx-auto">
+                <div className="text-black flex items-center text-center justify-center gap-20 mx-auto">
                   <div className="flex items-center">
                     <Check /> Fragmented Teams
                   </div>
@@ -568,10 +627,10 @@ const NithubFormsPage = () => {
             </div>
           </section>
           <section className="max-w-6xl mx-auto px-4 xl:px-0 py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2 className={'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'}>
               Solution
             </h2>
-            <p className="text-gray-600 text-xl leading-relaxed mb-12 max-w-4xl">
+            <p className="text-xl leading-relaxed mb-12 max-w-4xl">
               I designed a centralized forms system integrated directly within
               the website. The system transformed fragmented tools into a
               managed layer that introduced:
@@ -598,8 +657,8 @@ const NithubFormsPage = () => {
               ))}
             </div>
 
-            <p className="text-gray-600 text-xl leading-relaxed mb-12">
-              Forms shifted from separate Google tools to a cohesive, managed
+            <p className="text-xl leading-relaxed mb-12">
+              Forms shifted from separate Google tools to a cohesive, <span className={'text-[#03947B] font-bold italic '}>managed{' '}</span>
               layer within the Nithub platform.
             </p>
             <div className="flex flex-col gap-12">
@@ -615,7 +674,9 @@ const NithubFormsPage = () => {
                   alt="Nithub Forms Workflow"
                   className="w-5/6 mx-auto rounded-md object-cover"
                 />
-                <p className="text-center font-semibold text-sm">Nithub Forms Workflow</p>
+                <p className="text-center font-semibold text-sm">
+                  Nithub Forms Workflow
+                </p>
               </motion.div>
 
               <motion.div
@@ -629,7 +690,9 @@ const NithubFormsPage = () => {
                   alt="Form Lifecycle Management"
                   className="w-5/6 mx-auto rounded-md object-cover"
                 />
-                <p className="text-center font-semibold text-sm">Form Life Cycle</p>
+                <p className="text-center font-semibold text-sm">
+                  Form Life Cycle
+                </p>
               </motion.div>
             </div>
           </section>
@@ -679,13 +742,13 @@ const NithubFormsPage = () => {
                 transition={bounceTransition}
                 className="md:w-1/2 space-y-6"
               >
-                <h3 className="text-4xl font-bold text-gray-900">
+                <h3 className={'text-4xl font-bold ${themeStyles.heading}'}>
                   Full Application Form Page
                 </h3>
-                <p className="text-gray-800 text-lg pb-4 leading-relaxed font-semibold">
+                <p className={'${themeStyles.subtle} text-lg pb-4 leading-relaxed font-semibold'}>
                   Structured Application Experience
                 </p>
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className="text-lg leading-relaxed">
                   The application form is presented as a dedicated page to
                   provide focus and reduce distractions. Information is grouped
                   into clear sections, allowing users to complete their
@@ -769,13 +832,13 @@ const NithubFormsPage = () => {
                 transition={bounceTransition}
                 className="md:w-1/2 space-y-6"
               >
-                <h3 className="text-4xl font-bold text-gray-900">
+                <h3 className={'text-4xl font-bold ${themeStyles.heading}'}>
                   Annotated Form Structure Header
                 </h3>
-                <p className="text-gray-800 text-lg pb-4 leading-relaxed font-semibold">
+                <p className={'${themeStyles.subtle} text-lg pb-4 leading-relaxed font-semibold'}>
                   Structured Application Experience
                 </p>
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className={'${themeStyles.subtle} text-lg leading-relaxed'}>
                   For complex programs, a dedicated application page provides a
                   clear, distraction-free environment. Annotated headers help
                   users understand their progress and requirements.
@@ -856,22 +919,22 @@ const NithubFormsPage = () => {
                   viewport={{ once: true, amount: 0.5 }}
                   transition={bounceTransition}
                 >
-                  <h1 className="font-bold text-3xl md:text-4xl pb-16 text-gray-900 leading-tight">
+                  <h1 className="font-bold text-3xl md:text-4xl pb-16 ${themeStyles.heading} leading-tight">
                     The system transformed forms from scattered, disconnected
                     tools into a core part of the Nithub experience.
                   </h1>
 
-                  <h2 className="text-2xl font-bold mb-4 text-gray-900">
+                  <h2 className="text-2xl font-bold mb-4 ${themeStyles.heading}">
                     Outcome
                   </h2>
-                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                  <p className="${themeStyles.subtle} text-lg leading-relaxed mb-6">
                     <strong>Experience:</strong> Applications are completed
                     entirely within the platform, eliminating external
                     redirects. A consistent experience maintains brand
                     continuity throughout the process, and reduced friction
                     leads to lower drop-offs.
                   </p>
-                  <p className="text-gray-600 text-lg leading-relaxed">
+                  <p className="${themeStyles.subtle} text-lg leading-relaxed">
                     <strong>Internal Operations:</strong> Provides a centralized
                     hub for managing forms in one place, clear ownership, and
                     maintenance across teams, along with improved collaboration
@@ -881,7 +944,7 @@ const NithubFormsPage = () => {
               </section>
               <section className="flex items-center justify-between">
                 <div>
-                  <p className="text-xl text-gray-600 font-semibold text-center">
+                  <p className="text-xl ${accent} pb-4 font-semibold text-center">
                     Before Redesign:
                   </p>
                   <img
@@ -892,7 +955,7 @@ const NithubFormsPage = () => {
                 </div>
 
                 <div>
-                  <p className="text-xl text-gray-600 font-semibold text-center">
+                  <p className="text-xl ${accent} pb-4 font-semibold text-center">
                     After Redesign:
                   </p>
                   <img

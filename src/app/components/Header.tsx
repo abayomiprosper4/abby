@@ -108,7 +108,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
       >
         <div className="mx-auto flex max-w-[93%] items-center justify-between px-6 py-5">
           <a
-            href="#top"
+            href="/"
             className={`text-xl font-bold tracking-tight transition-colors ${
               isDark
                 ? "text-[#EAEAEA] hover:text-[#FF6A2A]"
@@ -119,21 +119,23 @@ export default function Header({ theme, setTheme }: HeaderProps) {
           </a>
 
           <ul className="hidden items-center gap-8 md:flex">
-            {["work", "about", "Blog", "Facilitation", "Playground"].map((item) => (
-              <li key={item}>
-                <a
-                  href={`#${item}`}
-                  className={`${subtle} relative text-sm font-medium transition-colors hover:text-[var(--accent)]`}
-                  style={{ ["--accent" as never]: accent }}
-                >
-                  {item[0].toUpperCase() + item.slice(1)}
-                  <span
-                    className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"
+            {["work", "about", "Blog", "Facilitation", "Playground"].map(
+              (item) => (
+                <li key={item}>
+                  <a
+                    href={`#${item}`}
+                    className={`${subtle} relative text-sm font-medium transition-colors hover:text-[var(--accent)]`}
                     style={{ ["--accent" as never]: accent }}
-                  />
-                </a>
-              </li>
-            ))}
+                  >
+                    {item[0].toUpperCase() + item.slice(1)}
+                    <span
+                      className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"
+                      style={{ ["--accent" as never]: accent }}
+                    />
+                  </a>
+                </li>
+              ),
+            )}
           </ul>
 
           <div className="flex items-center gap-3">
@@ -160,13 +162,13 @@ export default function Header({ theme, setTheme }: HeaderProps) {
               </span>
             </button>
 
-                  <SlidingBtn
-                    href="#contact"
-                    variant="solid"
-                    accent={accent}
-                    isDark={isDark}
-                    text="Contact me"
-                  />
+            <SlidingBtn
+              href="#contact"
+              variant="solid"
+              accent={accent}
+              isDark={isDark}
+              text="Contact me"
+            />
 
             <button
               type="button"

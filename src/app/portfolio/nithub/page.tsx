@@ -152,7 +152,8 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
             </h2>
             <div className="flex items-center gap-4">
               <span className={`${themeStyles.subtle}font-medium`}>2025</span>
-              <Link href="#">
+              <Link href="https://nithub.unilag.edu.ng/"
+              onClick={() => {}}>
                 <div className="bg-green-500 rounded p-3">Visit Website</div>
               </Link>
             </div>

@@ -41,7 +41,7 @@ const ProblemStatementCards = () => {
               </h4>
               <ul className="space-y-1">
                 {card.impacts.map((impact, i) => (
-                  <li key={i} className="text-md text-gray-700 leading-snug">
+                  <li key={i} className="text-md text-gray-800 leading-snug">
                     {impact}
                   </li>
                 ))}

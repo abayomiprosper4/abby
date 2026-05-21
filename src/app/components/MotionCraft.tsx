@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import { ArrowRight, Play } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowRight, Play, X } from "lucide-react";
 import SlidingBtn from "@/components/SlidingBtn";
 
 type Theme = "dark" | "light";
 type MotionItem = {
   title: string;
   description: string;
+  thumbnail: string;
+  videoUrl: string;
 };
 
 interface MotionCraftProps {
@@ -16,6 +18,7 @@ interface MotionCraftProps {
 
 const MotionCraft = ({ theme }: MotionCraftProps) => {
   const revealedElements = useRef(new Set<HTMLElement>());
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -82,11 +85,15 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
         title: "Flailabs AI Campaign",
         description:
           "Designed and animated motion visuals for an AI focused digital campaign experience",
+        thumbnail: "/assets/images/thumbnailflailabs.png",
+        videoUrl: "/assets/videos/flailabs-ai.mp4",
       },
       {
         title: "Morphing UI Animation",
         description:
           "Animated interface concept exploring seamless transitions and visual flow",
+        thumbnail: "/assets/images/thumbnailmorphin.png",
+        videoUrl: "/assets/videos/morphing.mp4",
       },
     ],
     [],
@@ -122,12 +129,27 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
           {motionItems.map((item) => (
             <div
               key={item.title}
-              className={`reveal group overflow-hidden rounded-[20px] border transition-all duration-300 hover:-translate-y-1.5 opacity-0 translate-y-8 ${themeStyles.card} ${themeStyles.border} hover:border-[#FF6A2A]/30 ${isDark ? "hover:shadow-[0_20px_50px_rgba(255,106,42,0.1)]" : "hover:shadow-2xl"}`}
+              className={`reveal group overflow-hidden rounded-[20px] border transition-all duration-300 hover:-translate-y-1.5 opacity-0 translate-y-8 cursor-pointer ${themeStyles.card} ${themeStyles.border} hover:border-[#FF6A2A]/30 ${isDark ? "hover:shadow-[0_20px_50px_rgba(255,106,42,0.1)]" : "hover:shadow-2xl"}`}
+              onClick={() => setSelectedVideo(item.videoUrl)}
             >
               <div
                 className={`relative aspect-video flex items-center justify-center overflow-hidden ${themeStyles.tertiaryBg}`}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,106,42,0.08)] to-transparent pointer-events-none" />
+                <img
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+                <button
+                  onClick={() => setSelectedVideo(item.videoUrl)}
+                  className="absolute inset-0 flex items-center justify-center"
+                  aria-label={`Play ${item.title}`}
+                >
+                  <div className="flex items-center justify-center h-16 w-16 rounded-full bg-[#FF6A2A] group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Play className="h-7 w-7 text-white fill-white ml-1" />
+                  </div>
+                </button>
               </div>
               <div className="p-7">
                 <h3 className="mb-2 text-lg font-semibold tracking-tight">
@@ -152,6 +174,35 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
           iconPosition="right"
         />
       </div>
+
+      {/* Video Modal */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div
+            className="relative w-full max-w-4xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedVideo(null)}
+              className="absolute -top-10 right-0 text-white hover:text-[#FF6A2A] transition-colors"
+              aria-label="Close video"
+            >
+              <X className="h-8 w-8" />
+            </button>
+            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+              <video
+                src={selectedVideo}
+                autoPlay
+                controls
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

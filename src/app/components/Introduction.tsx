@@ -111,7 +111,7 @@ const Introduction = ({ theme }: IntroductionProps) => {
                     iconPosition="right"
                   />
                   <SlidingBtn
-                    href="/assets/resume.pdf"
+                    href="https://drive.google.com/drive/u/0/folders/1TFWKm39r4M15TONW5IpWpA1LXS77e3Fz"
                     variant="outline"
                     isDark={isDark}
                     borderClass={isDark ? "border-zinc-800" : "border-zinc-300"}

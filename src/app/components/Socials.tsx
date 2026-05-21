@@ -1,7 +1,12 @@
 "use client";
 import { useState } from "react";
-import { ExternalLink } from "lucide-react";
-
+import {
+  FaLinkedin,
+  FaXTwitter,
+  FaInstagram,
+  FaDribbble,
+  FaBehance,
+} from "react-icons/fa6";
 
 const Socials = () => {
   const [theme] = useState("dark");
@@ -27,7 +32,10 @@ const Socials = () => {
     {
       title: "Connect",
       links: [
-        { name: "LinkedIn", target: "https://www.linkedin.com/in/abisola-jegede" },
+        {
+          name: "LinkedIn",
+          target: "https://www.linkedin.com/in/abisola-jegede",
+        },
         { name: "Twitter / X", target: "https://x.com/arby981" },
         { name: "Dribbble", target: "https://dribbble.com/AbisolaJegede" },
         { name: "Behance", target: "https://www.behance.net/abisolajegede" },
@@ -41,14 +49,13 @@ const Socials = () => {
     <footer className="py-16">
       <div className="mx-auto">
         <div className="max-w-[1200px] mx-auto flex flex-col justify-between gap-12 lg:flex-row lg:items-start px-6">
-          
           <div className="max-w-sm">
             <h3 className="mb-3 text-2xl font-bold tracking-tight">
               Abisola Jegede
             </h3>
             <p className={`text-sm leading-7 ${muted}`}>
-              Product Designer and Facilitator crafting thoughtful digital experiences, 
-              motion systems, and product interactions.
+              Product Designer and Facilitator crafting thoughtful digital
+              experiences, motion systems, and product interactions.
             </p>
           </div>
 
@@ -75,32 +82,63 @@ const Socials = () => {
               </div>
             ))}
           </div>
-
         </div>
         <div
           className={`mt-12 mx-6 flex flex-col items-center justify-between gap-6 border-t pt-8 md:flex-row ${border}`}
         >
           <p className={`text-sm ${muted}`}>
-            &copy; {new Date().getFullYear()} Abisola Jegede. All rights reserved.
+            &copy; {new Date().getFullYear()} Abisola Jegede. All rights
+            reserved.
           </p>
           <div className="flex gap-3">
             {[
-              { label: "LinkedIn", href: "https://linkedin.com/in/YOUR_USERNAME" },
-              { label: "Twitter", href: "https://x.com/YOUR_USERNAME" },
-              { label: "Dribbble", href: "https://dribbble.com/YOUR_USERNAME" },
-              { label: "Behance", href: "https://behance.net/YOUR_USERNAME" },
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                aria-label={item.label}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex h-10 w-10 items-center justify-center rounded-xl border transition hover:-translate-y-0.5 hover:bg-[#FF6A2A] hover:text-white ${secondaryBg} ${border} ${muted}`}
-              >
-                <ExternalLink className="h-[18px] w-[18px]" />
-              </a>
-            ))}
+              {
+                label: "LinkedIn",
+                href: "https://www.linkedin.com/in/abisola-jegede",
+                icon: FaLinkedin,
+              },
+              {
+                label: "Twitter",
+                href: "https://x.com/arby981",
+                icon: FaXTwitter,
+              },
+              {
+                label: "Instagram",
+                href: "https://www.instagram.com/rbyinmotion/",
+                icon: FaInstagram,
+              },
+              {
+                label: "Dribbble",
+                href: "https://dribbble.com/AbisolaJegede",
+                icon: FaDribbble,
+              },
+              {
+                label: "Behance",
+                href: "https://www.behance.net/abisolajegede",
+                icon: FaBehance,
+              },
+            ].map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  aria-label={item.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex h-10 w-10 items-center justify-center rounded-xl border transition hover:-translate-y-0.5 hover:bg-[#FF6A2A] hover:text-white ${secondaryBg} ${border} ${muted}`}
+                  title={item.label}
+                >
+                  {IconComponent ? (
+                    <IconComponent className="h-[18px] w-[18px]" />
+                  ) : (
+                    <span className="text-xs font-bold">
+                      {item.label.slice(0, 1)}
+                    </span>
+                  )}
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
