@@ -49,7 +49,7 @@ const Introduction = ({ theme }: IntroductionProps) => {
       >
         <section
           className="relative min-h-screen flex flex-col justify-center 
-                          overflow-hidden text-left px-6 py-20 w-full"
+                          overflow-hidden text-left px-6 py-32 w-full"
         >
           <div className="mx-auto w-full">
             <div
@@ -57,7 +57,7 @@ const Introduction = ({ theme }: IntroductionProps) => {
                           justify-between items-start gap-8"
             >
               <div className="flex-1">
-                <motion.div className="mb-2 text-lg font-medium opacity-80">
+                <motion.div className="mb-5 tracking-wider text-lg font-normal opacity-80">
                   I am Abisola Jegede
                 </motion.div>
 
@@ -66,8 +66,8 @@ const Introduction = ({ theme }: IntroductionProps) => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.7, delay: 0.1 }}
-                  className="mb-6 max-w-5xl text-4xl font-bold leading-[1.05] 
-                           tracking-[-0.08em] sm:text-4xl lg:text-5xl"
+                  className="mb-10 max-w-[99%] text-4xl font-bold leading-[40px] 
+                            sm:text-4xl lg:text-[2.8rem]"
                 >
                   Product designer focused on innovation,
                   <br />
@@ -144,7 +144,7 @@ const Introduction = ({ theme }: IntroductionProps) => {
                 </div>
                 <audio
                   ref={audioRef}
-                  src="/assets/audio/Pronunciation.mp3"
+                  src="/assets/audio/ah-bi-soh-lah.mp4"
                   className="hidden"
                 />
                 <p

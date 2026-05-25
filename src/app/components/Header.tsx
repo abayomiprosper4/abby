@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-import { Moon, SunMedium, X } from "lucide-react";
+import { Moon, SunMedium } from "lucide-react";
 import SlidingBtn from "./SlidingBtn";
 
 type Theme = "dark" | "light";
@@ -172,18 +172,36 @@ export default function Header({ theme, setTheme }: HeaderProps) {
 
             <button
               type="button"
-              aria-label="Open menu"
-              onClick={() => setMobileOpen(true)}
-              className="inline-flex flex-col gap-1.5 p-1 md:hidden"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className={`inline-flex flex-col gap-1.5 p-1 md:hidden z-50 relative`}
             >
               <span
-                className={`h-0.5 w-6 ${isDark ? "bg-[#EAEAEA]" : "bg-[#1A1A1A]"}`}
+                className={`h-0.5 w-6 transition-all duration-300 ${
+                  mobileOpen
+                    ? "rotate-45 translate-y-2"
+                    : isDark
+                      ? "bg-[#EAEAEA]"
+                      : "bg-[#1A1A1A]"
+                } ${mobileOpen ? "bg-[#FF6A2A]" : ""}`}
               />
               <span
-                className={`h-0.5 w-6 ${isDark ? "bg-[#EAEAEA]" : "bg-[#1A1A1A]"}`}
+                className={`h-0.5 w-6 transition-all duration-300 ${
+                  mobileOpen
+                    ? "opacity-0"
+                    : isDark
+                      ? "bg-[#EAEAEA]"
+                      : "bg-[#1A1A1A]"
+                } ${mobileOpen ? "bg-[#FF6A2A]" : ""}`}
               />
               <span
-                className={`h-0.5 w-6 ${isDark ? "bg-[#EAEAEA]" : "bg-[#1A1A1A]"}`}
+                className={`h-0.5 w-6 transition-all duration-300 ${
+                  mobileOpen
+                    ? "-rotate-45 -translate-y-2"
+                    : isDark
+                      ? "bg-[#EAEAEA]"
+                      : "bg-[#1A1A1A]"
+                } ${mobileOpen ? "bg-[#FF6A2A]" : ""}`}
               />
             </button>
           </div>
@@ -197,17 +215,6 @@ export default function Header({ theme, setTheme }: HeaderProps) {
             : "pointer-events-none opacity-0"
         } ${surface}`}
       >
-        <button
-          type="button"
-          aria-label="Close menu"
-          onClick={() => setMobileOpen(false)}
-          className={`absolute right-6 top-6 rounded-full p-2 ${secondaryBg} ${border} border`}
-        >
-          <X
-            className={`h-7 w-7 ${isDark ? "text-[#EAEAEA]" : "text-[#1A1A1A]"}`}
-          />
-        </button>
-
         {["work", "strategy", "facilitation", "about", "contact"].map(
           (item) => (
             <a

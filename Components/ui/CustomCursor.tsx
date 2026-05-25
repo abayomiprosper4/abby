@@ -66,10 +66,14 @@ export default function CustomCursor() {
   if (!mounted || !isVisible) return null;
 
   return createPortal(
-    <div className="custom-cursor-container fixed inset-0 z-[999999] pointer-events-none">
+    <div
+      className="custom-cursor-container fixed inset-0 z-[999999] pointer-events-none"
+      style={{ pointerEvents: "none" }}
+    >
       <motion.div
-        className="absolute top-0 left-0 mix-blend-difference"
+        className="absolute top-0 left-0 mix-blend-difference pointer-events-none"
         style={{ x: cursorX, y: cursorY }}
+        pointerEvents="none"
       >
         <motion.div
           className="absolute rounded-full bg-white"
@@ -106,8 +110,9 @@ export default function CustomCursor() {
       </motion.div>
 
       <motion.div
-        className="absolute top-0 left-0"
+        className="absolute top-0 left-0 pointer-events-none"
         style={{ x: cursorX, y: cursorY }}
+        pointerEvents="none"
       >
         <motion.div
           className="absolute rounded-full border border-white/20"

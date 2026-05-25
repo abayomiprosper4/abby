@@ -311,7 +311,7 @@ export default function Page() {
                     variant="solid"
                     accent={accent}
                     isDark={isDark}
-                    text="View Portfolio"
+                    text="View More About Me"
                     icon={<ArrowRight className="h-4 w-4" />}
                     iconPosition="right"
                   />

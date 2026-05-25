@@ -32,7 +32,6 @@ export default function SlidingBtn({
     isDark ? "text-[#EAEAEA]" : "text-[#1A1A1A]"
   }`;
 
-  // Determine the correct gradient sheen based on variant and theme
   let sheenGradient = "";
   if (isSolid) {
     sheenGradient = isDark 
@@ -45,7 +44,7 @@ export default function SlidingBtn({
   return (
     <a
       href={href}
-      className={`relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 group ${
+      className={`relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-lg md:px-7 px-2 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 group ${
         isSolid ? solidClasses : outlineClasses
       } ${className}`}
       style={isSolid ? { backgroundColor: accent } : undefined}
