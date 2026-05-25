@@ -73,7 +73,6 @@ export default function CustomCursor() {
       <motion.div
         className="absolute top-0 left-0 mix-blend-difference pointer-events-none"
         style={{ x: cursorX, y: cursorY }}
-        pointerEvents="none"
       >
         <motion.div
           className="absolute rounded-full bg-white"
@@ -112,7 +111,6 @@ export default function CustomCursor() {
       <motion.div
         className="absolute top-0 left-0 pointer-events-none"
         style={{ x: cursorX, y: cursorY }}
-        pointerEvents="none"
       >
         <motion.div
           className="absolute rounded-full border border-white/20"
