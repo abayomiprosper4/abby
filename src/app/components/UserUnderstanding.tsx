@@ -5,14 +5,14 @@ function UserUnderstanding() {
     <div>
         <section className="bg-[#fcf3f6] py-20 px-4 xl:px-0">
   <div className="max-w-5xl mx-auto">
-    <h2 className="text-2xl md:text-3xl text-right font-bold mb-10 text-gray-900">
+    <h2 className="text-2xl md:text-4xl text-center md:text-left font-bold mb-10 text-gray-900">
       Understanding the User
     </h2>
 
     <div className="w-full relative">
       <div className="text-center mb-8">
         <h3 className="text-2xl font-medium text-gray-800 mb-2">Empathy Map</h3>
-        <p className="text-gray-500 text-lg md:text-md leading-relaxed tracking-wider">Understanding User Needs for a Budgeting App</p>
+        <p className="text-gray-600 text-lg md:text-md leading-relaxed tracking-wider">Understanding User Needs for a Budgeting App</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 relative">
@@ -70,11 +70,11 @@ function UserUnderstanding() {
         <div className="bg-purple-50/60 p-6 md:p-10 border-t-4 border-white min-h-[150px]">
           <h4 className="font-bold ml-8 text-gray-800 text-base mb-4">Say & Do</h4>
           <div className="space-y-3">
-            <div className="bg-white/80 px-3 py-4 rounded-xl rounded-bl-none text-[13px] text-gray-500 italic shadow-sm inline-block border border-white">
+            <div className="bg-white/80 px-3 py-4 rounded-xl rounded-bl-none text-[13px] text-gray-800 italic shadow-sm inline-block border border-white">
               "Ugh, I have to go through all my expenses again."
             </div>
             <br />
-            <div className="bg-white/80 px-3 py-4 rounded-xl rounded-bl-none text-[13px] text-gray-500 italic shadow-sm inline-block border border-white">
+            <div className="bg-white/80 px-3 py-4 rounded-xl rounded-bl-none text-[13px] text-gray-800 italic shadow-sm inline-block border border-white">
               "What did I even spend on last month?"
             </div>
           </div>

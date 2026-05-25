@@ -38,20 +38,28 @@ const Works = ({ theme }: WorksProps) => {
     {
       title: "Nithub Website",
       types: ["Product Design", "Ecosystem Platform"],
-      description:
+      description: (
         <>
-          Redesigned NITHUB's digital ecosystem contributing to Linkedin growth from <span className="text-[#d4cfcf] font-bold">8k+</span> to <span className="text-[#d4cfcf] font-bold">20k+</span> followers, while improving engagement by <span className="text-[#d4cfcf] font-bold">30%</span>.
-        </>,
+          Redesigned NITHUB's digital ecosystem contributing to Linkedin growth
+          from <span className="text-[#d4cfcf] font-bold">8k+</span> to{" "}
+          <span className="text-[#d4cfcf] font-bold">20k+</span> followers,
+          while improving engagement by{" "}
+          <span className="text-[#d4cfcf] font-bold">30%</span>.
+        </>
+      ),
       image: "/assets/images/nithubwebsite.png",
       href: "/portfolio/nithub",
     },
     {
       title: "Nithub Forms",
       types: ["Product Design", "Web Application", "Operations"],
-      description:
-      <>
-        Built a centralized applicatinon system that reduced submission dropoff rates by <span className="text-[#d4cfcf] font-bold">50%</span> and improved application management across teams.
-        </>,
+      description: (
+        <>
+          Built a centralized applicatinon system that reduced submission
+          dropoff rates by <span className="text-[#d4cfcf] font-bold">50%</span>{" "}
+          and improved application management across teams.
+        </>
+      ),
       image: "/assets/images/nithubformimg.png",
       href: "/portfolio/nithubform",
     },
@@ -126,7 +134,8 @@ const ProjectCard = ({
   return (
     <div
       onClick={onClick}
-      className="bg-[#160e0d] rounded-3xl p-8 flex flex-col overflow-hidden border border-white/5 hover:border-white/10 transition-all group cursor-pointer h-full"
+      data-cursor-hover
+      className="bg-[#160e0d] rounded-3xl p-8 flex flex-col overflow-hidden border border-white/5 hover:border-white/10 transition-all group cursor-none h-full"
     >
       <div className="mt-auto w-full relative h-48 sm:h-64 mb-6 transition-all duration-500">
         <img

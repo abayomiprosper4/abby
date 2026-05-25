@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Socials from "@/components/Socials";
 import ProbStatement from "@/components/ProbStatement";
 import BackToTopBtn from "@/components/BacktoTopBtn";
+import Link from "next/link";
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { DotIcon } from "lucide-react";
@@ -91,7 +92,7 @@ const NithubFormsPage = () => {
         trigger: approachRef.current,
         start: "top 80%",
       },
-      text: "I reframed the work from 'designing forms' to defining how forms should exist within Nithub.",
+      text: "I reframed the work from 'redesigning forms' to defining how forms should exist within Nithub.",
       duration: 2.5,
       ease: "none",
     });
@@ -120,13 +121,13 @@ const NithubFormsPage = () => {
         initial={{ backgroundColor: "#ffffff" }}
         animate={{ backgroundColor: "#EBF9E5" }}
         transition={{ duration: 1 }}
-        className="w-full h-[60vh] md:h-[80vh] flex items-end justify-center overflow-hidden relative px-4 pb-12"
+        className="w-full h-[70vh] md:h-[80vh] flex items-end justify-center overflow-hidden relative px-4 pb-12"
       >
         <div className="z-10 flex justify-center">
           <img
             src="/assets/images/nit-forms-hero.png"
             alt="Nithub Forms Dashboard"
-            className="w-64 md:w-[100%] object-cover shadow-xl translate-y-16 block"
+            className="w-80 md:w-[100%] object-cover shadow-xl translate-y-14 block"
           />
         </div>
       </motion.section>
@@ -387,7 +388,7 @@ const NithubFormsPage = () => {
                 >
                   This shifted the direction from improving individual screens
                   to designing a{" "}
-                  <span className="text-blue-600">holistic forms system.</span>
+                  <span className="text-blue-600">Forms System.</span>
                 </motion.p>
               </div>
             </div>
@@ -498,10 +499,10 @@ const NithubFormsPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
               {[
-                "Forms scattered in personal or team drives",
+                "Forms personal or team drives",
                 "no shared naming or structure",
                 "Unclear ownership after form creation",
-                "Frequent duplicates and outdated links",
+                "Duplicates and outdated links",
               ].map((issue, index) => (
                 <motion.div
                   key={index}
@@ -511,7 +512,7 @@ const NithubFormsPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
                 >
-                  <p className="text-gray-800 text-sm md:text-md leading-snug font-medium">
+                  <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
                     {issue}
                   </p>
                 </motion.div>
@@ -559,7 +560,7 @@ const NithubFormsPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
                 >
-                  <p className="text-gray-800 text-sm md:text-md leading-snug font-medium">
+                  <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
                     {issue}
                   </p>
                 </motion.div>
@@ -591,7 +592,7 @@ const NithubFormsPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
                 >
-                  <p className="text-gray-800 text-sm md:text-md leading-snug font-medium">
+                  <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
                     {issue}
                   </p>
                 </motion.div>
@@ -650,7 +651,7 @@ const NithubFormsPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
                 >
-                  <p className="text-gray-800 text-sm md:text-md leading-snug font-medium">
+                  <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
                     {feature}
                   </p>
                 </motion.div>
@@ -911,7 +912,7 @@ const NithubFormsPage = () => {
             </div>
           </section>
           <section className="pt-20 px-4 xl:px-0">
-            <div className="space-y-16 max-w-4xl mx-auto">
+            <div className="space-y-16 max-w-5xl mx-auto">
               <section>
                 <motion.div
                   initial={{ opacity: 0, x: -50 }}
@@ -973,20 +974,20 @@ const NithubFormsPage = () => {
                 transition={{ ...bounceTransition, delay: 0.2 }}
                 className="bg-gray-50 p-8 md:p-12 rounded-3xl"
               >
-                <h2 className="text-xl font-bold mb-4 text-gray-900">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900">
                   Reflection
                 </h2>
-                <p className="text-gray-800 text-lg leading-relaxed mb-4">
+                <p className="text-gray-800 text-xl leading-relaxed mb-4">
                   This project reinforced a recurring pattern in growing
                   organizations: tools become fragmented when a unifying system
                   layer is absent.
                 </p>
-                <p className="text-gray-800 text-lg leading-relaxed mb-4">
+                <p className="text-gray-800 text-xl leading-relaxed mb-4">
                   By integrating forms into the Nithub ecosystem and defining
                   how teams create and manage them, the solution improved both
                   user continuity and internal structure.
                 </p>
-                <p className="text-gray-800 text-lg leading-relaxed font-medium">
+                <p className="text-gray-800 text-xl leading-relaxed font-medium">
                   Designing at this level required moving beyond individual
                   screens into system thinking—considering ownership, lifecycle,
                   and scalability as core parts of the experience.
@@ -1001,25 +1002,31 @@ const NithubFormsPage = () => {
             <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
               Previous Project
             </p>
+            <Link href="/portfolio/nithub" className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110">
             <button className="group transition-transform duration-300 hover:scale-110">
               <img
-                src="/assets/images/glee-btn.png"
+                src="/assets/images/nithub.png"
                 alt="Previous Project"
-                className="w-40 md:w-60 transition-all duration-300 group-hover:brightness-110"
+                className="w-40 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
               />
             </button>
+            Nithub Website
+            </Link>
           </div>
           <div className="text-right">
             <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
               Next Project
             </p>
+            <Link href="/portfolio/spenditure" className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110">
             <button className="group transition-transform duration-300 hover:scale-110">
               <img
-                src="/assets/images/nit-btn.png"
+                src="/assets/images/spenditure.png"
                 alt="Next Project"
-                className="w-40 md:w-60 transition-all duration-300 group-hover:brightness-110"
+                className="w-10 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
               />
             </button>
+            Spenditure
+            </Link>
           </div>
         </div>
         <BackToTopBtn />

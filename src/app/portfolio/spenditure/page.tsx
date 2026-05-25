@@ -23,18 +23,42 @@ const SpenditurePage = () => {
   const goalRef = useRef<HTMLParagraphElement>(null);
   const quoteRef = useRef<HTMLHeadingElement>(null);
 
-        const [theme, setTheme] = useState<Theme>("dark");
-      
-        // 1. Theme Persistence Logic
-        useEffect(() => {
-          const savedTheme =
-            (localStorage.getItem("theme") as Theme | null) || "dark";
-          setTheme(savedTheme);
-        }, []);
-      
-        useEffect(() => {
-          localStorage.setItem("theme", theme);
-        }, [theme]);
+  const [theme, setTheme] = useState<Theme>("dark");
+
+  // 1. Theme Persistence Logic
+  useEffect(() => {
+    const savedTheme =
+      (localStorage.getItem("theme") as Theme | null) || "dark";
+    setTheme(savedTheme);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // --- Dynamic Theme Variables ---
+  const isDark = theme === "dark";
+  const accent = "#03947B";
+  const themeStyles = {
+    surface: isDark
+      ? "bg-[#0B0B0B] text-[#EAEAEA]"
+      : "bg-[#F8F9FB] text-[#1A1A1A]",
+    card: isDark
+      ? "bg-[#111111] border-[rgba(255,255,255,0.08)] shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+      : "bg-[#FFFFFF] border-[rgba(0,0,0,0.06)] shadow-[0_8px_32px_rgba(0,0,0,0.08)]",
+    heading: isDark ? "text-white" : "text-[#1A1A1A]",
+    subtle: isDark ? "text-[#9b9b9b]" : "text-[#1f1f1f]",
+    muted: isDark ? "text-[#666666]" : "text-[#888888]",
+    border: isDark
+      ? "border-[rgba(255,255,255,0.08)]"
+      : "border-[rgba(0,0,0,0.06)]",
+    borderHover: isDark
+      ? "hover:border-[rgba(255,255,255,0.15)]"
+      : "hover:border-[rgba(0,0,0,0.12)]",
+    secondaryBg: isDark ? "bg-[#111111]" : "bg-[#FFFFFF]",
+    tertiaryBg: isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]",
+  };
+  // -------------------------------
 
   useEffect(() => {
     const tl = gsap.timeline({ delay: 3.8 });
@@ -85,41 +109,38 @@ const SpenditurePage = () => {
   } as const;
 
   return (
-    <div className="bg-white pt-24 text-[#1a1a1a] min-h-screen">
-  <Header theme={theme} setTheme={setTheme} />
-
+    <div
+      className={`${themeStyles.surface} pt-24 min-h-screen transition-colors duration-300`}
+    >
+    <Header theme={theme} setTheme={setTheme} />
       <motion.section
         initial={{ backgroundColor: "#ffffff" }}
         animate={{ backgroundColor: "#03947B" }}
         transition={{ duration: 1 }}
-        className="w-full h-[55vh] md:h-[85vh] flex items-end justify-center overflow-hidden relative px-4"
+        className="w-full h-[75vh] md:h-[85vh] flex items-end justify-center overflow-hidden relative px-4"
       >
         <div className="flex items-end justify-center gap-4 md:gap-14 translate-y-1 md:translate-y-2">
-          <div
-          >
+          <div>
             <img
               src="/assets/images/spenditure-3.png"
               alt="Transaction Detail"
-              className="w-80 sm:w-32 md:w-56 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform -rotate-2 translate-y-12 md:translate-y-7"
+              className="w-[600px] sm:w-40 md:w-64 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform -rotate-2 translate-y-12 md:translate-y-7"
             />
           </div>
 
-          <div
-            className="z-10"
-          >
+          <div className="z-10">
             <img
               src="/assets/images/spenditure-2.png"
               alt="Main Dashboard"
-              className="w-96 sm:w-40 md:w-64 object-contain shadow-2xl md:rounded-[2rem] rounded-sm scale-110 md:scale-125"
+              className="w-[800px] sm:w-40 md:w-64 object-contain shadow-2xl md:rounded-[2rem] rounded-sm scale-110 md:scale-125"
             />
           </div>
 
-          <div
-          >
+          <div>
             <img
               src="/assets/images/spenditure-1.png"
               alt="Add Bill Screen"
-              className="w-80 sm:w-32 md:w-56 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform rotate-2 translate-y-12 md:translate-y-7"
+              className="w-[600px] sm:w-32 md:w-56 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform rotate-2 translate-y-12 md:translate-y-7"
             />
           </div>
         </div>
@@ -129,13 +150,21 @@ const SpenditurePage = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...bounceTransition, delay: 2.5 }}
-          className="flex justify-between text-center items-baseline mx-auto max-w-6xl mb-12 border-b border-gray-100 pb-6 px-4 xl:px-0"
+          className={`flex justify-between text-center items-baseline mx-auto max-w-6xl mb-12 border-b ${themeStyles.border} pb-6 px-4 xl:px-0 transition-colors duration-300`}
         >
-          <h2 className="text-xl font-bold tracking-tight">Spenditure</h2>
-          <span className="text-gray-400 font-medium">August 2025</span>
+          <h2
+            className={`text-xl font-bold tracking-tight ${themeStyles.heading}`}
+          >
+            Spenditure
+          </h2>
+          <span className={`font-medium ${themeStyles.subtle}`}>
+            August 2025
+          </span>
         </motion.div>
 
-        <h1 className="text-4xl md:text-5xl mx-auto max-w-6xl font-extrabold mb-20 tracking-tighter leading-[1.1] text-gray-900 px-4 xl:px-0 min-h-[1.1em]">
+        <h1
+          className={`text-4xl md:text-5xl mx-auto max-w-6xl font-extrabold mb-20 tracking-tighter leading-[1.1] ${themeStyles.heading} px-4 xl:px-0 min-h-[1.1em] transition-colors duration-300`}
+        >
           <span ref={titlePart1Ref}></span>
           <span ref={titlePart2Ref}></span>
         </h1>
@@ -170,7 +199,7 @@ const SpenditurePage = () => {
                 visible: { opacity: 1, x: 0, transition: bounceTransition },
               }}
             >
-              <h3 className="text-[13px] uppercase tracking-[0.2em] font-black text-gray-900 mb-3">
+              <h3 className="text-[13px] uppercase tracking-[0.2em] font-black ${themeStyles.subtle} mb-3">
                 {item.title}
               </h3>
               <p className="text-gray-500 text-lg leading-relaxed">
@@ -189,10 +218,14 @@ const SpenditurePage = () => {
             transition={bounceTransition}
             className="max-w-6xl mx-auto px-4 xl:px-0"
           >
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2
+              className={`text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading} transition-colors duration-300`}
+            >
               Overview
             </h2>
-            <p className="text-gray-500 text-xl leading-relaxed max-w-4xl">
+            <p
+              className={`${themeStyles.subtle} text-xl leading-relaxed max-w-4xl transition-colors duration-300`}
+            >
               Spenditure is a personal finance mobile application designed to
               help users track and understand their daily expenses. While many
               tools make it easy to record transactions, they often stop short
@@ -207,11 +240,15 @@ const SpenditurePage = () => {
             transition={bounceTransition}
             className="max-w-6xl mx-auto px-4 xl:px-0"
           >
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2
+              className={`text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading} transition-colors duration-300`}
+            >
               Product Context
             </h2>
             <div className="space-y-8 max-w-6xl">
-              <p className="md:text-4xl text-2xl font-medium text-gray-800 leading-snug">
+              <p
+                className={`md:text-4xl text-2xl font-medium ${themeStyles.heading} leading-snug transition-colors duration-300`}
+              >
                 Personal finance products depend heavily on consistency. Users
                 are expected to log expenses regularly, yet many abandon these
                 tools not because the interaction is difficult, but because the
@@ -219,7 +256,7 @@ const SpenditurePage = () => {
               </p>
               <p className="text-gray-500 text-xl leading-relaxed">
                 When someone cannot easily answer a simple question like{" "}
-                <span className="italic text-gray-900 font-semibold">
+                <span className="italic ${themeStyles.subtle} font-semibold">
                   "Where is my money going?"
                 </span>
                 , the act of tracking begins to feel pointless.
@@ -234,7 +271,7 @@ const SpenditurePage = () => {
 
           <section className="max-w-6xl mx-auto px-4 xl:px-0">
             <h2
-              className="text-2xl md:text-4xl font-bold mb-6 text-gray-900 min-h-[1.5em]"
+              className="text-2xl md:text-4xl font-bold mb-6 ${themeStyles.heading} min-h-[1.5em]"
               ref={problemRef}
             ></h2>
 
@@ -250,7 +287,7 @@ const SpenditurePage = () => {
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ ...bounceTransition, delay: 2.3 }}
-                className="md:text-2xl text-lg font-bold text-gray-800 leading-tight"
+                className="md:text-2xl text-lg font-bold ${themeStyles.subtle} leading-tight"
               >
                 "Most expense tracking tools are optimized for collecting data,
                 not explaining it."
@@ -272,10 +309,10 @@ const SpenditurePage = () => {
           </section>
 
           <section className="bg-[#fcf3f6] py-20 px-4 xl:px-0">
-            <h2 className="max-w-6xl mx-auto text-2xl md:text-3xl md:text-right text-center font-bold mb-10 text-gray-900">
+            <h2 className="max-w-6xl mx-auto text-2xl md:text-3xl md:text-left text-center font-bold mb-10 text-gray-900">
               From Data Logging to Financial Understanding
             </h2>
-            <div className="max-w-6xl mx-auto text-center md:text-right text-gray-800 text-xl leading-relaxed mb-16 min-w-4xl">
+            <div className="max-w-6xl mx-auto text-center md:text-left text-gray-900 text-xl leading-relaxed mb-16 min-w-4xl">
               In many products, users are required to manually scan and
               interpret long lists of expenses, making it difficult to identify
               patterns or understand spending behavior.
@@ -293,7 +330,7 @@ const SpenditurePage = () => {
                   transition={bounceTransition}
                   src="/assets/images/f-s-4.png"
                   alt="Before: Transaction List"
-                  className="md:w-50 w-40 shadow-lg rounded-3xl mb-6 mx-auto"
+                  className="md:w-64 w-40 md:shadow-xl md:rounded-[2.3rem] mb-6 mx-auto"
                 />
                 <p className="text-gray-500 text-sm">
                   Users manually scan transaction lists to interpret their
@@ -311,7 +348,7 @@ const SpenditurePage = () => {
                   transition={{ ...bounceTransition, delay: 0.5 }}
                   src="/assets/images/detail.png"
                   alt="After: Insight Dashboard"
-                  className="md:w-50 w-40 shadow-lg rounded-3xl mb-6 mx-auto"
+                  className="md:w-64 w-40 md:shadow-xl md:rounded-[2.3rem] mb-6 mx-auto"
                 />
                 <p className="text-gray-500 text-sm">
                   Spenditure surfaces key insights instantly for faster
@@ -322,7 +359,7 @@ const SpenditurePage = () => {
           </section>
 
           <section className="max-w-6xl mx-auto">
-            <div className="text-gray-800 text-xl leading-relaxed">
+            <div className="${themeStyles.subtle} text-xl leading-relaxed">
               In many products, users are required to manually scan and
               interpret long lists of expenses, making it difficult to identify
               patterns or understand spending behavior.
@@ -330,10 +367,10 @@ const SpenditurePage = () => {
           </section>
           <UserUnderstanding />
           <section className="mx-auto max-w-6xl px-4 xl:px-0">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4">
               User Journey, Expense Tracking Experience
             </h2>
-            <p className="text-gray-400 text-lg mb-12">
+            <p className="text-gray-400 text-xl mb-12">
               The experience unfolds over time
             </p>
             <div className="w-full bg-[#fcfcfc] rounded-3xl p-4 md:p-12 mb-12 shadow-sm border border-gray-100">
@@ -350,10 +387,10 @@ const SpenditurePage = () => {
           </section>
 
           <section className="mx-auto max-w-6xl px-4 xl:px-0">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 ">
               Key Insights
             </h2>
-            <p className="text-gray-800 text-xl leading-relaxed">
+            <p className="${themeStyles.subtle} text-xl leading-relaxed">
               The problem is not that users fail to track their expenses, it's
               that they struggle to understand what their data reveals. When
               tracking does not translate into clear insight, the experience
@@ -362,20 +399,20 @@ const SpenditurePage = () => {
           </section>
 
           <section className="mx-auto max-w-6xl pb-12 px-4 xl:px-0">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}">
               Design Approach
             </h2>
-            <p className="text-gray-800 text-xl leading-relaxed mb-8">
+            <p className="${themeStyles.subtle} text-xl leading-relaxed mb-8">
               The design shifts the product from data collection to insight
               generation. Rather than adding complexity, the focus was on:
             </p>
-            <ul className="list-disc list-inside text-gray-800 text-xl space-y-4 mb-16 pl-4">
+            <ul className="list-disc list-inside ${themeStles.subtle} text-xl space-y-4 mb-16 pl-4">
               <li>Simplifying interactions</li>
               <li>Highlighting meaningful patterns</li>
               <li>Reducing the effort required to interpret data</li>
             </ul>
             <p
-              className="text-2xl md:text-3xl font-bold text-gray-900 leading-[1.2] min-h-[3em]"
+              className="text-2xl md:text-3xl font-bold text-gray-400 leading-[1.2] min-h-[3em]"
               ref={goalRef}
             ></p>
           </section>
@@ -439,13 +476,13 @@ const SpenditurePage = () => {
                 transition={bounceTransition}
                 className="md:w-1/2 space-y-6"
               >
-                <h3 className="text-4xl font-bold text-gray-900">
+                <h3 className="text-4xl font-bold ${themeStyles.heading}">
                   Quick Add Flow
                 </h3>
-                <p className="text-gray-800 text-lg pb-4 leading-relaxed">
+                <p className="${themeStyles.subtle} text-lg pb-4 leading-relaxed">
                   The interface surfaces key information at a glance:
                 </p>
-                <ul className="text-gray-800 text-lg leading-relaxed space-y-2">
+                <ul className="${themeStyles.subtle} text-lg leading-relaxed space-y-2">
                   <li className="flex items-center gap-2">
                     <DotIcon className="text-[#03947B]" /> Total spending
                   </li>
@@ -456,7 +493,7 @@ const SpenditurePage = () => {
                     <DotIcon className="text-[#03947B]" /> High-level summaries
                   </li>
                 </ul>
-                <p className="text-gray-800 text-2xl md:text-3xl font-bold leading-relaxed pt-6">
+                <p className="${themeStyles.subtle} text-2xl md:text-3xl font-bold leading-relaxed pt-6">
                   Users can immediately understand their financial position
                   without scanning through transactions.
                 </p>
@@ -477,7 +514,6 @@ const SpenditurePage = () => {
             </div>
           </section>
 
-          {/* 7) "Spending Insights/Analytics" section */}
           <section className="bg-[#fcf3f6] py-20 px-4 xl:px-0 w-full overflow-hidden">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
               <motion.div
@@ -529,35 +565,35 @@ const SpenditurePage = () => {
 
           <section className="space-y-32 pt-10 px-4 xl:px-0">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl md:text-3xl text-center font-bold mb-8 text-gray-900">
+              <h2 className="text-2xl md:text-3xl text-center md:text-left font-bold mb-8 ${themeStyles.heading}">
                 Structuring the Experience
               </h2>
-              <p className="text-gray-800 text-xl leading-relaxed mb-6">
+              <p className="${themeStyles.subtle} text-xl leading-relaxed mb-6">
                 The product is designed as a cohesive system anchored around
                 three layers:
               </p>
-              <ul className="list-disc list-inside text-gray-500 text-xl space-y-4 mb-8 pl-4">
+              <ul className="list-disc list-inside ${themeStyles.subtle} text-xl space-y-4 mb-8 pl-4">
                 <li>
-                  <span className="font-bold text-gray-800">Dashboards:</span>{" "}
+                  <span className="font-bold ${themeStyles.subtle}">Dashboards:</span>{" "}
                   Immediate financial clarity
                 </li>
                 <li>
-                  <span className="font-bold text-gray-800">Transactions:</span>{" "}
+                  <span className="font-bold ${themeStyles.subtle}">Transactions:</span>{" "}
                   Organized records
                 </li>
                 <li>
-                  <span className="font-bold text-gray-800">Insights:</span>{" "}
+                  <span className="font-bold ${themeStyles.subtle}">Insights:</span>{" "}
                   Pattern recognition over time
                 </li>
               </ul>
-              <p className="text-xl font-bold text-gray-900">
+              <p className="${themeStyles.subtle} text-xl font-bold ${themeStyles.heading}">
                 These layers work together to create a continuous loop of
                 financial awareness.
               </p>
             </div>
 
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl md:text-3xl text-center font-bold mb-6 text-gray-900">
+              <h2 className="text-2xl md:text-3xl text-center font-bold mb-6 ${themeStyles.heading}">
                 Real-Time Financial Feedback Loop
               </h2>
               <motion.div
@@ -590,7 +626,7 @@ const SpenditurePage = () => {
                   />
                 ))}
               </motion.div>
-              <p className="text-gray-800 text-xl font-medium leading-relaxed max-w-5xl">
+              <p className="${themeStyles.subtle} text-xl font-medium leading-relaxed max-w-5xl">
                 This real-time response connects user actions directly to
                 financial outcomes—making tracking interactive rather than
                 passive.
@@ -599,7 +635,7 @@ const SpenditurePage = () => {
           </section>
 
           <section className="pt-20 px-4 xl:px-0">
-            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-gray-900 text-center">
+            <h2 className="text-2xl md:text-3xl max-w-6xl mx-auto font-bold mb-12 ${themeStyles.heading}">
               Final Solution
             </h2>
             <motion.div
@@ -616,12 +652,12 @@ const SpenditurePage = () => {
                 "f-s-2.png",
                 "f-s-3.png",
                 "f-s-4.png",
-                "insights-1.png",                                                                                                                    
+                "insights-1.png",
                 "f-s-6.png",
                 "f-s-7.png",
                 "f-s-8.png",
                 "f-s-9.png",
-                "f-s-10.png", 
+                "f-s-10.png",
               ].map((imgSrc, index) => (
                 <motion.img
                   key={index}
@@ -638,7 +674,7 @@ const SpenditurePage = () => {
             <div className="space-y-16 max-w-4xl mx-auto">
               <section>
                 <h1
-                  className="font-bold text-4xl pb-16 text-gray-900 min-h-[3em]"
+                  className="font-bold text-4xl pb-16 text-[#03947B] min-h-[3em]"
                   ref={quoteRef}
                 ></h1>
                 <motion.div
@@ -647,10 +683,10 @@ const SpenditurePage = () => {
                   viewport={{ once: true, amount: 0.5 }}
                   transition={bounceTransition}
                 >
-                  <h2 className="text-xl font-bold mb-4 text-gray-900">
+                  <h2 className="text-xl font-bold mb-4 ${themeStyles.heading}">
                     Outcome
                   </h2>
-                  <p className="text-gray-500 text-lg leading-relaxed">
+                  <p className="${themeStyles.subtle} text-lg leading-relaxed">
                     By simplifying how expenditure is captured and interpreted,
                     the experience encourages consistent tracking, builds
                     clearer financial awareness, and empowers users to make more
@@ -664,10 +700,10 @@ const SpenditurePage = () => {
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ ...bounceTransition, delay: 0.2 }}
               >
-                <h2 className="text-xl font-bold mb-4 text-gray-900">
+                <h2 className="text-xl font-bold mb-4 ${themeStyles.heading}">
                   Reflections
                 </h2>
-                <p className="text-gray-800 text-lg leading-relaxed">
+                <p className="${themeStyles.subtle} text-lg leading-relaxed">
                   Working on Spenditure highlighted that collecting expenditure
                   data is only the starting point. What truly drives value is
                   transforming that data into clear, actionable insight. When
@@ -681,20 +717,27 @@ const SpenditurePage = () => {
           </section>
         </div>
 
-        <div className="mt-32 pt-12 border-t border-gray-100 md:flex block justify-between items-center max-w-6xl mx-auto px-4 xl:px-0">
-          <div className="text-right">
-            <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
+        <div
+          className={`mt-32 pt-12 border-t ${themeStyles.border} flex justify-between items-center max-w-6xl mx-auto px-4 xl:px-0 transition-colors duration-300`}
+        >
+          <div className="text-left">
+            <p
+              className={`text-sm font-bold uppercase tracking-widest ${themeStyles.muted} mb-2 transition-colors duration-300`}
+            >
               Previous Project
             </p>
             <Link
-              href="/nithub-forms"
-              className="group inline-block transition-transform duration-300 hover:scale-110 mb-2"
+              href="/portfolio/spenditure"
+              className={`group flex items-center text-sm ${themeStyles.secondaryBg} px-10 py-7 ${themeStyles.heading} rounded-lg transition-transform duration-300 hover:scale-110`}
             >
-              <img
-                src="/assets/images/nit-btn.png"
-                alt="Next Project"
-                className="w-64 transition-all duration-300 group-hover:brightness-110"
-              />
+              <button className="group transition-transform duration-300 hover:scale-110">
+                <img
+                  src="/assets/images/spenditure.png"
+                  alt="Previous Project"
+                  className="w-40 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
+                />
+              </button>
+              Spenditure
             </Link>
           </div>
           <div className="text-right">
@@ -702,14 +745,17 @@ const SpenditurePage = () => {
               Next Project
             </p>
             <Link
-              href="/nithub-forms"
-              className="group inline-block transition-transform duration-300 hover:scale-110"
+              href="/portfolio/working"
+              className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110"
             >
-              <img
-                src="/assets/images/glee-btn.png"
-                alt="Next Project"
-                className="w-64 transition-all duration-300 group-hover:brightness-110"
-              />
+              <button className="group transition-transform duration-300 hover:scale-110">
+                <img
+                  src="/assets/images/gleeee.png"
+                  alt="Next Project"
+                  className="w-10 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
+                />
+              </button>
+              Gleephoria
             </Link>
           </div>
         </div>

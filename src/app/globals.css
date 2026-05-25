@@ -6,6 +6,9 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    cursor: none;
+  }
   /* :root {
     --color-brown: 16deg 71% 27%;
     --color-white: 0deg 0% 100%;

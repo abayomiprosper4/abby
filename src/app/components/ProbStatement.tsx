@@ -21,11 +21,11 @@ const ProblemStatementCards = () => {
 
   return (
     <div className="bg-white p-8">
-      <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
+      <div className="flex flex-col md:flex-row gap-3 max-w-6xl mx-auto">
         {cards.map((card, index) => (
           <div 
             key={index} 
-            className="flex-1 bg-[#f1f9f1] border border-[#c3e6cb] rounded-[2rem] px-6 py-14 shadow-sm"
+            className="flex-1 bg-[#f1f9f1] border border-[#22910f1a] rounded-[2rem] px-6 py-14 shadow-sm"
           >
             <div className="mb-4">
               <h3 className="font-bold text-xl text-gray-800 tracking-tight uppercase">

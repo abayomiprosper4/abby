@@ -29,6 +29,9 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
   const challengeRef = useRef<HTMLHeadingElement>(null);
   const approachRef = useRef<HTMLParagraphElement>(null);
   const quoteRef = useRef<HTMLHeadingElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const lastX = useRef(0);
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
@@ -43,7 +46,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
 
   // --- Dynamic Theme Variables ---
   const isDark = theme === "dark";
-  const accent = "#FF6A2A";
+  const accent = "#27A810";
   const themeStyles = {
     surface: isDark
       ? "bg-[#0B0B0B] text-[#EAEAEA]"
@@ -52,7 +55,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
       ? "bg-[#111111] border-[rgba(255,255,255,0.08)] shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
       : "bg-[#FFFFFF] border-[rgba(0,0,0,0.06)] shadow-[0_8px_32px_rgba(0,0,0,0.08)]",
     heading: isDark ? "text-white" : "text-[#1A1A1A]",
-    subtle: isDark ? "text-[#A0A0A0]" : "text-[#555555]",
+    subtle: isDark ? "text-[#9b9b9b]" : "text-[#1f1f1f]",
     muted: isDark ? "text-[#666666]" : "text-[#888888]",
     border: isDark
       ? "border-[rgba(255,255,255,0.08)]"
@@ -66,7 +69,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
   // -------------------------------
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 3.8 });
+    const tl = gsap.timeline({ delay: 2.8 });
     tl.to(titlePart1Ref.current, {
       text: "Repositioning from a Training Platform to an ",
       duration: 1.5,
@@ -86,7 +89,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
         trigger: challengeRef.current,
         start: "top 80%",
       },
-      text: "The Design Challenge",
+      text: "The Problem",
       duration: 1.5,
       ease: "none",
     });
@@ -96,7 +99,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
         trigger: approachRef.current,
         start: "top 80%",
       },
-      text: "Rather than redesigning page by page, I approached the problem as a chance to restructure the ecosystem.",
+      text: "Rather than redesigning the existing website page by page, I approached the project as a chance to rethink the structure of the platform.",
       duration: 2.5,
       ease: "none",
     });
@@ -118,17 +121,87 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
     duration: 1.8,
   } as const;
 
+  const carouselImages = [
+    {
+      src: "/assets/images/slideimg-1.png",
+      alt: "Homepage Restructure - View 1",
+    },
+    {
+      src: "/assets/images/slideimg-2.png",
+      alt: "Homepage Restructure - View 2",
+    },
+    {
+      src: "/assets/images/slideimg-3.png",
+      alt: "Homepage Restructure - View 3",
+    },
+    {
+      src: "/assets/images/slideimg-4.png",
+      alt: "Homepage Restructure - View 4",
+    },
+    {
+      src: "/assets/images/slideimg-5.png",
+      alt: "Homepage Restructure - View 5",
+    },
+  ];
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    let animationId: number;
+    const speed = 0.75; // Baseline speed of the continuous belt
+
+    const autoScroll = () => {
+      if (container) {
+        // Dynamic width assessment handles lazy-loaded images gracefully
+        const singleSetWidth = container.scrollWidth / 3;
+
+        if (singleSetWidth > 0) {
+          container.scrollLeft += speed;
+
+          // Instant, seamless layout resetting over loop boundary tracks
+          if (container.scrollLeft >= singleSetWidth * 2) {
+            container.scrollLeft -= singleSetWidth;
+          } else if (container.scrollLeft <= 0) {
+            container.scrollLeft += singleSetWidth;
+          }
+        }
+      }
+      animationId = requestAnimationFrame(autoScroll);
+    };
+
+    animationId = requestAnimationFrame(autoScroll);
+    return () => cancelAnimationFrame(animationId);
+  }, []);
+
+  // Desktop Drag Handlers using relative displacement
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDragging.current = true;
+    lastX.current = e.pageX;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !scrollRef.current) return;
+
+    const deltaX = e.pageX - lastX.current;
+    // Subtracting delta moves the track naturally with the direction of the hand
+    scrollRef.current.scrollLeft -= deltaX * 1.2;
+    lastX.current = e.pageX;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDragging.current = false;
+  };
   return (
     <>
       <div
-        className={`${themeStyles.surface} pt-24 min-h-screen transition-colors duration-300`}
+        className={`${themeStyles.surface} mx-auto pt-24 min-h-screen transition-colors duration-300`}
       >
         <Header theme={theme} setTheme={setTheme} />
         <motion.section
           initial={{ backgroundColor: isDark ? "#0B0B0B" : "#F8F9FB" }}
           animate={{ backgroundColor: isDark ? "#0D1830" : "#0D1830" }}
           transition={{ duration: 1 }}
-          className="w-full h-[60vh] md:h-[80vh] flex items-end justify-center overflow-hidden relative px-4 pb-12"
+          className="w-full h-[60vh] md:h-[80vh] mx-auto flex items-end justify-center overflow-hidden relative px-4 pb-12"
         >
           <div className="z-10 flex justify-center">
             <img
@@ -152,8 +225,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
             </h2>
             <div className="flex items-center gap-4">
               <span className={`${themeStyles.subtle}font-medium`}>2025</span>
-              <Link href="https://nithub.unilag.edu.ng/"
-              onClick={() => {}}>
+              <Link href="https://nithub.unilag.edu.ng/" onClick={() => {}}>
                 <div className="bg-green-500 rounded p-3">Visit Website</div>
               </Link>
             </div>
@@ -178,23 +250,52 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
             }}
             className="space-y-12 mx-auto max-w-6xl mb-32 min-w-2xl px-4 xl:px-0"
           >
-            <motion.section
+            <motion.div
+              initial="hidden"
+              animate="visible"
               variants={{
-                hidden: { opacity: 0, x: -50 },
-                visible: { opacity: 1, x: 0, transition: bounceTransition },
+                hidden: {},
+                visible: {
+                  transition: { staggerChildren: 0.8, delayChildren: 3.8 },
+                },
               }}
+              className={`space-y-12 mx-auto max-w-6xl mb-32 min-w-2xl px-4 xl:px-0`}
             >
-              <p
-                className={`${themeStyles.subtle} text-xl leading-relaxed max-w-5xl`}
-              >
-                Transportation, Mobility | Product Designer |{" "}
-                <span className="font-bold">
-                  {" "}
-                  Redefined the booking experience by reducing uncertainty and
-                  improving the system feedback
-                </span>
-              </p>
-            </motion.section>
+              {[
+                {
+                  title: "Sector",
+                  desc: "Nonprofit • Education • Youth Programs",
+                },
+                {
+                  title: "Challenge",
+                  desc: "As the hub's programs expanded, form creation became fragmented and messy. Applications redirected users away from the website, breaking continuity and making forms difficult to manage internally. The organization needed a way to structure and manage forms within its digital ecosystem.",
+                },
+                { title: "Role", desc: "Lead Product Designer" },
+                {
+                  title: "Timeline",
+                  desc: "2-week design sprint from discovery to system definition",
+                },
+              ].map((item, index) => (
+                <motion.section
+                  key={index}
+                  variants={{
+                    hidden: { opacity: 0, x: -50 },
+                    visible: { opacity: 1, x: 0, transition: bounceTransition },
+                  }}
+                >
+                  <h3
+                    className={`text-[13px] uppercase tracking-[0.2em] font-black ${themeStyles.subtle} mb-3`}
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    className={`text-gray-500 text-lg leading-relaxed max-w-4xl ${themeStyles.subtle}`}
+                  >
+                    {item.desc}
+                  </p>
+                </motion.section>
+              ))}
+            </motion.div>
             <motion.div
               variants={{
                 hidden: { opacity: 0, x: -50 },
@@ -207,14 +308,14 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                 Overview
               </p>
               <p
-                className={`${themeStyles.subtle} text-lg leading-relaxed max-w-5xl`}
+                className={`${themeStyles.subtle} text-xl leading-relaxed max-w-5xl`}
               >
                 Nithub is an innovation hub supporting students, engineers,
                 startups, and founders through programs, incubation, and
                 community initiatives.
               </p>
               <p
-                className={`${themeStyles.subtle} text-lg mt-4 leading-relaxed max-w-5xl`}
+                className={`${themeStyles.subtle} text-xl mt-4 leading-relaxed max-w-5xl`}
               >
                 However, its digital presence told a different story.
               </p>
@@ -226,7 +327,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
               }}
             >
               <p
-                className={`${themeStyles.subtle} text-2xl leading-relaxed font-semibold max-w-5xl`}
+                className={`${themeStyles.subtle} border border-[#a8c5a8] rounded-[1rem] py-5 px-7 text-2xl leading-relaxed font-semibold max-w-7xl`}
               >
                 This project focused on redesigning the platform to accurately
                 reflect Nithub&apos;s evolution while also enabling internal
@@ -250,16 +351,16 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
               </h2>
               <div className="space-y-8 max-w-6xl">
                 <p
-                  className={`text-2xl md:text-3xl font-medium ${themeStyles.heading} leading-snug transition-colors duration-300`}
+                  className={`text-lg md:text-xl font-medium ${themeStyles.heading} leading-snug transition-colors duration-300`}
                 >
-                  <p className="mb-4">
+                  <p className="mb-4 text-xl md:text-2xl">
                     Nithub operates around three core pillars:
                   </p>{" "}
                   <p>&ndash; Training & Upskilling,</p>{" "}
                   <p>&ndash; Startup Incubation & Acceleration,</p>{" "}
                   <p>&ndash; Product Innovation.</p>
                 </p>
-                <p className={`${themeStyles.subtle} text-xl leading-relaxed`}>
+                <p className={`${themeStyles.heading} text-xl leading-relaxed`}>
                   However, at present, the existing website did not clearly
                   communicate how these pillars connected within the broader
                   ecosystem.
@@ -277,7 +378,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                   product innovation capabilities.
                 </p>
                 <p
-                  className={`${themeStyles.heading} text-3xl leading-relaxed`}
+                  className={`${themeStyles.heading} border border-[#a8c5a8] rounded-[1rem] py-5 px-7 text-2xl leading-relaxed font-semibold max-w-7xl`}
                 >
                   This created the need for a redesign that could better
                   represent the organization's full structure, clarify its
@@ -285,13 +386,15 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                   different parts of Nithub connect together.
                 </p>
               </div>
-              <motion.div className="flex mt-20 gap-40 text-center justify-center items-center">
+              <motion.div className="flex mt-20 gap-40 text-left justify-center items-center">
                 <div>
-                  How Nithub was percieved
+                  <p className="text-xl font-bold mb-4">
+                    How Nithub was perceived
+                  </p>
                   <img
                     src="/assets/images/percieved.png"
                     alt="Nithub Core Pillars Context"
-                    className="mt-10"
+                    className="mt-5"
                   />
                   <p className="text-xs flex gap-3 justify-center mt-3 items-center text-center">
                     <span className="flex gap-1 items-center">
@@ -309,11 +412,11 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                   </p>
                 </div>
                 <div>
-                  Reality of Nithub
+                  <p className="text-xl font-bold mb-4">Reality of Nithub</p>
                   <img
                     src="/assets/images/reality.png"
                     alt="Nithub Core Pillars Context"
-                    className="mt-10"
+                    className="mt-5"
                   />
                   <p className="text-xs flex gap-3 justify-center mt-3 items-center text-center">
                     <span className="flex gap-1 items-center">
@@ -332,10 +435,10 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                 </div>
               </motion.div>
             </motion.section>
-            
-            <section className="py-20 px-4 xl:px-0">
+
+            <section className="py-16 px-4 xl:px-0">
               <h2
-                className={`max-w-6xl mx-auto text-2xl md:text-3xl font-bold mb-12 ${themeStyles.heading}`}
+                className={`max-w-6xl mx-auto text-3xl md:text-4xl font-bold mb-12 ${themeStyles.heading}`}
               >
                 Understanding the Problem
               </h2>
@@ -347,53 +450,47 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                   >
                     To understand this gap, I conducted:
                   </h3>
-                  <ul>
-                    <li>One-on-one conversations with students and founders</li>
-                   <li>Feedback sessions with the Nithub community</li>
-                    <li>Working sessions with internal stakeholders across different pillars</li>
-                  </ul>
-                  <p
-                    className={`${themeStyles.subtle} mt-10 text-lg leading-relaxed`}
+                  <ul
+                    className={`space-y-3 list-disc text-lg ${themeStyles.subtle} pl-2`}
                   >
-                    Through one-on-one conversations and feedback sessions, it
-                    became clear that users saw Nithub strictly as a training
-                    hub without fully recognizing the incubation and product
-                    innovation arms.
-                  </p>
+                    <li>One-on-one conversations with students and founders</li>
+                    <li>Feedback sessions with the Nithub community</li>
+                    <li>
+                      Working sessions with internal stakeholders across
+                      different pillars
+                    </li>
+                  </ul>
                 </div>
-                <p  className={`${themeStyles.subtle} text-lg leading-relaxed`}>
+                <p className={`${themeStyles.subtle} text-lg leading-relaxed`}>
                   Across all touchpoints, the same issues surfaced:
                 </p>
-                <p className={`text-xl bg- font-bold ${themeStyles.heading} mt-6`}>
-                  Most users mainly associated Nithub with training, while the incubation and product innovation pillars were less visible across the platform experience.
+                <p
+                  className={`${themeStyles.subtle} border border-[#a8c5a8] rounded-[1rem] py-5 px-7 text-2xl leading-relaxed font-semibold max-w-7xl`}
+                >
+                  Most users mainly associated Nithub with training, while the
+                  incubation and product innovation pillars were less visible
+                  across the platform experience.
                 </p>
-                <p className={`${themeStyles.subtle} text-lg leading-relaxed`}>
-                  The challenge was not just structural, it was operational. The
-                  lack of a unified digital structure meant:
+                <p
+                  className={`${themeStyles.subtle} border border-[#a8c5a8] rounded-[1rem] py-5 px-7 text-2xl leading-relaxed font-semibold max-w-7xl`}
+                >
+                  The website showed different activities, programs, and
+                  initiatives, but it did not clearly communicate how the
+                  ecosystem connected together.
                 </p>
-                <ul className={`space-y-3 text-lg ${themeStyles.subtle} pl-2`}>
-                  <li className="flex items-center gap-3">
-                    <DotIcon className="text-[#27A810] shrink-0" /> Programs and
-                    initiatives appeared disconnected.
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <DotIcon className="text-[#27A810] shrink-0" />{" "}
-                    Opportunities for startups and founders were hidden.
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <DotIcon className="text-[#27A810] shrink-0" /> Content
-                    updates across teams were entirely manual.
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <DotIcon className="text-[#27A810] shrink-0" /> Publishing
-                    stories and managing events lacked a system.
-                  </li>
-                </ul>
+                <p
+                  className={`${themeStyles.subtle} border border-[#a8c5a8] rounded-[1rem] py-5 px-7 text-2xl leading-relaxed font-semibold max-w-7xl`}
+                >
+                  At the operational level, different teams also needed a better
+                  way to publish programs, share updates, manage events, tell
+                  stories through blogs, and showcase activities happening
+                  within the hub.
+                </p>
               </div>
 
               <div className="max-w-4xl mx-auto text-center mt-12">
                 <h1
-                  className={`font-bold text-3xl md:text-4xl ${themeStyles.heading} min-h-[3em] italic`}
+                  className={`font-bold text-2xl md:text-3xl ${themeStyles.heading} min-h-[3em] italic`}
                   ref={quoteRef}
                 ></h1>
               </div>
@@ -409,32 +506,50 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={bounceTransition}
-                className={`max-w-6xl mx-auto px-4 xl:px-0 ${themeStyles.subtle} text-xl leading-relaxed mb-7`}
+                className={`border border-[#a8c5a8] rounded-[1rem] py-5 px-7 text-2xl leading-relaxed font-semibold max-w-7xl ${themeStyles.heading} leading-relaxed mb-7`}
               >
-                The website showed different activities, programs, and
-                initiatives, but it did not clearly communicate how the
-                ecosystem connected together. At the operational level,
-                different teams also needed a better way to publish programs,
-                share updates, manage events, and tell stories through blogs.
+                The challenge was not just to redesign the website visually, but
+                to create a clearer ecosystem structure that better represented
+                Nithub&apos;s three pillars while also supporting how internal
+                teams managed and shared content across the platform.
               </motion.div>
               <motion.div
-                initial={{ borderLeftColor: "transparent" }}
-                whileInView={{ borderLeftColor: "#27A810" }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 1.5 }}
-                className={`border-l-8 pl-4 md:pl-8 py-4 mb-12 overflow-hidden rounded-r-2xl ${isDark ? "bg-[#1A1A1A]" : "bg-transparent"}`}
+                className={`pl-4 md:pl-8 py-4 mb-12 overflow-hidden`}
               >
                 <motion.h3
                   initial={{ x: "-100%", opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ ...bounceTransition, delay: 1 }}
-                  className={`text-lg md:text-2xl font-bold ${themeStyles.heading} leading-tight`}
+                  className={`text-lg md:text-2xl mb-4 font-bold ${themeStyles.heading} leading-tight`}
                 >
-                  "How might we design a platform to accurately reflect Nithub's
-                  evolution while enabling internal teams to manage and scale
-                  operations effectively?"
+                  Goal
                 </motion.h3>
+                <div>
+                  <p className="mb-4 text-lg font-medium">
+                    Redesign the platform to:
+                  </p>
+                  <ul
+                    className={`space-y-3 list-disc text-lg ${themeStyles.subtle} pl-2`}
+                  >
+                    <li>Better represent Nithub&apos;s three core pillars</li>
+                    <li>
+                      Create a clearer and more connected ecosystem experience
+                    </li>
+                    <li>
+                      Make programs, startups, events, and opportunities easier
+                      to discover
+                    </li>
+                    <li>
+                      Improve how content and activities are structured across
+                      the platform
+                    </li>
+                    <li>
+                      Support internal teams in managing and publishing platform
+                      content more efficiently
+                    </li>
+                  </ul>
+                </div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -442,8 +557,7 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={bounceTransition}
                 className="max-w-6xl mx-auto px-4 xl:px-0 mt-16"
-              >
-              </motion.div>
+              ></motion.div>
             </section>
 
             <section className="mx-auto max-w-6xl pb-12 px-4 xl:px-0">
@@ -453,23 +567,134 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                 Approach
               </h2>
               <p
-                className={`text-2xl md:text-3xl font-medium ${themeStyles.heading} leading-[1.4] min-h-[3em] mb-10`}
+                className={`text-lg md:text-xl font-medium ${themeStyles.heading} leading-[1.4] min-h-[3em]`}
                 ref={approachRef}
               ></p>
-
+              <p
+                className={`text-lg md:text-xl font-normal ${themeStyles.heading} leading-[1.4] min-h-[3em] mb-10`}
+              >
+                The previous website heavily emphasized training and coworking
+                activities, while other parts of the ecosystem were less clearly
+                represented across the platform experience.
+              </p>
               <div>
+                <p className="mb-4 text-lg font-medium">
+                  So instead of directly copying the old structure, I focused
+                  on:
+                </p>
+                <ul
+                  className={`space-y-3 list-disc text-lg ${themeStyles.subtle} pl-2 mb-7`}
+                >
+                  <li>Creating a clearer ecosystem structure</li>
+                  <li>
+                    Understanding how different users would move through the
+                    platform
+                  </li>
+                  <li>
+                    Making it easier for people to discover programs, startups,
+                    events, and opportunities
+                  </li>
+                  <li>
+                    Improving how content and activities are structured across
+                    the platform
+                  </li>
+                  <li>
+                    Aligning the platform experience with how Nithub actually
+                    operates today
+                  </li>
+                </ul>
+              </div>
+              <p
+                className={`text-lg md:text-xl font-normal ${themeStyles.heading} leading-[1.4] min-h-[3em] mb-16`}
+              >
+                The previous website heavily emphasized training and coworking
+                activities, while other parts of the ecosystem were less clearly
+                represented across the platform experience.
+              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={bounceTransition}
+              >
+                <img
+                  src="/assets/images/visual-refresh.png"
+                  alt="Original Fragmented Structure"
+                  className="w-[60%] mx-auto"
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={bounceTransition}
+                className="mt-32"
+              >
+                <p className={`text-2xl font-bold mb-4 ${themeStyles.heading}`}>
+                  Restructuring the Platform
+                </p>
+                <p className="text-lg max-w-2xl mb-16">
+                  The original structure was fragmented and program-heavy. The
+                  redesign introduced a clearer, ecosystem-based structure.
+                </p>
+                <img
+                  src="/assets/images/restructure.png"
+                  alt="Original Fragmented Structure"
+                  className="w-[60%] mx-auto"
+                />
+              </motion.div>
+            </section>
+            <motion.section>
+              <h2
+                className={`max-w-6xl mx-auto text-3xl md:text-4xl font-bold mb-12 ${themeStyles.heading}`}
+              >
+                Designing around User Goals
+              </h2>
+
+              <div className="max-w-6xl mx-auto grid gap-6 items-start mb-16">
+                <div>
+                  <p
+                    className={`text-lg font-semibold ${themeStyles.heading} mb-4`}
+                  >
+                    The redesign shifted the experience from navigating through
+                    disconnected program categories to clearer ecosystem entry
+                    points.
+                  </p>
+                </div>
+                <p
+                  className={`text-lg font-semibold ${themeStyles.heading} mb-4`}
+                >
+                  Users could more easily discover opportunities across:
+                </p>
+                <ul
+                  className={`space-y-3 list-disc text-lg ${themeStyles.subtle} pl-2 mb-7`}
+                >
+                  <li>Training & Upskilling</li>
+                  <li>Startup Incubation & Acceleration</li>
+                  <li>Product Innovation</li>
+                </ul>
+                <p className={`text-lg font-semibold ${themeStyles.heading}`}>
+                  This created a more intuitive experience for different
+                  audiences entering the platform with different goals.
+                </p>
+              </div>
+              <div className="max-w-6xl mx-auto">
+                <h2
+                  className={`max-w-6xl mx-auto text-3xl md:text-4xl font-bold mb-4 ${themeStyles.heading}`}
+                >
+                  Reframing the Homepage
+                </h2>
                 <p
                   className={`${themeStyles.subtle} text-xl leading-relaxed mb-8`}
                 >
-                  Key areas of focus driving the redesign:
+                  The homepage became a narrative layer — not just an entry
+                  point. This:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
                   {[
-                    "Creating a coherent ecosystem structure.",
-                    "Understanding how different users navigate the platform.",
-                    "Making it easier to discover programs, startups, and opportunities.",
-                    "Aligning the platform experience with daily operations.",
-                    "Supporting internal teams with a structured CMS.",
+                    "Establishes Nithub's Identity",
+                    "Communicates value immediately",
+                    "Guides users into the ecosystem",
                   ].map((question, index) => (
                     <motion.div
                       key={index}
@@ -478,69 +703,22 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
                       // 4. Cards use the cardBg variable
-                      className={`${themeStyles.card} border rounded-md p-6 flex items-center shadow-sm transition-colors duration-300`}
+                      className={`bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm transition-colors duration-300`}
                     >
                       <p
-                        className={`${themeStyles.heading} text-sm md:text-lg leading-snug font-medium`}
+                        className={`text-gray-800 text-sm md:text-lg leading-snug font-medium`}
                       >
                         {question}
                       </p>
                     </motion.div>
                   ))}
                 </div>
-
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  className={`${themeStyles.heading} text-xl md:text-2xl font-semibold leading-relaxed max-w-3xl`}
-                >
-                  This helped shape the platform into something more flexible,
-                  focusing on{" "}
-                  <span className="text-[#27A810]">goals and discovery</span>{" "}
-                  rather than static pages.
-                </motion.p>
               </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={bounceTransition}
-                className="mt-40"
-              >
-                <p className={`text-2xl font-bold mb-4 ${themeStyles.heading}`}>
-                  Old Platform Structure
-                </p>
-                <img
-                  src="/assets/images/nithub-old-flow.png"
-                  alt="Original Fragmented Structure"
-                  className="w-full rounded-3xl"
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={bounceTransition}
-                className="mt-20"
-              >
-                <p className={`text-2xl font-bold mb-4 ${themeStyles.heading}`}>
-                  New Ecosystem Structure
-                </p>
-                <img
-                  src="/assets/images/nithub-new-flow.png"
-                  alt="New Connected Ecosystem"
-                  className="w-full rounded-3xl"
-                />
-              </motion.div>
-            </section>
-
-            {/* 5. Highlight Sections use the sectionBg variable */}
+            </motion.section>
             <section
-              className={`${themeStyles.secondaryBg} py-20 px-4 xl:px-0 w-full overflow-hidden transition-colors duration-300`}
+              className={`py-20 px-4 xl:px-0 w-full bg-[#f7f3f3] overflow-hidden transition-colors duration-300`}
             >
-              <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+              <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-12">
                 <motion.div
                   initial={{ opacity: 0, x: -100 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -548,87 +726,276 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
                   transition={bounceTransition}
                   className="md:w-1/2 space-y-6"
                 >
-                  <h3 className={`text-4xl font-bold ${themeStyles.heading}`}>
-                    Reframing the Homepage
-                  </h3>
-                  <p
-                    className={`${themeStyles.heading} text-lg pb-4 leading-relaxed font-semibold`}
-                  >
-                    A Narrative Layer, Not Just an Entry Point
-                  </p>
-                  <p
-                    className={`${themeStyles.subtle} text-lg leading-relaxed`}
-                  >
-                    The homepage became a narrative tool guiding visitors
-                    through the full Nithub story. It ensures that the three
-                    core pillars—Training, Incubation, and Innovation—are
-                    immediately recognizable and accessible.
-                  </p>
+                  <img
+                    src="/assets/images/nit-hero.png"
+                    alt="Homepage Restructure"
+                    className="w-full max-w-xl object-contain"
+                  />
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, x: 100 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.5 }}
                   transition={bounceTransition}
-                  className="md:w-1/2 flex justify-end"
+                  className="md:w-1/2 flex flex-col font-light px-6 py-10 rounded-2xl bg-[#0D1830]"
                 >
-                  <img
-                    src="/assets/images/nithub-homepage-annot.png"
-                    alt="Homepage Restructure"
-                    className="w-full max-w-xl object-contain shadow-2xl rounded-md"
-                  />
+                  <p className={"text-xl pb-3 leading-relaxed text-[#FFFF]"}>
+                    Key Improvements
+                  </p>
+                  <p className="text-lg text-[#FFFF]">Clearer Positioning</p>
+                  <p className="text-[#FFFF]">
+                    Repositioned Nithub as the central hub for tech innovation
+                    and collaboration.
+                  </p>
+                  <p className="text-lg text-[#FFFF]">Stronger CTAs</p>
+                  <p className="text-[#FFFF]">
+                    Introduced clear and prominent actions for pitching ideas
+                    and partnerships.
+                  </p>
+                  <p className="text-lg text-[#FFFF]">
+                    Improved Visual Hierarchy
+                  </p>
+                  <p className="text-[#FFFF]">
+                    Refined the layout to highlight key messages and drive focus
+                    to what matters.
+                  </p>
+                  <p className="text-lg text-[#FFFF]">
+                    Ecosystem Representation
+                  </p>
+                  <p className="text-[#FFFF]">
+                    Used real imagery and impactful messaging to reflect
+                    collaboration, innovation, and community.
+                  </p>
+                  <p className="text-lg text-[#FFFF]">Simplified Navigation</p>
+                  <p className="text-[#FFFF]">
+                    Streamlined the navigation to improve discoverability across
+                    programs and content.
+                  </p>
                 </motion.div>
               </div>
             </section>
 
+            <section className="w-full relative py-8 overflow-hidden">
+              <style>{`
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  `}</style>
+
+              <div
+                ref={scrollRef}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUpOrLeave}
+                onMouseLeave={handleMouseUpOrLeave}
+                className="flex gap-6 overflow-x-auto no-scrollbar select-none cursor-grab active:cursor-grabbing"
+              >
+                {[...carouselImages, ...carouselImages, ...carouselImages].map(
+                  (image, index) => (
+                    <img
+                      key={index}
+                      src={image.src}
+                      alt={image.alt}
+                      draggable="false"
+                      className="w-full max-w-xl object-contain flex-shrink-0 pointer-events-none"
+                    />
+                  ),
+                )}
+              </div>
+            </section>
+            <div className="max-w-6xl mx-auto">
+              <h2
+                className={`max-w-6xl mx-auto text-3xl md:text-4xl font-bold mb-4 ${themeStyles.heading}`}
+              >
+                Designing for Scale (System Thinking)
+              </h2>
+              <p
+                className={`${themeStyles.subtle} text-xl leading-relaxed mb-8`}
+              >
+                As the experience improved, a deeper issue became clear: The
+                platform could not scale without fixing internal operations.
+                Behind the scenes:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                {[
+                  "Content updates were manual",
+                  "Teams had limited visibility into ecosystem activities",
+                  "Publishing and updates were handled manually",
+                ].map((question, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm transition-colors duration-300`}
+                  >
+                    <p
+                      className={`text-gray-800 text-sm md:text-lg leading-snug font-medium`}
+                    >
+                      {question}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <div className="max-w-6xl mx-auto">
+              <h2
+                className={`max-w-6xl mx-auto text-3xl md:text-4xl font-bold mb-4 ${themeStyles.heading}`}
+              >
+                What Changed
+              </h2>
+              <p
+                className={`${themeStyles.subtle} text-xl leading-relaxed mb-8`}
+              >
+                To support the growing ecosystem, I designed a centralized admin
+                dashboard.
+              </p>
+              <p className="text-3xl md:text-4xl mb-10">
+                The goal was to make content management simpler, faster, and
+                more collaborative across teams.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                {[
+                  "Content updates were manual",
+                  "Teams had limited visibility into ecosystem activities",
+                  "Publishing and updates were handled manually",
+                ].map((question, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    // 4. Cards use the cardBg variable
+                    className={`bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm transition-colors duration-300`}
+                  >
+                    <p
+                      className={`text-gray-800 text-sm md:text-lg leading-snug font-medium`}
+                    >
+                      {question}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-6xl mx-auto"
+            >
+              <img
+                src="/assets/images/what-changed.png"
+                alt="newdashboard"
+                className="w-[60%] mx-auto"
+              />
+            </motion.div>
             <section className="pt-20 px-4 xl:px-0">
               <div className="space-y-16 max-w-4xl mx-auto">
                 <section>
                   <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    viewport={{ once: true, amount: 0.2 }}
                     transition={bounceTransition}
                   >
                     <h1
-                      className={`font-bold text-3xl md:text-4xl pb-16 ${themeStyles.heading} leading-tight`}
+                      className={`font-bold text-3xl md:text-4xl pb-5 ${themeStyles.heading} leading-tight`}
                     >
-                      The final solution is a connected platform that clearly
-                      communicates Nithub's identity while providing operational
-                      stability.
+                      Final Outcome
                     </h1>
+                    <p className="text-xl ${themeStyles.subtle} mb-5">
+                      The final solution is a connected platform
+                    </p>
+                    <ul className="list-disc">
+                      <li className="text-lg">
+                        A redesigned user experience that clearly communicates
+                        Nithub&apos;s identity
+                      </li>
+                      <li className="text-lg">
+                        An internal system that enables teams to manage and
+                        scale it effectively
+                      </li>
+                    </ul>
 
-                    <h2
-                      className={`text-2xl font-bold mb-4 ${themeStyles.heading}`}
-                    >
-                      Impact & Recognition
-                    </h2>
-                    <p
-                      className={`${themeStyles.subtle} text-lg leading-relaxed mb-6`}
-                    >
-                      <strong className={themeStyles.heading}>
-                        User Experience:
-                      </strong>{" "}
-                      We saw increased engagement across all ecosystem pillars
-                      and significantly improved discovery of opportunities for
-                      startups and programs.
-                    </p>
-                    <p
-                      className={`${themeStyles.subtle} text-lg leading-relaxed mb-6`}
-                    >
-                      <strong className={themeStyles.heading}>
-                        Internal Operations:
-                      </strong>{" "}
-                      Content management became simpler, faster, and more
-                      collaborative. Teams can now update the platform without
-                      bottlenecks.
-                    </p>
-                    <div
-                      className={`p-6 rounded-xl border border-[#27A810]/30 mt-8 inline-block ${isDark ? "bg-[#122A12]" : "bg-[#EAF5EA]"}`}
-                    >
-                      <p className="text-[#27A810] font-bold tracking-wide">
-                        🏆 Awarded NAIL 2021 Best Innovation Portal
+                    <div className="max-w-6xl mx-auto mt-16">
+                      <h2
+                        className={`font-bold text-3xl md:text-4xl ${themeStyles.heading} leading-tight`}
+                      >
+                        Impact
+                      </h2>
+                      <p
+                        className={`${themeStyles.subtle} text-xl leading-relaxed mb-8`}
+                      >
+                        User Experience
                       </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                        {[
+                          "Increased exploration across programs, startups, and community sections",
+                          "Reduced early drop-off from the homepage",
+                          "Improved discovery of opportunities",
+                        ].map((question, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1 }}
+                            className={`bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm transition-colors duration-300`}
+                          >
+                            <p
+                              className={`text-gray-800 text-sm md:text-lg leading-snug font-medium`}
+                            >
+                              {question}
+                            </p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="max-w-6xl mx-auto">
+                      <h2
+                        className={`text-xl font-bold mb-4 ${themeStyles.heading}`}
+                      >
+                        Internally:
+                      </h2>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                        {[
+                          "Teams can update content more efficiently",
+                          "Consistency improved across the platform",
+                          "Operations became more scalable",
+                        ].map((question, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1 }}
+                            className={`bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm transition-colors duration-300`}
+                          >
+                            <p
+                              className={`text-gray-800 text-sm md:text-lg leading-snug font-medium`}
+                            >
+                              {question}
+                            </p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="max-w-6xl mx-auto">
+                      {" "}
+                      <h2
+                        className={`text-2xl font-bold mb-4 ${themeStyles.heading}`}
+                      >
+                        Impact
+                      </h2>
+                      <p>The redesigned platform was awarded:</p>
+                      <div
+                        className={`p-6 rounded-xl border border-[#27A810]/30 mt-8 inline-block ${isDark ? "bg-[#122A12]" : "bg-[#EAF5EA]"}`}
+                      >
+                        <p className="text-[#27A810] font-bold tracking-wide">
+                          🏆 NAIL 2021 Best Innovation Website/Portal
+                        </p>
+                      </div>
                     </div>
                   </motion.div>
                 </section>
@@ -657,33 +1024,53 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
               </div>
             </section>
           </div>
+          <div className="max-w-5xl mx-auto mt-16">
+              <h2
+              className={`font-bold text-3xl md:text-4xl pb-5 ${themeStyles.heading} leading-tight`}
+            >
+             What&apos;s Next
+            </h2>
+            <p className="text-lg">
+              This work expanded into deeper internal tooling evolving the dashboard into a more robust system for managing Nithub&apos;s operations at scale.
+            </p>
+          </div>
 
-          <div
-            className={`mt-32 pt-12 border-t flex justify-between items-center max-w-6xl mx-auto px-4 xl:px-0 ${isDark ? "border-white/10" : "border-gray-100"}`}
-          >
+          <div className="mt-32 pt-12 border-t border-gray-100 flex justify-between items-center max-w-6xl mx-auto px-4 xl:px-0">
             <div className="text-left">
               <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
                 Previous Project
               </p>
-              <button className="group transition-transform duration-300 hover:scale-110">
-                <img
-                  src="/assets/images/gigsecure-btn.png"
-                  alt="Previous Project"
-                  className="w-40 md:w-60 transition-all duration-300 group-hover:brightness-110 rounded-lg"
-                />
-              </button>
+              <Link
+                href="/portfolio/nithub"
+                className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110"
+              >
+                <button className="group transition-transform duration-300 hover:scale-110">
+                  <img
+                    src="/assets/images/nithub.png"
+                    alt="Previous Project"
+                    className="w-40 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
+                  />
+                </button>
+                Nithub Website
+              </Link>
             </div>
             <div className="text-right">
               <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
                 Next Project
               </p>
-              <button className="group transition-transform duration-300 hover:scale-110">
-                <img
-                  src="/assets/images/spenditure-btn.png"
-                  alt="Next Project"
-                  className="w-40 md:w-60 transition-all duration-300 group-hover:brightness-110 rounded-lg"
-                />
-              </button>
+              <Link
+                href="/portfolio/spenditure"
+                className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110"
+              >
+                <button className="group transition-transform duration-300 hover:scale-110">
+                  <img
+                    src="/assets/images/spenditure.png"
+                    alt="Next Project"
+                    className="w-10 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
+                  />
+                </button>
+                Spenditure
+              </Link>
             </div>
           </div>
           <BackToTopBtn />
