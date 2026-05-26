@@ -20,14 +20,37 @@ const Facilitation = () => {
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
+      // --- Dynamic Theme Variables ---
+  const isDark = theme === "dark";
+  const accent = "#27A810";
+  const themeStyles = {
+    surface: isDark
+      ? "bg-[#0B0B0B] text-[#EAEAEA]"
+      : "bg-[#F8F9FB] text-[#1A1A1A]",
+    card: isDark
+      ? "bg-[#111111] border-[rgba(255,255,255,0.08)] shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+      : "bg-[#FFFFFF] border-[rgba(0,0,0,0.06)] shadow-[0_8px_32px_rgba(0,0,0,0.08)]",
+    heading: isDark ? "text-white" : "text-[#1A1A1A]",
+    subtle: isDark ? "text-[#9b9b9b]" : "text-[#1f1f1f]",
+    muted: isDark ? "text-[#666666]" : "text-[#888888]",
+    border: isDark
+      ? "border-[rgba(255,255,255,0.08)]"
+      : "border-[rgba(0,0,0,0.06)]",
+    borderHover: isDark
+      ? "hover:border-[rgba(255,255,255,0.15)]"
+      : "hover:border-[rgba(0,0,0,0.12)]",
+    secondaryBg: isDark ? "bg-[#111111]" : "bg-[#FFFFFF]",
+    tertiaryBg: isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]",
+  };
+  // -------------------------------
   return (
-    <div className="pt-8">
+    <div className={`${themeStyles.surface} min-h-screen flex flex-col pt-8`}>
       <div className="w-full mx-auto">
         <Header theme={theme} setTheme={setTheme} />
         <main>
           <div>
             <Introduction theme={theme} />
-            <p className="w-[90%] mx-auto text-lg leading-8 text-gray-700 mb-16">
+            <p className={`w-[90%] mx-auto text-lg md:text-2xl leading-8 ${themeStyles.subtle} mb-24`}>
               I am a self taught design thinking facilitator with over a year of
               professional experience.
             </p>

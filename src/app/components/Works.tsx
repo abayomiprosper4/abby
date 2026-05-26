@@ -24,6 +24,7 @@ const Works = ({ theme }: WorksProps) => {
   const accent = "#FF6A2A";
   const themeStyles = {
     subtle: isDark ? "text-[#A0A0A0]" : "text-[#555555]",
+    cardBg: isDark ? "bg-gradient-to-b from-[#231813] via-[#000000] to-[#000000]" : "bg-[#F5E6E1]",
   };
 
   const projects: Project[] = [
@@ -41,10 +42,25 @@ const Works = ({ theme }: WorksProps) => {
       description: (
         <>
           Redesigned NITHUB's digital ecosystem contributing to Linkedin growth
-          from <span className="text-[#d4cfcf] font-bold">8k+</span> to{" "}
-          <span className="text-[#d4cfcf] font-bold">20k+</span> followers,
-          while improving engagement by{" "}
-          <span className="text-[#d4cfcf] font-bold">30%</span>.
+          from{" "}
+          <span
+            className={`font-bold ${isDark ? "text-[#d4cfcf]" : "text-[#8B4513]"}`}
+          >
+            8k+
+          </span>{" "}
+          to{" "}
+          <span
+            className={`font-bold ${isDark ? "text-[#d4cfcf]" : "text-[#8B4513]"}`}
+          >
+            20k+
+          </span>{" "}
+          followers, while improving engagement by{" "}
+          <span
+            className={`font-bold ${isDark ? "text-[#d4cfcf]" : "text-[#8B4513]"}`}
+          >
+            30%
+          </span>
+          .
         </>
       ),
       image: "/assets/images/nithubwebsite.png",
@@ -56,7 +72,12 @@ const Works = ({ theme }: WorksProps) => {
       description: (
         <>
           Built a centralized applicatinon system that reduced submission
-          dropoff rates by <span className="text-[#d4cfcf] font-bold">50%</span>{" "}
+          dropoff rates by{" "}
+          <span
+            className={`font-bold ${isDark ? "text-[#d4cfcf]" : "text-[#8B4513]"}`}
+          >
+            50%
+          </span>{" "}
           and improved application management across teams.
         </>
       ),
@@ -115,6 +136,9 @@ const Works = ({ theme }: WorksProps) => {
               <ProjectCard
                 project={project}
                 onClick={() => router.push(project.href)}
+                theme={theme}
+                isDark={isDark}
+                cardBg={themeStyles.cardBg}
               />
             </div>
           ))}
@@ -127,17 +151,27 @@ const Works = ({ theme }: WorksProps) => {
 const ProjectCard = ({
   project,
   onClick,
+  theme,
+  isDark,
+  cardBg,
 }: {
   project: Project;
   onClick: () => void;
+  theme: Theme;
+  isDark: boolean;
+  cardBg: string;
 }) => {
   return (
     <div
       onClick={onClick}
       data-cursor-hover
-      className="bg-[#160e0d] rounded-3xl p-8 flex flex-col overflow-hidden border border-white/5 hover:border-white/10 transition-all group cursor-none h-full"
+      className={`${cardBg} rounded-3xl p-8 flex flex-col h-full overflow-hidden border transition-all group cursor-none ${
+        isDark
+          ? "border-white/5 hover:border-white/10"
+          : "border-black/5 hover:border-black/10"
+      }`}
     >
-      <div className="mt-auto w-full relative h-48 sm:h-64 mb-6 transition-all duration-500">
+      <div className="w-full relative h-48 sm:h-64 mb-6 transition-all duration-500 flex-shrink-0">
         <img
           src={project.image}
           alt={project.title}
@@ -145,16 +179,22 @@ const ProjectCard = ({
         />
       </div>
 
-      <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
+      <h3
+        className={`text-2xl font-bold mb-3 ${isDark ? "text-white" : "text-[#1A1A1A]"}`}
+      >
+        {project.title}
+      </h3>
 
-      <p className="text-gray-400 text-sm leading-relaxed mb-6">
+      <p
+        className={`text-sm leading-relaxed mb-6 flex-grow ${isDark ? "text-gray-400" : "text-gray-600"}`}
+      >
         {project.description}
       </p>
-      <div className="flex flex-wrap gap-2 mt-auto">
+      <div className="flex flex-wrap gap-2 mt-auto flex-shrink-0">
         {project.types.map((type, i) => (
           <span
             key={i}
-            className="bg-[#ffff00]/10 text-white text-[10px] px-3 py-1 rounded-full tracking-widest font-normal"
+            className={`${isDark ? "bg-[#ffff00]/10 text-white" : "bg-[#FFD700]/15 text-[#1A1A1A]"} text-[10px] px-3 py-1 rounded-full tracking-widest font-normal`}
           >
             {type}
           </span>

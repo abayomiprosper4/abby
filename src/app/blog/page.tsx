@@ -24,16 +24,39 @@ const BlogPage = () => {
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
+    // --- Dynamic Theme Variables ---
+  const isDark = theme === "dark";
+  const accent = "#27A810";
+  const themeStyles = {
+    surface: isDark
+      ? "bg-[#0B0B0B] text-[#EAEAEA]"
+      : "bg-[#F8F9FB] text-[#1A1A1A]",
+    card: isDark
+      ? "bg-[#111111] border-[rgba(255,255,255,0.08)] shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+      : "bg-[#FFFFFF] border-[rgba(0,0,0,0.06)] shadow-[0_8px_32px_rgba(0,0,0,0.08)]",
+    heading: isDark ? "text-white" : "text-[#1A1A1A]",
+    subtle: isDark ? "text-[#9b9b9b]" : "text-[#1f1f1f]",
+    muted: isDark ? "text-[#666666]" : "text-[#888888]",
+    border: isDark
+      ? "border-[rgba(255,255,255,0.08)]"
+      : "border-[rgba(0,0,0,0.06)]",
+    borderHover: isDark
+      ? "hover:border-[rgba(255,255,255,0.15)]"
+      : "hover:border-[rgba(0,0,0,0.12)]",
+    secondaryBg: isDark ? "bg-[#111111]" : "bg-[#FFFFFF]",
+    tertiaryBg: isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]",
+  };
+  // -------------------------------
   return (
     <>
-      <div className="pt-8">
+      <div className={`${themeStyles.surface} min-h-screen flex flex-col`}>
         <div className="w-[90%] mx-auto">
           <Header theme={theme} setTheme={setTheme} />
         </div>
         <main>
-          <div className="w-[90%] mx-auto mt-8 mb-24">
+          <div className="w-full mx-auto mt-4 mb-24">
             <Introduction theme={theme} />
-            <p className="text-lg md:text-2xl text-white/[0.69]">
+            <p className={`text-lg md:text-2xl ${themeStyles.subtle} max-w-[90%] mx-auto`}>
               I am a freelance writer dedicated to writing blogs and articles on
               UI/UX and any other thing I find interesting things. I see writing
               as a way of giving back to the community. I constantly blog on
@@ -49,10 +72,10 @@ const BlogPage = () => {
                   className="w-full object-cover xs:w-[90%] xs:mx-auto xs:rounded-[0.875rem] md:w-full"
                 />
                 <figcaption className="p-6">
-                  <h3 className="text-white/[0.69] font-medium text-2xl mb-3">
+                  <h3 className={`font-medium ${themeStyles.heading} text-2xl mb-3`}>
                     Wireframing is not a big deal (The non-designer approach)
                   </h3>
-                  <p className="text-white/[0.79] text-base">
+                  <p className={`text-base ${themeStyles.subtle}`}>
                     Image attribution by Photo by{" "}
                     <a
                       href="https://unsplash.com/@sigmund?utm_source=Hashnode&utm_medium=referral"
@@ -83,7 +106,7 @@ const BlogPage = () => {
                   className="w-full object-cover xs:w-[90%] xs:mx-auto xs:rounded-[0.875rem] md:w-full"
                 />
                 <figcaption className="p-6">
-                  <h3 className="text-white/[0.69] font-medium text-2xl mb-3">
+                  <h3 className={`font-medium ${themeStyles.heading} text-2xl mb-3`}>
                     The mystery of the box-shadow.
                   </h3>
                 </figcaption>
@@ -97,10 +120,10 @@ const BlogPage = () => {
                   className="w-full object-cover xs:w-[90%] xs:mx-auto xs:rounded-[0.875rem] md:w-full"
                 />
                 <figcaption className="p-6">
-                  <h3 className="text-white/[0.69] font-medium text-2xl mb-3">
+                  <h3 className={`font-medium ${themeStyles.heading} text-2xl mb-3`}>
                     Terms in UI/UX replication
                   </h3>
-                  <p>
+                  <p className={themeStyles.subtle}>
                     Image attribution by Photo by{" "}
                     <a
                       href="https://unsplash.com/@fakurian?utm_source=Hashnode&utm_medium=referral"

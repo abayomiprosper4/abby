@@ -323,7 +323,6 @@ export default function Page() {
         {/* Contact CTA */}
         <CTA theme={theme} />
         <Socials />
-        <BackToTopBtn />
       </main>
     </div>
   );

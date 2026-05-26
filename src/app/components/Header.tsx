@@ -119,23 +119,27 @@ export default function Header({ theme, setTheme }: HeaderProps) {
           </a>
 
           <ul className="hidden items-center gap-8 md:flex">
-            {["work", "about", "Blog", "Facilitation", "Playground"].map(
-              (item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item}`}
-                    className={`${subtle} relative text-sm font-medium transition-colors hover:text-[var(--accent)]`}
+            {[
+              { label: "Work", href: "#work" },
+              { label: "About", href: "#about" },
+              { label: "Blog", href: "/blog" },
+              { label: "Facilitation", href: "/facilitation" },
+              { label: "Playground", href: "/#facilitation" },
+            ].map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  className={`${subtle} relative text-sm font-medium transition-colors hover:text-[var(--accent)]`}
+                  style={{ ["--accent" as never]: accent }}
+                >
+                  {item.label}
+                  <span
+                    className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"
                     style={{ ["--accent" as never]: accent }}
-                  >
-                    {item[0].toUpperCase() + item.slice(1)}
-                    <span
-                      className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"
-                      style={{ ["--accent" as never]: accent }}
-                    />
-                  </a>
-                </li>
-              ),
-            )}
+                  />
+                </a>
+              </li>
+            ))}
           </ul>
 
           <div className="flex items-center gap-3">
@@ -215,18 +219,24 @@ export default function Header({ theme, setTheme }: HeaderProps) {
             : "pointer-events-none opacity-0"
         } ${surface}`}
       >
-        {["work", "strategy", "facilitation", "about", "contact"].map(
-          (item) => (
-            <a
-              key={item}
-              href={`#${item}`}
-              onClick={() => setMobileOpen(false)}
-              className={`text-2xl font-semibold tracking-tight transition-colors ${isDark ? "text-[#EAEAEA]" : "text-[#1A1A1A]"} hover:text-[#FF6A2A]`}
-            >
-              {item[0].toUpperCase() + item.slice(1)}
-            </a>
-          ),
-        )}
+        {["work", "about", "blog", "facilitation", "playground"].map((item) => (
+          <a
+            key={item}
+            href={
+              item === "blog"
+                ? "/blog"
+                : item === "facilitation"
+                  ? "/facilitation"
+                  : item === "playground"
+                    ? "/#facilitation"
+                    : `#${item}`
+            }
+            onClick={() => setMobileOpen(false)}
+            className={`text-2xl font-semibold tracking-tight transition-colors ${isDark ? "text-[#EAEAEA]" : "text-[#1A1A1A]"} hover:text-[#FF6A2A]`}
+          >
+            {item[0].toUpperCase() + item.slice(1)}
+          </a>
+        ))}
 
         <a
           href="#contact"
