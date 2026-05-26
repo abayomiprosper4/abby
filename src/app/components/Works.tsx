@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import PasswordProtectedModal from "./PasswordProtectedModal";
 
 type Theme = "dark" | "light";
 
@@ -19,12 +20,17 @@ interface WorksProps {
 
 const Works = ({ theme }: WorksProps) => {
   const router = useRouter();
+  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+  const [selectedPasswordProject, setSelectedPasswordProject] =
+    useState<Project | null>(null);
 
   const isDark = theme === "dark";
   const accent = "#FF6A2A";
   const themeStyles = {
     subtle: isDark ? "text-[#A0A0A0]" : "text-[#555555]",
-    cardBg: isDark ? "bg-gradient-to-b from-[#231813] via-[#000000] to-[#000000]" : "bg-[#F5E6E1]",
+    cardBg: isDark
+      ? "bg-gradient-to-b from-[#231813] to-[#000000]"
+      : "bg-[#F5E6E1]",
   };
 
   const projects: Project[] = [
@@ -97,7 +103,7 @@ const Works = ({ theme }: WorksProps) => {
       description:
         "Designing a dating experience that prioritizes meaningful connections over endless swiping.",
       image: "/assets/images/gleeee.png",
-      href: "/portfolio/gleephoria",
+      href: "/working",
     },
     {
       title: "Transtura",
@@ -135,7 +141,14 @@ const Works = ({ theme }: WorksProps) => {
             >
               <ProjectCard
                 project={project}
-                onClick={() => router.push(project.href)}
+                onClick={() => {
+                  if (project.title === "GigSecure") {
+                    setSelectedPasswordProject(project);
+                    setPasswordModalOpen(true);
+                  } else {
+                    router.push(project.href);
+                  }
+                }}
                 theme={theme}
                 isDark={isDark}
                 cardBg={themeStyles.cardBg}
@@ -144,6 +157,13 @@ const Works = ({ theme }: WorksProps) => {
           ))}
         </div>
       </div>
+      <PasswordProtectedModal
+        isOpen={passwordModalOpen}
+        onClose={() => setPasswordModalOpen(false)}
+        projectTitle={selectedPasswordProject?.title || ""}
+        projectImage={selectedPasswordProject?.image || ""}
+        projectHref={selectedPasswordProject?.href || ""}
+      />
     </section>
   );
 };
