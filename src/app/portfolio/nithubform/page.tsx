@@ -123,11 +123,11 @@ const NithubFormsPage = () => {
         transition={{ duration: 1 }}
         className="w-full h-[70vh] md:h-[80vh] flex items-end justify-center overflow-hidden relative px-4 pb-12"
       >
-        <div className="z-10 flex justify-center">
+        <div className="z-10 bg-[#27A810] translate-y-24 rounded-xl md:rounded-[2rem] p-5 flex justify-center">
           <img
-            src="/assets/images/nit-forms-hero.png"
+            src="/assets/images/forms-hero.png"
             alt="Nithub Forms Dashboard"
-            className="w-80 md:w-[100%] object-cover shadow-xl translate-y-14 block"
+            className="w-96 md:w-[700px] object-cover rounded-xl md:rounded-[2rem] shadow-xl block"
           />
         </div>
       </motion.section>

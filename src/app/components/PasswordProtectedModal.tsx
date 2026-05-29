@@ -93,7 +93,7 @@ const PasswordProtectedModal = ({
               </div>
 
               <form onSubmit={handlePasswordSubmit} className="w-full mt-6">
-                <p className="text-gray-400 mb-6 text-sm">
+                <p className="text-gray-400 mb-6 text-md">
                   This project is password protected due to an NDA.
                 </p>
                 <input
@@ -104,12 +104,12 @@ const PasswordProtectedModal = ({
                     if (passwordError) setPasswordError(false);
                   }}
                   placeholder="Enter Password"
-                  className="w-full bg-[#2a2f33] border border-white/10 focus:border-[#FFFF00] outline-none text-white rounded-xl px-4 py-3 mb-4 transition-all"
+                  className="w-full bg-[#2a2f33] border border-white/10 focus:border-[#FF6A2A] outline-none text-white rounded-xl px-4 py-3 mb-6 transition-all"
                   autoFocus
                 />
                 <button
                   type="submit"
-                  className="w-full bg-white hover:bg-[#FFFF00] text-[#FFFF] hover:text-black font-bold py-3 rounded-xl transition-colors"
+                  className="w-[16rem] bg-white hover:bg-[#FF6A2A] border border-[#FF6A2A] text-[#FFFF] hover:text-[#FFFF] font-bold py-3 rounded-xl transition-colors"
                 >
                   View Case Study
                 </button>

@@ -124,7 +124,7 @@ const SpenditurePage = () => {
             <img
               src="/assets/images/spenditure-3.png"
               alt="Transaction Detail"
-              className="w-[600px] sm:w-40 md:w-64 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform -rotate-2 translate-y-12 md:translate-y-7"
+              className="w-[600px] sm:w-40 md:w-80 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform -rotate-2 translate-y-12 md:translate-y-7"
             />
           </div>
 
@@ -132,7 +132,7 @@ const SpenditurePage = () => {
             <img
               src="/assets/images/spenditure-2.png"
               alt="Main Dashboard"
-              className="w-[800px] sm:w-40 md:w-64 object-contain shadow-2xl md:rounded-[2rem] rounded-sm scale-110 md:scale-125"
+              className="w-[800px] sm:w-40 md:w-80 object-contain shadow-2xl md:rounded-[2rem] rounded-sm scale-110 md:scale-125"
             />
           </div>
 
@@ -140,7 +140,7 @@ const SpenditurePage = () => {
             <img
               src="/assets/images/spenditure-1.png"
               alt="Add Bill Screen"
-              className="w-[600px] sm:w-32 md:w-56 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform rotate-2 translate-y-12 md:translate-y-7"
+              className="w-[600px] sm:w-32 md:w-96 object-contain shadow-2xl md:rounded-[2rem] rounded-sm transform rotate-2 translate-y-12 md:translate-y-7"
             />
           </div>
         </div>

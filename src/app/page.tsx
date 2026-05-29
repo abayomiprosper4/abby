@@ -4,15 +4,10 @@ import Header from "@/components/Header";
 import Introduction from "@/components/Introduction";
 import Image from "next/image";
 import Socials from "@/components/Socials";
-import BackToTopBtn from "./components/BacktoTopBtn";
 import { useEffect, useMemo, useState, useRef } from "react";
 import {
   ArrowRight,
-  CalendarDays,
   ChartNoAxesCombined,
-  ChevronRight,
-  CircleDot,
-  Mail,
   Play,
   Sparkles,
 } from "lucide-react";
@@ -212,7 +207,7 @@ export default function Page() {
           </div>
         </section>
         <section id="about" className="px-6 py-24">
-          <div className="mx-auto grid max-w-[1200px] gap-20 lg:grid-cols-2 lg:items-center">
+          <div className="mx-auto grid max-w-[1260px] gap-20 lg:grid-cols-2 lg:items-center">
             <div className="reveal m-8">
               <div
                 className={`relative overflow-hidden rounded-[24px] ${themeStyles.card} ${themeStyles.border}`}
@@ -264,16 +259,16 @@ export default function Page() {
 
             <div className="reveal opacity-0 translate-y-8">
               <span
-                className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
+                className="mb-4 mx-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
                 style={{ color: accent }}
               >
                 About Me
               </span>
-              <h2 className="mb-6 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
+              <h2 className="mb-6 mx-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
                 I bridge the gap between vision and execution
               </h2>
               <div
-                className={`space-y-5 text-lg leading-8 ${themeStyles.subtle}`}
+                className={`space-y-5 mx-4 text-lg leading-8 ${themeStyles.subtle}`}
               >
                 <p>
                   I&apos;m{" "}

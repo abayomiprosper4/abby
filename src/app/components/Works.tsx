@@ -36,7 +36,7 @@ const Works = ({ theme }: WorksProps) => {
   const projects: Project[] = [
     {
       title: "GigSecure",
-      types: ["Product Design", "Insurence"],
+      types: ["Product Design", "Insurance"],
       description:
         "Designed a scalable insurance platform that simplifies onboarding, policy underwriting, and claims experiences for Gig workers.",
       image: "/assets/images/gigsecureimg.png",
@@ -142,7 +142,7 @@ const Works = ({ theme }: WorksProps) => {
               <ProjectCard
                 project={project}
                 onClick={() => {
-                  if (project.title === "GigSecure") {
+                  if (project.title === "GigSecure" || project.title === "Gleephoria") {
                     setSelectedPasswordProject(project);
                     setPasswordModalOpen(true);
                   } else {

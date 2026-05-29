@@ -203,11 +203,11 @@ const NithubWebsitePage = ({}: NithubWebsiteProps) => {
           transition={{ duration: 1 }}
           className="w-full h-[60vh] md:h-[80vh] mx-auto flex items-end justify-center overflow-hidden relative px-4 pb-12"
         >
-          <div className="z-10 flex justify-center">
+          <div className="z-10 bg-[#8B8B8B] translate-y-12 rounded-2xl p-3 flex justify-center">
             <img
-              src="/assets/images/nithub-hero.png"
+              src="/assets/images/nit-hero.png"
               alt="Nithub Website Redesign Dashboard"
-              className="w-64 md:w-[100%] object-cover shadow-xl translate-y-16 block"
+              className="w-[70px] md:w-[720px] object-cover rounded-2xl shadow-xl block"
             />
           </div>
         </motion.section>

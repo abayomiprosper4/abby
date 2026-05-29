@@ -90,6 +90,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
   const border = isDark ? "border-white/10" : "border-black/10";
   const secondaryBg = isDark ? "bg-[#111111]" : "bg-[#FFFFFF]";
   const tertiaryBg = isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]";
+  const icon = isDark ? "text-[#EAEAEA]" : "text-[#FFFF]";
   const accent = "#FF6A2A";
 
   return (
@@ -147,10 +148,10 @@ export default function Header({ theme, setTheme }: HeaderProps) {
               type="button"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
-              className={`relative hidden h-[26px] w-12 rounded-full ${tertiaryBg} p-[3px] transition hover:border-[var(--accent)] sm:flex`}
+              className={`relative md:h-[26px] h-[20px] w-12 rounded-full ${tertiaryBg} p-[3px] transition hover:border-[var(--accent)] sm:flex`}
             >
               <span
-                className={`absolute left-[3px] top-[3px] flex h-5 w-5 items-center justify-center rounded-full text-white shadow-md transition-transform duration-500 ${
+                className={`absolute md:left-[3px] left-[4px] md:top-[3px] top-[2px] flex md:h-5 h-4 md:w-5 w-4 items-center justify-center rounded-full text-white shadow-md transition-transform duration-500 ${
                   isDark ? "translate-x-0" : "translate-x-[22px]"
                 }`}
                 style={{
@@ -159,9 +160,9 @@ export default function Header({ theme, setTheme }: HeaderProps) {
                 }}
               >
                 {isDark ? (
-                  <Moon className="h-3 w-3" />
+                  <Moon className={`h-3 w-3 ${icon}`} />
                 ) : (
-                  <SunMedium className="h-3 w-3" />
+                  <SunMedium className={`h-4 w-4 ${icon}`} />
                 )}
               </span>
             </button>
@@ -172,6 +173,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
               accent={accent}
               isDark={isDark}
               text="Contact me"
+              className="hidden sm:inline-flex"
             />
 
             <button
@@ -241,7 +243,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
         <a
           href="#contact"
           onClick={() => setMobileOpen(false)}
-          className="inline-flex items-center rounded-lg px-6 py-3 text-sm font-semibold text-white"
+          className="inline-flex items-center rounded-lg px-6 py-3 text-sm font-semibold text-[#FFFF]"
           style={{ backgroundColor: accent }}
         >
           Contact Me

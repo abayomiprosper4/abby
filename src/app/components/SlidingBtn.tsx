@@ -27,7 +27,7 @@ export default function SlidingBtn({
   const finalIconPosition = iconPosition || (isSolid ? "right" : "left");
 
   // Base style tokens
-  const solidClasses = "text-white hover:bg-[#E55A1F] shadow-[0_4px_16px_rgba(255,106,42,0.3)]";
+  const solidClasses = `text-[#FFFF] hover:bg-[#E55A1F] shadow-[0_4px_16px_rgba(255,106,42,0.3)]}`;
   const outlineClasses = `border ${borderClass} hover:text-[#FF6A2A] hover:border-[#FF6A2A] ${
     isDark ? "text-[#EAEAEA]" : "text-[#1A1A1A]"
   }`;

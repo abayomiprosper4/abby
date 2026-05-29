@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaLinkedin,
   FaXTwitter,
@@ -11,21 +11,21 @@ import {
 const Socials = () => {
   const [theme] = useState("dark");
 
-  const isDark = theme === "dark";
-  const muted = isDark ? "text-[#666666]" : "text-[#888888]";
+  const isDark = theme === "dark" ? true : false;
+  const muted = isDark ? "text-[#888888]" : "text-[#555555]";
   const border = isDark ? "border-white/10" : "border-black/10";
-  const secondaryBg = isDark ? "bg-[#111111]" : "bg-[#FFFFFF]";
-
-  // Unified structured column data for simple editing
+  const iconBg = isDark
+    ? "text-[#888888] border-white/10"
+    : "text-[#555555] border-black/10";
   const footerColumns = [
     {
       title: "Navigation",
       links: [
         { name: "Work", target: "#work" },
         { name: "About", target: "#about" },
-        { name: "Facilitation", target: "#strategy" },
-        { name: "Blog", target: "#contact" },
-        { name: "Playground", target: "#contact" },
+        { name: "Facilitation", target: "/facilitation" },
+        { name: "Blog", target: "/blog" },
+        { name: "Playground", target: "/playground" },
       ],
       isExternal: false,
     },
@@ -46,9 +46,9 @@ const Socials = () => {
   ];
 
   return (
-    <footer className="py-16">
+    <footer className="py-16 max-w-full mx-auto">
       <div className="mx-auto">
-        <div className="max-w-[1200px] mx-auto flex flex-col justify-between gap-12 lg:flex-row lg:items-start px-6">
+        <div className="max-w-[1250px] mx-auto flex flex-col justify-between gap-20 lg:flex-row lg:items-start px-6">
           <div className="max-w-sm">
             <h3 className="mb-3 text-2xl font-bold tracking-tight">
               Abisola Jegede
@@ -84,8 +84,9 @@ const Socials = () => {
           </div>
         </div>
         <div
-          className={`mt-12 mx-6 flex flex-col items-center justify-between gap-6 border-t pt-8 md:flex-row ${border}`}
+          className={`mt-12 mx-10 gap-6 border-t ${border}`}
         >
+          <div className={`flex flex-col mx-7 md:flex-row items-center pt-8 justify-between`}>
           <p className={`text-sm ${muted}`}>
             &copy; {new Date().getFullYear()} Abisola Jegede. All rights
             reserved.
@@ -126,7 +127,7 @@ const Socials = () => {
                   aria-label={item.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex h-10 w-10 items-center justify-center rounded-xl border transition hover:-translate-y-0.5 hover:bg-[#FF6A2A] hover:text-white ${secondaryBg} ${border} ${muted}`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-xl border transition hover:-translate-y-0.5 hover:bg-[#FF6A2A] hover:text-white ${iconBg}`}
                   title={item.label}
                 >
                   {IconComponent ? (
@@ -139,6 +140,7 @@ const Socials = () => {
                 </a>
               );
             })}
+            </div>
           </div>
         </div>
       </div>
