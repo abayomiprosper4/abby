@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import PasswordProtectedModal from "./PasswordProtectedModal";
+import ComingSoon from "./ComingSoon";
 
 type Theme = "dark" | "light";
 
@@ -20,9 +21,10 @@ interface WorksProps {
 
 const Works = ({ theme }: WorksProps) => {
   const router = useRouter();
+  
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
-  const [selectedPasswordProject, setSelectedPasswordProject] =
-    useState<Project | null>(null);
+  const [comingSoonModalOpen, setComingSoonModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const isDark = theme === "dark";
   const accent = "#FF6A2A";
@@ -142,8 +144,11 @@ const Works = ({ theme }: WorksProps) => {
               <ProjectCard
                 project={project}
                 onClick={() => {
-                  if (project.title === "GigSecure" || project.title === "Gleephoria") {
-                    setSelectedPasswordProject(project);
+                  if (project.title === "GigSecure") {
+                    setSelectedProject(project);
+                    setComingSoonModalOpen(true);
+                  } else if (project.title === "Gleephoria") {
+                    setSelectedProject(project);
                     setPasswordModalOpen(true);
                   } else {
                     router.push(project.href);
@@ -157,12 +162,21 @@ const Works = ({ theme }: WorksProps) => {
           ))}
         </div>
       </div>
+      
       <PasswordProtectedModal
         isOpen={passwordModalOpen}
         onClose={() => setPasswordModalOpen(false)}
-        projectTitle={selectedPasswordProject?.title || ""}
-        projectImage={selectedPasswordProject?.image || ""}
-        projectHref={selectedPasswordProject?.href || ""}
+        projectTitle={selectedProject?.title || ""}
+        projectImage={selectedProject?.image || ""}
+        projectHref={selectedProject?.href || ""}
+      />
+
+      <ComingSoon
+        isOpen={comingSoonModalOpen}
+        onClose={() => setComingSoonModalOpen(false)}
+        projectTitle={selectedProject?.title || ""}
+        projectImage={selectedProject?.image || ""}
+        projectHref={selectedProject?.href || ""}
       />
     </section>
   );
