@@ -7,6 +7,7 @@ import BackToTopBtn from "@/components/BacktoTopBtn";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { DotIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -27,6 +28,11 @@ const NithubFormsPage = () => {
   const approachRef = useRef<HTMLParagraphElement>(null);
   const quoteRef = useRef<HTMLHeadingElement>(null);
   const [theme, setTheme] = useState<Theme>("dark");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [isChallengeModalOpen, setIsChallengeModalOpen] = useState(false);
+const [isChallengeZoomed, setIsChallengeZoomed] = useState(false);
+
 
   // 1. Theme Persistence Logic
   useEffect(() => {
@@ -127,7 +133,7 @@ const NithubFormsPage = () => {
           <img
             src="/assets/images/forms-hero.png"
             alt="Nithub Forms Dashboard"
-            className="w-96 md:w-[700px] object-cover rounded-xl md:rounded-[2rem] shadow-xl block"
+            className="w-[400px] md:w-[700px] object-cover rounded-xl md:rounded-[2rem] shadow-xl block"
           />
         </div>
       </motion.section>
@@ -237,10 +243,66 @@ const NithubFormsPage = () => {
                 the hub.
               </p>
             </div>
-            <img src="/assets/images/context.png" alt="" className="mt-20" />
+
+            <img
+              src="/assets/images/context.png"
+              alt="Context workflow"
+              className="mt-20 cursor-zoom-in hover:opacity-90 transition-opacity rounded-md shadow-sm"
+              onClick={() => setIsModalOpen(true)}
+            />
+            <AnimatePresence>
+              {isModalOpen && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-8 cursor-zoom-out"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    setIsZoomed(false);
+                  }}
+                >
+                  <motion.img
+                    src="/assets/images/context.png"
+                    alt="Context workflow zoomed"
+                    layoutId="context-image"
+                    className={`object-contain transition-transform duration-300 ease-in-out ${
+                      isZoomed
+                        ? "scale-150 cursor-zoom-out"
+                        : "scale-100 cursor-zoom-in max-h-full max-w-full"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsZoomed(!isZoomed);
+                    }}
+                  />
+
+                  <button
+                    className="absolute top-6 right-6 text-white bg-black/50 hover:bg-black/80 rounded-full p-2 transition-colors z-50"
+                    onClick={() => setIsModalOpen(false)}
+                    aria-label="Close modal"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.section>
 
-          <section className="max-w-6xl mx-auto px-4 xl:px-0">
+<section className="max-w-6xl mx-auto px-4 xl:px-0">
             <h2
               className={`text-2xl md:text-4xl font-bold mb-6 ${themeStyles.heading} min-h-[1.5em]`}
               ref={challengeRef}
@@ -277,6 +339,7 @@ const NithubFormsPage = () => {
                 creating a shared structure for teams to manage them?"
               </motion.h3>
             </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -284,8 +347,56 @@ const NithubFormsPage = () => {
               transition={bounceTransition}
               className="max-w-6xl bg-[#f7f3f3] px-6 rounded-xl shadow-md shadow-gray-200 mx-auto py-4 xl:px-0 mt-16"
             >
-              <img src="/assets/images/design-challenge.png" alt="" />
+              {/* Clickable Original Image */}
+              <img 
+                src="/assets/images/design-challenge.png" 
+                alt="Design Challenge" 
+                className="cursor-zoom-in hover:opacity-90 transition-opacity w-full h-auto"
+                onClick={() => setIsChallengeModalOpen(true)}
+              />
             </motion.div>
+
+            {/* Zoomable Modal Overlay for Design Challenge */}
+            <AnimatePresence>
+              {isChallengeModalOpen && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-8 cursor-zoom-out"
+                  onClick={() => {
+                    setIsChallengeModalOpen(false);
+                    setIsChallengeZoomed(false); // Reset zoom on close
+                  }}
+                >
+                  <motion.img
+                    src="/assets/images/design-challenge.png"
+                    alt="Design Challenge zoomed"
+                    layoutId="challenge-image"
+                    className={`object-contain transition-transform duration-300 ease-in-out ${
+                      isChallengeZoomed 
+                        ? "scale-150 cursor-zoom-out" 
+                        : "scale-100 cursor-zoom-in max-h-full max-w-full"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Keep modal open when clicking the image
+                      setIsChallengeZoomed(!isChallengeZoomed);
+                    }}
+                  />
+                  
+                  {/* Close Button */}
+                  <button
+                    className="absolute top-6 right-6 text-white bg-black/50 hover:bg-black/80 rounded-full p-2 transition-colors z-50"
+                    onClick={() => setIsChallengeModalOpen(false)}
+                    aria-label="Close modal"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </section>
           <section className="py-20 px-4 xl:px-0">
             <h2
@@ -392,13 +503,15 @@ const NithubFormsPage = () => {
                 </motion.p>
               </div>
             </div>
-            <div className="bg-[#f7f3f3] p-7 pb-20 mt-10">
+            </section>
+            <div className="bg-[#f7f3f3]">
+            <div className="py-20 px-7 max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={bounceTransition}
-                className="mt-40"
+                className="my-10"
               >
                 <p className="text-2xl text-black font-bold mb-4">
                   Old User Flow
@@ -426,7 +539,7 @@ const NithubFormsPage = () => {
                 />
               </motion.div>
             </div>
-          </section>
+</div>
           <motion.section
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -436,14 +549,18 @@ const NithubFormsPage = () => {
           >
             <h2
               className={
-                'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'
+                "text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}"
               }
             >
               Process
             </h2>
 
             <div className="space-y-6 max-w-5xl">
-              <h3 className={'${themeStyles.muted} text-lg leading-relaxed font-semibold tracking-wider'}>
+              <h3
+                className={
+                  "${themeStyles.muted} text-lg leading-relaxed font-semibold tracking-wider"
+                }
+              >
                 Experience Mapping
               </h3>
               <p className="text-xl leading-relaxed">
@@ -488,11 +605,11 @@ const NithubFormsPage = () => {
             transition={bounceTransition}
             className="bg-[#f7f3f3] mx-auto px-24 xl:px-26 py-16"
           >
-            <h2 className={'text-2xl md:text-3xl font-bold mb-8 text-black'}>
+            <h2 className={"text-2xl md:text-3xl font-bold mb-8 text-black"}>
               Internal Workflow Mapping
             </h2>
 
-            <p className={'text-black text-xl leading-relaxed mb-12 max-w-4xl'}>
+            <p className={"text-black text-xl leading-relaxed mb-12 max-w-4xl"}>
               I traced how forms were created, stored, and handed over across
               teams. The patterns were consistent:
             </p>
@@ -533,10 +650,14 @@ const NithubFormsPage = () => {
             </motion.div>
           </motion.section>
           <section className="max-w-6xl mx-auto px-4 xl:px-0 py-16">
-            <h2 className={'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'}>
+            <h2
+              className={
+                "text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}"
+              }
+            >
               Observed Behaviour & Recurring Feedback
             </h2>
-            <p className={'text-gray-600 text-xl leading-relaxed ${accent}'}>
+            <p className={"text-gray-600 text-xl leading-relaxed ${accent}"}>
               Across teams, people described difficulty locating or taking over
               existing forms. Users were also known to drop off after leaving
               the website to complete applications.
@@ -569,35 +690,43 @@ const NithubFormsPage = () => {
           </section>
           <section className="px-4 xl:px-0 py-16">
             <div className="max-w-6xl mx-auto">
-            <h1 className={'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'}>
-              From Lifecycle Diagram
-            </h1>
-            <h2 className={'text-xl md:text-2xl font-bold mb-8 ${themeStyles.heading}'}>
-              Key Insights
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-16">
-              {[
-                "Forms scattered in personal or team drives",
-                "There was no shared repository or lifecycle structure, making continuity and ownership difficult",
-                "The application journey broke at the point of action",
-                "Redirecting users outside the website interrupted engagement and weakened trust.",
-                "The issue was structural, not visual",
-                "Improving individual forms would not resolve fragmentation or continuity gaps.",
-              ].map((issue, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
-                >
-                  <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
-                    {issue}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+              <h1
+                className={
+                  "text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}"
+                }
+              >
+                From Lifecycle Diagram
+              </h1>
+              <h2
+                className={
+                  "text-xl md:text-2xl font-bold mb-8 ${themeStyles.heading}"
+                }
+              >
+                Key Insights
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-16">
+                {[
+                  "Forms scattered in personal or team drives",
+                  "There was no shared repository or lifecycle structure, making continuity and ownership difficult",
+                  "The application journey broke at the point of action",
+                  "Redirecting users outside the website interrupted engagement and weakened trust.",
+                  "The issue was structural, not visual",
+                  "Improving individual forms would not resolve fragmentation or continuity gaps.",
+                ].map((issue, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-gray-50 border border-gray-200 rounded-md p-6 flex items-center shadow-sm"
+                  >
+                    <p className="text-gray-800 text-sm md:text-lg leading-snug font-medium">
+                      {issue}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
             <div className="items-center bg-[#f7f3f3] py-16 text-center">
               <img
@@ -628,7 +757,11 @@ const NithubFormsPage = () => {
             </div>
           </section>
           <section className="max-w-6xl mx-auto px-4 xl:px-0 py-16">
-            <h2 className={'text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}'}>
+            <h2
+              className={
+                "text-2xl md:text-3xl font-bold mb-8 ${themeStyles.heading}"
+              }
+            >
               Solution
             </h2>
             <p className="text-xl leading-relaxed mb-12 max-w-4xl">
@@ -659,7 +792,10 @@ const NithubFormsPage = () => {
             </div>
 
             <p className="text-xl leading-relaxed mb-12">
-              Forms shifted from separate Google tools to a cohesive, <span className={'text-[#03947B] font-bold italic '}>managed{' '}</span>
+              Forms shifted from separate Google tools to a cohesive,{" "}
+              <span className={"text-[#03947B] font-bold italic "}>
+                managed{" "}
+              </span>
               layer within the Nithub platform.
             </p>
             <div className="flex flex-col gap-12">
@@ -743,10 +879,14 @@ const NithubFormsPage = () => {
                 transition={bounceTransition}
                 className="md:w-1/2 space-y-6"
               >
-                <h3 className={'text-4xl font-bold ${themeStyles.heading}'}>
+                <h3 className={"text-4xl font-bold ${themeStyles.heading}"}>
                   Full Application Form Page
                 </h3>
-                <p className={'${themeStyles.subtle} text-lg pb-4 leading-relaxed font-semibold'}>
+                <p
+                  className={
+                    "${themeStyles.subtle} text-lg pb-4 leading-relaxed font-semibold"
+                  }
+                >
                   Structured Application Experience
                 </p>
                 <p className="text-lg leading-relaxed">
@@ -833,13 +973,17 @@ const NithubFormsPage = () => {
                 transition={bounceTransition}
                 className="md:w-1/2 space-y-6"
               >
-                <h3 className={'text-4xl font-bold ${themeStyles.heading}'}>
+                <h3 className={"text-4xl font-bold ${themeStyles.heading}"}>
                   Annotated Form Structure Header
                 </h3>
-                <p className={'${themeStyles.subtle} text-lg pb-4 leading-relaxed font-semibold'}>
+                <p
+                  className={
+                    "${themeStyles.subtle} text-lg pb-4 leading-relaxed font-semibold"
+                  }
+                >
                   Structured Application Experience
                 </p>
-                <p className={'${themeStyles.subtle} text-lg leading-relaxed'}>
+                <p className={"${themeStyles.subtle} text-lg leading-relaxed"}>
                   For complex programs, a dedicated application page provides a
                   clear, distraction-free environment. Annotated headers help
                   users understand their progress and requirements.
@@ -1002,30 +1146,36 @@ const NithubFormsPage = () => {
             <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
               Previous Project
             </p>
-            <Link href="/portfolio/nithub" className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110">
-            <button className="group transition-transform duration-300 hover:scale-110">
-              <img
-                src="/assets/images/nithub.png"
-                alt="Previous Project"
-                className="w-40 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
-              />
-            </button>
-            Nithub Website
+            <Link
+              href="/portfolio/nithub"
+              className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110"
+            >
+              <button className="group transition-transform duration-300 hover:scale-110">
+                <img
+                  src="/assets/images/nithub.png"
+                  alt="Previous Project"
+                  className="w-40 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
+                />
+              </button>
+              Nithub Website
             </Link>
           </div>
           <div className="text-right">
             <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
               Next Project
             </p>
-            <Link href="/portfolio/spenditure" className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110">
-            <button className="group transition-transform duration-300 hover:scale-110">
-              <img
-                src="/assets/images/spenditure.png"
-                alt="Next Project"
-                className="w-10 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
-              />
-            </button>
-            Spenditure
+            <Link
+              href="/portfolio/spenditure"
+              className="group flex items-center text-sm bg-gray-200 px-10 py-7 text-gray-800 rounded-lg transition-transform duration-300 hover:scale-110"
+            >
+              <button className="group transition-transform duration-300 hover:scale-110">
+                <img
+                  src="/assets/images/spenditure.png"
+                  alt="Next Project"
+                  className="w-10 md:w-10 mr-2 transition-all duration-300 group-hover:brightness-110"
+                />
+              </button>
+              Spenditure
             </Link>
           </div>
         </div>

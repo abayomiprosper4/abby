@@ -152,7 +152,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
             >
               <span
                 className={`absolute md:left-[3px] left-[4px] md:top-[3px] top-[2px] flex md:h-5 h-4 md:w-5 w-4 items-center justify-center rounded-full text-white shadow-md transition-transform duration-500 ${
-                  isDark ? "translate-x-0" : "translate-x-[22px]"
+                  isDark ? "translate-x-0" : "translate-x-[24px]"
                 }`}
                 style={{
                   backgroundColor: accent,

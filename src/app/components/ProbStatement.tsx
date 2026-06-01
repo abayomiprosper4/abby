@@ -20,7 +20,7 @@ const ProblemStatementCards = () => {
   ];
 
   return (
-    <div className="bg-white p-8">
+    <div className="bg-white md:p-8 p-0 md:mt-1 mt-10">
       <div className="flex flex-col md:flex-row gap-3 max-w-6xl mx-auto">
         {cards.map((card, index) => (
           <div 
