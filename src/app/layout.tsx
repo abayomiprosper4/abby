@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable}`}>
-      <body className="bg-[hsl(204,8%,12%)] font-manrope text-white overflow-x-hidden">
+      <body className="font-manrope text-white">
         <div className="relative isolate z-0">
         {children}
         </div>

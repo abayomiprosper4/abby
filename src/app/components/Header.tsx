@@ -125,7 +125,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
               { label: "About", href: "#about" },
               { label: "Blog", href: "/blog" },
               { label: "Facilitation", href: "/facilitation" },
-              { label: "Playground", href: "/#facilitation" },
+              { label: "Playground", href: "/working" },
             ].map((item) => (
               <li key={item.label}>
                 <a
@@ -230,7 +230,7 @@ export default function Header({ theme, setTheme }: HeaderProps) {
                 : item === "facilitation"
                   ? "/facilitation"
                   : item === "playground"
-                    ? "/#facilitation"
+                    ? "/working"
                     : `#${item}`
             }
             onClick={() => setMobileOpen(false)}

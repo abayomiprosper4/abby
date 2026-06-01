@@ -18,8 +18,20 @@ export default function ManagementPage() {
     useEffect(() => {
       localStorage.setItem("theme", theme);
     }, [theme]);
+      const isDark = theme === "dark";
+
+  const surface = isDark
+    ? "bg-[#0B0B0B] text-[#EAEAEA]"
+    : "bg-[#F8F9FB] text-[#1A1A1A]";
+  const subtle = isDark ? "text-[#A0A0A0]" : "text-[#555555]";
+  const border = isDark ? "border-white/10" : "border-black/10";
+  const secondaryBg = isDark ? "bg-[#111111]" : "bg-[#FFFFFF]";
+  const tertiaryBg = isDark ? "bg-[#1A1A1A]" : "bg-[#F0F1F3]";
+  const icon = isDark ? "text-[#EAEAEA]" : "text-[#FFFF]";
+  const accent = "#FF6A2A";
+
   return (
-    <main className="mx-auto py-8 w-[90%]">
+    <main className={`mx-auto ${surface} py-8`}>
   <Header theme={theme} setTheme={setTheme} />
     <div className="flex flex-col h-[70vh] items-center justify-center text-center">
       <motion.div
@@ -28,7 +40,7 @@ export default function ManagementPage() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="space-y-6"
       >
-        <p className="font-space text-white/90 text-xl md:text-2xl mb-12 leading-relaxed tracking-wide">
+        <p className={`font-space ${subtle} text-xl md:text-2xl my-12 leading-relaxed tracking-wide`}>
           Hii, we are currently working on this page.
           <br />
           Kindly check back in another time.
@@ -51,7 +63,7 @@ export default function ManagementPage() {
           ))}
         </div>
       </motion.div>
-      <div className="absolute bottom-28 text-gray-400 text-sm md:text-base tracking-wide">
+      <div className={`mt-20 ${subtle} text-sm md:text-base tracking-wide`}>
         I am a Jack of all Trades Master of All.
       </div>
     </div>

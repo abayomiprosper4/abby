@@ -165,7 +165,7 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
       </div>
       <div className="mt-8 text-center">
         <SlidingBtn
-          href="#work"
+          href="https://vimeo.com/user181828612"
           variant="solid"
           accent={accent}
           isDark={isDark}

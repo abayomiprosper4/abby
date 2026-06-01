@@ -25,7 +25,7 @@ const Socials = () => {
         { name: "About", target: "#about" },
         { name: "Facilitation", target: "/facilitation" },
         { name: "Blog", target: "/blog" },
-        { name: "Playground", target: "#facilitation" },
+        { name: "Playground", target: "/working" },
       ],
       isExternal: false,
     },
