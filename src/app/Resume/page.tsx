@@ -51,9 +51,6 @@ export default function ManagementPage() {
           ))}
         </div>
       </motion.div>
-      <div className="absolute bottom-28 text-gray-400 text-sm md:text-base tracking-wide">
-        I am a Jack of all Trades Master of All.
-      </div>
     </div>
           <Socials />
     </main>

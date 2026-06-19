@@ -21,9 +21,8 @@ const Socials = () => {
     {
       title: "Navigation",
       links: [
-        { name: "Work", target: "#work" },
-        { name: "About", target: "#about" },
-        { name: "Facilitation", target: "/facilitation" },
+        { name: "Work", target: "/#work" },
+        { name: "Facilitation", target: "/working" },
         { name: "Blog", target: "/blog" },
         { name: "Playground", target: "/working" },
       ],

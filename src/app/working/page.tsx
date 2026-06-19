@@ -63,9 +63,6 @@ export default function ManagementPage() {
           ))}
         </div>
       </motion.div>
-      <div className={`mt-20 ${subtle} text-sm md:text-base tracking-wide`}>
-        I am a Jack of all Trades Master of All.
-      </div>
     </div>
           <Socials />
     </main>

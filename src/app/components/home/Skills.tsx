@@ -59,7 +59,7 @@ const SkillsSection = () => {
           <div className="relative group w-fit">
             <div className="hidden md:block absolute top-0 right-3 w-1.5 h-full bg-[#FF5F1F] z-0 transition-all duration-500 ease-out group-hover:translate-x-8"></div>
 
-            <Link href="/facilitation">
+            <Link href="/working">
               <button className="relative z-10 bg-[#1a1e20] border border-white/20 hover:border-white/50 text-white text-lg md:text-xl lg:text-2xl rounded-lg py-5 px-6 md:py-9 md:px-14 whitespace-normal md:whitespace-nowrap hover:shadow-neon transition-all duration-500 w-full md:w-fit">
                 Design Thinking Facilitation
               </button>

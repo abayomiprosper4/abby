@@ -121,10 +121,9 @@ export default function Header({ theme, setTheme }: HeaderProps) {
 
           <ul className="hidden items-center gap-8 md:flex">
             {[
-              { label: "Work", href: "#work" },
-              { label: "About", href: "#about" },
+              { label: "Work", href: "/#work" },
               { label: "Blog", href: "/blog" },
-              { label: "Facilitation", href: "/facilitation" },
+              { label: "Facilitation", href: "/working" },
               { label: "Playground", href: "/working" },
             ].map((item) => (
               <li key={item.label}>
@@ -221,17 +220,17 @@ export default function Header({ theme, setTheme }: HeaderProps) {
             : "pointer-events-none opacity-0"
         } ${surface}`}
       >
-        {["work", "about", "blog", "facilitation", "playground"].map((item) => (
+        {["work", "blog", "facilitation", "playground"].map((item) => (
           <a
             key={item}
             href={
               item === "blog"
                 ? "/blog"
                 : item === "facilitation"
-                  ? "/facilitation"
+                  ? "/working"
                   : item === "playground"
                     ? "/working"
-                    : `#${item}`
+                    : `/#${item}`
             }
             onClick={() => setMobileOpen(false)}
             className={`text-2xl font-semibold tracking-tight transition-colors ${isDark ? "text-[#EAEAEA]" : "text-[#1A1A1A]"} hover:text-[#FF6A2A]`}
