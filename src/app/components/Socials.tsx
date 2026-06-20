@@ -13,7 +13,6 @@ const Socials = () => {
 
   const isDark = theme === "dark" ? true : false;
   const muted = isDark ? "text-[#888888]" : "text-[#555555]";
-  const border = isDark ? "border-white/10" : "border-black/10";
   const iconBg = isDark
     ? "text-[#888888] border-white/10"
     : "text-[#555555] border-black/10";
@@ -82,10 +81,9 @@ const Socials = () => {
             ))}
           </div>
         </div>
-        <div
-          className={`mt-12 mx-10 gap-6 border-t ${border}`}
-        >
-          <div className={`flex flex-col mx-7 md:flex-row items-center pt-8 justify-between`}>
+        <div className="mt-12 mx-10">
+          <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.4)", width: "100%" }} />
+          <div className={`flex flex-col mx-7 md:flex-row items-center pt-8 gap-6 justify-between`}>
           <p className={`text-sm ${muted}`}>
             &copy; {new Date().getFullYear()} Abisola Jegede. All rights
             reserved.

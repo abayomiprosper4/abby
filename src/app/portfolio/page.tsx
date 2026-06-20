@@ -33,19 +33,19 @@ const projects: Project[] = [
     href: "/portfolio/nithub",
   },
   {
+    title: "Gleephoria",
+    type: "Mobile application",
+    description:
+    "Designing a dating experience that prioritizes meaningful connections over endless swiping.",
+    image: "/assets/images/gleephoria.png",
+    href: "/portfolio/gleephoria",
+  },
+  {
     title: "Spenditure",
     type: "Mobile application",
     description: "Rethinking Personal Expense Awareness.",
     image: "/assets/images/spenditure.png",
     href: "/portfolio/spenditure",
-  },
-  {
-    title: "Gleephoria",
-    type: "Mobile application",
-    description:
-      "Designing a dating experience that prioritizes meaningful connections over endless swiping.",
-    image: "/assets/images/gleephoria.png",
-    href: "/portfolio/gleephoria",
   },
   {
     title: "Nithub Forms",

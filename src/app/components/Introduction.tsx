@@ -56,7 +56,7 @@ const Introduction = ({ theme }: IntroductionProps) => {
               className="relative z-10 flex flex-col md:flex-row 
                           justify-between items-start gap-8"
             >
-              <div className="flex-1">
+              <div className="flex-1 max-w-[700px]">
                 <motion.div className="mb-5 tracking-wider text-lg font-normal opacity-80">
                   I am Abisola Jegede
                 </motion.div>
@@ -66,18 +66,12 @@ const Introduction = ({ theme }: IntroductionProps) => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.7, delay: 0.1 }}
-                  className="mb-10 max-w-[99%] text-4xl font-bold leading-[40px] 
-                            sm:text-4xl lg:text-[2.8rem]"
+                  className="mb-10 max-w-[99%] text-4xl font-bold sm:text-4xl lg:text-[2.8rem]"
+                  style={{ lineHeight: "1.3" }}
                 >
                   Product designer focused on innovation,
-                  <br />
-                  <span className="relative" style={{ color: accent }}>
+                  <span style={{ color: accent }}>
                     facilitation
-                    <span
-                      className="absolute bottom-1 left-0 right-0 -z-10 h-2 
-                               rounded-sm opacity-30"
-                      style={{ backgroundColor: accent }}
-                    />
                   </span>
                   , and scalable solutions.
                 </motion.h1>
@@ -87,7 +81,8 @@ const Introduction = ({ theme }: IntroductionProps) => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.7, delay: 0.2 }}
-                  className={`reveal mb-10 max-w-4xl md:text-xl text-md leading-8 ${subtle}`}
+                  className={`reveal mb-10 max-w-4xl md:text-xl text-md ${subtle}`}
+                  style={{ lineHeight: "1.8" }}
                 >
                   I use product design, design thinking, and facilitation to
                   help organizations build solutions that are practical,

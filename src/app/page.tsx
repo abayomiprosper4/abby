@@ -5,12 +5,7 @@ import Introduction from "@/components/Introduction";
 import Image from "next/image";
 import Socials from "@/components/Socials";
 import { useEffect, useMemo, useState, useRef } from "react";
-import {
-  ArrowRight,
-  ChartNoAxesCombined,
-  Play,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, ChartNoAxesCombined, Play, Sparkles } from "lucide-react";
 import MotionCraft from "./components/MotionCraft";
 import Works from "./components/Works";
 import CTA from "./components/CTA";
@@ -171,9 +166,9 @@ export default function Page() {
         {/* Strategy / Services */}
         <section
           id="strategy"
-          className={`px-6 py-24 ${themeStyles.secondaryBg}`}
+          className={`max-w-[93%] mx-auto px-6 py-24 ${themeStyles.secondaryBg}`}
         >
-          <div className="mx-auto max-w-[1200px]">
+          <div className="w-full">
             <div className="reveal mb-14">
               <span
                 className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
@@ -206,8 +201,8 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section id="about" className="px-6 py-24">
-          <div className="mx-auto grid max-w-[1260px] gap-20 lg:grid-cols-2 lg:items-center">
+        <section id="about" className="max-w-[93%] mx-auto px-6 py-24">
+          <div className="w-full grid gap-20 lg:grid-cols-2 lg:items-center">
             <div className="reveal m-8">
               <div
                 className={`relative overflow-hidden rounded-[24px] ${themeStyles.card} ${themeStyles.border}`}
@@ -234,7 +229,7 @@ export default function Page() {
 
               <div className="mt-8 grid grid-cols-2 gap-4">
                 {[
-                  ["4+", "Years Experience"],
+                  ["5+", "Years Experience"],
                   ["50+", "Sessions Facilitated"],
                   ["15+", "Products Designed"],
                   ["100+", "People Mentored"],
@@ -271,45 +266,37 @@ export default function Page() {
                 className={`space-y-5 mx-4 text-lg leading-8 ${themeStyles.subtle}`}
               >
                 <p>
-                  I&apos;m{" "}
-                  <span className="font-semibold text-inherit">
-                    Abisola Jegede
-                  </span>{" "}
-                  — a product designer and innovation lead with a background in
-                  design thinking, facilitation, and digital product design. I
-                  enjoy helping teams turn complex ideas into prctical,
-                  human-centered experiences.
+                  I&apos;m Abisola Jegede , a Product Designer and Design
+                  Thinking Facilitator who enjoys turning complex problems into
+                  clear, actionable solutions.
                 </p>
                 <p>
-                  Over the years, I&apos;ve worked across startup ecosystems,
-                  innovation programs, and digital products, designing
-                  interfaces, facilitating workshops, and supporting teams
-                  through Ive Product developmetn and strategic thinking.
+                  My work combines product design, facilitation, and strategic
+                  thinking to help teams build products and experiences that
+                  people genuinely find useful. Over the years, I've had the
+                  opportunity to work with startups, entrepreneurs, and
+                  organizations, guiding ideas from early exploration through to
+                  execution.
                 </p>
                 <p>
-                  Whether I&apos;m designing flows in Figma, or leading
-                  collaborative sessions, my focus remains the same:{" "}
-                  <span
-                    className="font-semibold"
-                    style={{ color: isDark ? "#EAEAEA" : "#1A1A1A" }}
-                  >
-                    Creating solutions that are useful, thoughtful, and built
-                    with intention
-                  </span>
-                  .
+                  Whether I&apos;m facilitating a workshop, designing a user
+                  experience, or collaborating with a team to solve a challenge,
+                  I'm driven by a simple goal: creating solutions that are
+                  practical, purposeful, and centered around the people they
+                  serve.
                 </p>
               </div>
 
               <div className="mt-8">
-                  <SlidingBtn
-                    href="#work"
-                    variant="solid"
-                    accent={accent}
-                    isDark={isDark}
-                    text="View More About Me"
-                    icon={<ArrowRight className="h-4 w-4" />}
-                    iconPosition="right"
-                  />
+                {/* <SlidingBtn
+                  href="#work"
+                  variant="solid"
+                  accent={accent}
+                  isDark={isDark}
+                  text="View More About Me"
+                  icon={<ArrowRight className="h-4 w-4" />}
+                  iconPosition="right"
+                /> */}
               </div>
             </div>
           </div>

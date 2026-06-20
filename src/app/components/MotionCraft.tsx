@@ -106,9 +106,9 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
   return (
     <section
       id="facilitation"
-      className={`px-6 py-24 ${themeStyles.secondaryBg}`}
+      className={`max-w-[93%] mx-auto px-6 py-24 ${themeStyles.secondaryBg}`}
     >
-      <div className="mx-auto max-w-[1200px]">
+      <div className="w-full">
         <div className="mb-14">
           <span
             className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
@@ -119,9 +119,12 @@ const MotionCraft = ({ theme }: MotionCraftProps) => {
           <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
             Bringing interfaces to life
           </h2>
-          <p className={`max-w-2xl text-lg leading-8 ${themeStyles.subtle}`}>
-            Motion is not decoration — it&apos;s communication. Here are some
-            explorations in product animation and interaction design.
+          <p className={`max-w-4xl text-lg leading-8 ${themeStyles.subtle}`}>
+            I&apos;m fascinated by how motion can improve usability, communicate
+            intent, and create more engaging product experiences. Here you&apos;ll
+            find a collection of experiments in motion design, interface
+            animation, and interactive prototypes that showcase my curiosity and
+            ongoing learning in this space.
           </p>
         </div>
 

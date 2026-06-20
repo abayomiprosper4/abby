@@ -40,7 +40,7 @@ const Works = ({ theme }: WorksProps) => {
       title: "GigSecure",
       types: ["Product Design", "Insurance"],
       description:
-        "Designed a scalable insurance platform that simplifies onboarding, policy underwriting, and claims experiences for Gig workers.",
+        "Led the end-to-end design of a digital insurance platform for gig workers, simplifying access to coverage and attracting 264 active users within the first month of launch.",
       image: "/assets/images/gigsecureimg.png",
       href: "/portfolio/gigsecure",
     },
@@ -93,19 +93,20 @@ const Works = ({ theme }: WorksProps) => {
       href: "/portfolio/nithubform",
     },
     {
-      title: "Spenditure",
-      types: ["UI/UX", "Mobile App"],
-      description: "Rethinking Personal Expense Awareness.",
-      image: "/assets/images/expenditure.png",
-      href: "/portfolio/spenditure",
-    },
-    {
       title: "Gleephoria",
       types: ["Product Design", "Web and Mobile App", "Dating App"],
       description:
         "Designing a dating experience that prioritizes meaningful connections over endless swiping.",
       image: "/assets/images/gleeee.png",
       href: "/working",
+    },
+    {
+      title: "Spenditure",
+      types: ["UI/UX", "Mobile App"],
+      description:
+        "Designed a finance-tracking experience focused on intuitive budgeting, expense awareness, and simplified financial reporting. ",
+      image: "/assets/images/expenditure.png",
+      href: "/portfolio/spenditure",
     },
     {
       title: "Transtura",
@@ -118,8 +119,8 @@ const Works = ({ theme }: WorksProps) => {
   ];
 
   return (
-    <section id="work" className="px-6 py-24">
-      <div className="mx-auto max-w-[1200px]">
+    <section id="work" className="max-w-[93%] mx-auto px-6 py-24">
+      <div className="w-full">
         <div className="reveal mb-14 opacity-0 translate-y-8 transition-all duration-700">
           <span
             className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.16em]"
